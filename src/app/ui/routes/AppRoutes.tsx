@@ -16,5 +16,5 @@ export const AppRoutes: React.FC = () =>
         <Route path="/password_new" element={<NewPassword/>}/>
         <Route path="/password_reset" element={<ResetPassword/>}/>
         
-        <Route path="*" element={<h1>404</h1>}/>
+        <Route path="*" element={<PageNotFound/>}/>
     </Routes>
