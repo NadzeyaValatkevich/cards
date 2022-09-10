@@ -6,6 +6,7 @@ import {Profile} from "../../../features/f1-auth/profile/ui/Profile";
 import {NewPassword} from "../../../features/f1-auth/newPassword/ui/NewPassword";
 import {ResetPassword} from "../../../features/f1-auth/resetPassword/ui/ResetPassword";
 import {PageNotFound} from "../../../features/pageNotFound/ui/PageNotFound";
+import {TestPage} from "../../../features/f0-test/ui/TestPage";
 
 export const AppRoutes: React.FC = () =>
     <Routes>
@@ -15,6 +16,7 @@ export const AppRoutes: React.FC = () =>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/password_new" element={<NewPassword/>}/>
         <Route path="/password_reset" element={<ResetPassword/>}/>
+        <Route path="/test" element={<TestPage/>}/>
         
         <Route path="*" element={<PageNotFound/>}/>
     </Routes>

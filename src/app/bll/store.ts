@@ -16,6 +16,7 @@ import {
     resetPasswordReducer
 } from "../../features/f1-auth/resetPassword/bll/reducers/resetPasswordReducer";
 import {PageNotFoundActionsType} from "../../features/pageNotFound/bll/reducers/pageNotFoundReducer";
+import {TestPageActionsType, testPageReducer} from "../../features/f0-test/bll/reducers/testPageReducer";
 
 const rootReducer = combineReducers({
     app: appReducer,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     registration: registrationReducer,
     resetPassword: resetPasswordReducer,
+    testPage: testPageReducer,
 })
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
@@ -34,5 +36,6 @@ export type AllActionsType = AppActionsType
     | RegistrationActionsType
     | ResetPasswordActionsType
     | PageNotFoundActionsType
+    | TestPageActionsType
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
