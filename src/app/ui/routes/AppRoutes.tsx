@@ -1,10 +1,11 @@
 import React from 'react';
 import {Navigate, Route, Routes} from "react-router-dom";
-import {Login} from "../../../features/f1-auth/login/ui/login/Login";
-import {Registration} from "../../../features/f1-auth/registration/ui/registration/Registration";
-import {Profile} from "../../../features/f1-auth/profile/ui/profile/Profile";
-import {NewPassword} from "../../../features/f1-auth/newPassword/ui/newPassword/NewPassword";
-import {ResetPassword} from "../../../features/f1-auth/resetPassword/ui/resetPassword/resetPassword";
+import {Login} from "../../../features/f1-auth/login/ui/Login";
+import {Registration} from "../../../features/f1-auth/registration/ui/Registration";
+import {Profile} from "../../../features/f1-auth/profile/ui/Profile";
+import {NewPassword} from "../../../features/f1-auth/newPassword/ui/NewPassword";
+import {ResetPassword} from "../../../features/f1-auth/resetPassword/ui/ResetPassword";
+import {PageNotFound} from "../../../features/pageNotFound/ui/PageNotFound";
 
 export const AppRoutes: React.FC = () =>
     <Routes>
