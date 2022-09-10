@@ -1,0 +1,8 @@
+@import "src/app/ui/settings/colors";
+
+.header {
+  width: 100%;
+  background-color: $headerBackground;
+  color: $headerTextColor;
+  padding: 5px;
+}
