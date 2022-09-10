@@ -1,0 +1,48 @@
+.pageNotFound {
+  position: absolute;
+  z-index: -1;
+  height: 40vmax;
+  width: 50%;
+  min-height: 150px;
+  min-width: 40vmax;
+  top: 80px;
+  left: 20%;
+  right: auto;
+  bottom: 10px;
+  background: lemonchiffon;
+  border: solid 0.5vmax;
+  border-radius: 1vmax;
+  box-shadow: 0 0 3px 5px darkcyan;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  color: orangered;
+  text-shadow: 1px 1px 3px #002ad7;
+  font-size: 5vmax;
+  font-family: 'Baloo 2', cursive;
+  overflow: hidden;
+  transition-duration: 6s;
+
+  &:hover {
+    transition-duration: 3s;
+    transform: translate(30%, 20%) rotate(-20deg);
+
+    & div:nth-child(2) {
+      transition-duration: 1.5s;
+      transform: translate(10%, 800%) rotate(-120deg);
+    }
+  }
+
+  & div:nth-child(2) {
+    font-size: 4vmax;
+    position: relative;
+    transition-duration: 5s;
+  }
+
+  & div:nth-child(3) {
+    font-size: 4vmax;
+    text-shadow: 1px 1px 2px darkcyan;
+    letter-spacing: -4px;
+  }
+}
