@@ -1,0 +1,27 @@
+@import "src/app/ui/settings/colors";
+
+.navbar {
+  padding: 10px;
+  display: flex;
+
+  & a {
+    text-decoration: none;
+    border: solid 1px #fd8b00;
+    border-radius: 3px;
+    padding: 2px 10px;
+    margin: 2px;
+    text-align: center;
+    color: $navLinkTextColor;
+    background-color: $navLinkBackground;
+    text-transform: uppercase;
+
+    &:hover {
+      border: solid 1px darkslateblue;
+    }
+  }
+
+  .active {
+    background-color: $navActiveLinkBackground;
+    color: $navActiveLinkTextColor;
+  }
+}
