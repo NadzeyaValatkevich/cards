@@ -1,41 +1,20 @@
-import {applyMiddleware, combineReducers, legacy_createStore as createStore} from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import {AppActionsType, appReducer} from "./reducers/appReducer";
-import {LoginActionsType, loginReducer} from "../../features/f1-auth/login/bll/reducers/loginReducer";
-import {
-    NewPasswordActionsType,
-    newPasswordReducer
-} from "../../features/f1-auth/newPassword/bll/reducers/newPasswordReducer";
-import {ProfileActionsType, profileReducer} from "../../features/f1-auth/profile/bll/reducers/profileReducer";
-import {
-    RegistrationActionsType,
-    registrationReducer
-} from "../../features/f1-auth/registration/bll/reducers/registrationReducer";
-import {
-    ResetPasswordActionsType,
-    resetPasswordReducer
-} from "../../features/f1-auth/resetPassword/bll/reducers/resetPasswordReducer";
-import {PageNotFoundActionsType} from "../../features/pageNotFound/bll/reducers/pageNotFoundReducer";
-import {TestPageActionsType, testPageReducer} from "../../features/f0-test/bll/reducers/testPageReducer";
+import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+
+import { AuthActionsType } from '../../features/auth/bll/authActions'
+import { authReducer } from '../../features/auth/bll/authReducer'
+import { ProfileActionsType } from '../../features/profile/bll/profileActions'
+import { profileReducer } from '../../features/profile/bll/profileReducer'
+
+import { AppActionsType, appReducer } from './appReducer'
 
 const rootReducer = combineReducers({
-    app: appReducer,
-    login: loginReducer,
-    newPassword: newPasswordReducer,
-    profile: profileReducer,
-    registration: registrationReducer,
-    resetPassword: resetPasswordReducer,
-    testPage: testPageReducer,
+  app: appReducer,
+  auth: authReducer,
+  profile: profileReducer,
 })
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
-export type AllActionsType = AppActionsType
-    | LoginActionsType
-    | NewPasswordActionsType
-    | ProfileActionsType
-    | RegistrationActionsType
-    | ResetPasswordActionsType
-    | PageNotFoundActionsType
-    | TestPageActionsType
+export type AllActionsType = AppActionsType | ProfileActionsType | AuthActionsType
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))

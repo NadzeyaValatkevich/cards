@@ -1,26 +1,17 @@
-import React, {useState} from 'react';
-import './App.css';
-import {store} from "../bll/store";
-import {Provider} from "react-redux";
-import {HashRouter} from "react-router-dom";
-import {AppRoutes} from "./routes/AppRoutes";
-import {Header} from "./header/Header";
-import {ContentContainer} from "../../common/components/contentContainer/ContentContainer";
+import React from 'react'
 
-const App = () => {
-    const [headerHeight, setHeaderHeight] = useState(0)
-    return (
-        <HashRouter>
-            <Provider store={store}>
-                <div className="App">
-                    <Header onHeightChanged={setHeaderHeight}/>
-                    <ContentContainer stepDown={headerHeight}>
-                        <AppRoutes/>
-                    </ContentContainer>
-                </div>
-            </Provider>
-        </HashRouter>
-    )
-}
+import './App.css'
+import { Provider } from 'react-redux'
+import { HashRouter } from 'react-router-dom'
 
-export default App;
+import { store } from '../bll/store'
+
+const App = () => (
+  <HashRouter>
+    <Provider store={store}>
+      <div className="App">Empty App</div>
+    </Provider>
+  </HashRouter>
+)
+
+export default App
