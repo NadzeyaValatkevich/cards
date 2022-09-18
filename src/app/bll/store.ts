@@ -6,7 +6,8 @@ import { authReducer } from '../../features/auth/bll/authReducer'
 import { ProfileActionsType } from '../../features/profile/bll/profileActions'
 import { profileReducer } from '../../features/profile/bll/profileReducer'
 
-import { AppActionsType, appReducer } from './appReducer'
+import { AppActionsType } from './appActions'
+import { appReducer } from './appReducer'
 
 const rootReducer = combineReducers({
   app: appReducer,

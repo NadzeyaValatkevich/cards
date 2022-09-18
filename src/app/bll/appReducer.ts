@@ -1,4 +1,4 @@
-/*============TYPES===================================================================================================*/
+import { AppActionsType } from './appActions'
 
 export enum RequestStatusType {
   idle,
@@ -9,10 +9,6 @@ export type AppStateType = {
   status: RequestStatusType
   error: string | null
 }
-
-export type AppActionsType = ReturnType<typeof setAppErrorAC> | ReturnType<typeof setAppStatusAC>
-
-/*==========REDUCER===================================================================================================*/
 
 const initialState: AppStateType = {
   status: RequestStatusType.idle,
@@ -32,11 +28,3 @@ export const appReducer = (
       return state
   }
 }
-
-/*============ActionCreators==========================================================================================*/
-
-export const setAppErrorAC = (error: string | null) => ({ type: 'APP/SET-ERROR', error } as const)
-export const setAppStatusAC = (status: RequestStatusType) =>
-  ({ type: 'APP/SET-STATUS', status } as const)
-
-/*============ThunkCreators===========================================================================================*/
