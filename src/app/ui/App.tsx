@@ -6,8 +6,9 @@ import { HashRouter } from 'react-router-dom'
 
 import { ContentWrapper } from '../../common/components/contentWrapper/ContentWrapper'
 import { Header } from '../../features/header/Header'
-import { RoutesComponent } from '../../features/routes/RoutesComponent'
 import { store } from '../bll/store'
+
+import { RoutesComponent } from './RoutesComponent'
 
 const App = () => (
   <HashRouter>

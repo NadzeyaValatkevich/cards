@@ -2,11 +2,11 @@ import React from 'react'
 
 import { Routes, Route, Navigate } from 'react-router-dom'
 
-import { Recovery } from '../auth/ui/Recovery'
-import { SignIn } from '../auth/ui/SignIn'
-import { SignUp } from '../auth/ui/SignUp'
-import { PageNotFound } from '../pageNotFound/ui/PageNotFound'
-import { Profile } from '../profile/ui/Profile'
+import { Recovery } from '../../features/auth/ui/Recovery'
+import { SignIn } from '../../features/auth/ui/SignIn'
+import { SignUp } from '../../features/auth/ui/SignUp'
+import { PageNotFound } from '../../features/pageNotFound/ui/PageNotFound'
+import { Profile } from '../../features/profile/ui/Profile'
 
 export const PROFILE = '/'
 export const SIGN_IN = '/login'
@@ -26,10 +26,10 @@ export const RoutesComponent: React.FC = () => {
   return (
     <div>
       <Routes>
-        <Route path={'*'} element={<Navigate to={Page_Not_Found} />} />
         {routes.map((route, index) => (
           <Route key={index} path={route.path} element={route.component} />
         ))}
+        <Route path={'*'} element={<Navigate to={Page_Not_Found} />} />
       </Routes>
     </div>
   )
