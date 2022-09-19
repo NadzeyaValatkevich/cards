@@ -26,10 +26,10 @@ export const RoutesComponent: React.FC = () => {
   return (
     <div>
       <Routes>
+        <Route path={'*'} element={<Navigate to={Page_Not_Found} />} />
         {routes.map((route, index) => (
           <Route key={index} path={route.path} element={route.component} />
         ))}
-        <Route path={'*'} element={<Navigate to={Page_Not_Found} />} />
       </Routes>
     </div>
   )
