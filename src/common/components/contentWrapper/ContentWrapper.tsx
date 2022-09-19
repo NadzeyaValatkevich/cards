@@ -11,13 +11,16 @@ export const ContentWrapper: React.FC<PropsType> = ({ children }) => (
   <Box
     sx={{
       display: 'flex',
-      flexWrap: 'wrap',
-      '& > :not(style)': {
-        m: 1,
-        width: 413,
-      },
+      justifyContent: 'center',
     }}
   >
-    <Paper>{children}</Paper>
+    <Paper
+      sx={{
+        marginTop: '60px',
+        padding: '10px',
+      }}
+    >
+      {children}
+    </Paper>
   </Box>
 )
