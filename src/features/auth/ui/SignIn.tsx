@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import { Button, Checkbox, FormControlLabel, Link, TextField, Typography } from '@mui/material'
 
 import { ContentWrapper } from '../../../common/components/contentWrapper/ContentWrapper'
 
 export const SignIn: React.FC = () => {
+  const [showPassword, setShowPassword] = useState(false)
+
   return (
     <ContentWrapper
       sx={{
@@ -31,12 +35,21 @@ export const SignIn: React.FC = () => {
           label="Email"
           variant="standard"
         />
-        <TextField
-          style={{ width: '100%', marginBottom: '15px', height: '1' }}
-          type="password"
-          label="Password"
-          variant="standard"
-        />
+        <div style={{ display: 'flex', width: '100%' }}>
+          <TextField
+            style={{ width: '100%', marginBottom: '15px', height: '1' }}
+            type={showPassword ? 'text' : 'password'}
+            label="Password"
+            variant="standard"
+          />
+          <Checkbox
+            checked={showPassword}
+            onChange={e => setShowPassword(e.currentTarget.checked)}
+            icon={<VisibilityIcon />}
+            checkedIcon={<VisibilityOffIcon />}
+          />
+        </div>
+
         <FormControlLabel
           style={{ alignSelf: 'flex-start', marginBottom: '29px' }}
           label="Remember me"
