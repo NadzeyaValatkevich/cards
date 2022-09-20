@@ -16,6 +16,8 @@ export const ContentWrapper: React.FC<PropsType> = ({ children }) => (
   >
     <Paper
       sx={{
+        width: '400px',
+        height: '500px',
         marginTop: '60px',
         padding: '10px',
       }}
