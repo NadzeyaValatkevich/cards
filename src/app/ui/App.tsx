@@ -13,8 +13,8 @@ import { store } from '../bll/store'
 import { RoutesComponent } from './RoutesComponent'
 
 const App = () => (
-  <ThemeProvider theme={theme}>
-    <HashRouter>
+  <HashRouter>
+    <ThemeProvider theme={theme}>
       <Provider store={store}>
         <div className="App">
           <Header />
@@ -23,8 +23,8 @@ const App = () => (
           </ContentWrapper>
         </div>
       </Provider>
-    </HashRouter>
-  </ThemeProvider>
+    </ThemeProvider>
+  </HashRouter>
 )
 
 export default App
