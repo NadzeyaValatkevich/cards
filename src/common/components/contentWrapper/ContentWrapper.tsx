@@ -1,30 +1,24 @@
 import React, { ReactNode } from 'react'
 
-import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
-import { Theme } from '@mui/material/styles'
-import { SxProps } from '@mui/system'
+import Container from '@mui/material/Container'
 
 type PropsType = {
-  sx?: SxProps<Theme>
   children: ReactNode
 }
 
-export const ContentWrapper: React.FC<PropsType> = ({ children, sx }) => (
-  <Box
+export const ContentWrapper: React.FC<PropsType> = ({ children }) => (
+  <Container
     sx={{
       display: 'flex',
+      flexDirection: 'column',
       justifyContent: 'center',
+      alignItems: 'center',
+      height: '100%',
+    }}
+    style={{
+      height: '100%',
     }}
   >
-    <Paper
-      sx={{
-        marginTop: '60px',
-        padding: '10px',
-        ...sx,
-      }}
-    >
-      {children}
-    </Paper>
-  </Box>
+    {children}
+  </Container>
 )
