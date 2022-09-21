@@ -10,14 +10,7 @@ export const SignIn: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
-    <ContentWrapper
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '35px 33px',
-      }}
-    >
+    <ContentWrapper>
       <Typography variant="h4">Sign In</Typography>
       <form
         style={{
