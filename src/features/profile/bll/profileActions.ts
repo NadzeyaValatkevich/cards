@@ -1,5 +1,5 @@
 export type setProfileACType = ReturnType<typeof setProfileAC>
-export type updateProfileNameACType = ReturnType<typeof updateProfileNameAC>
+export type updateProfileTitleACType = ReturnType<typeof updateProfileTitleAC>
 
 export type ResponseProfileType = {
   _id: string | null
@@ -17,12 +17,12 @@ export type ResponseProfileType = {
   token?: string | null
   tokenDeathTime?: number | null
 }
-export type updateNameProfileType = {
+export type updateProfileType = {
   name: string | null
 }
 
 export const setProfileAC = (profile: ResponseProfileType) => ({ type: 'PROFILE' } as const)
-export const updateProfileNameAC = ({ name }: updateNameProfileType) => {
+export const updateProfileTitleAC = ({ name }: updateProfileType) => {
   return {
     type: 'UPDATE-NAME-PROFILE',
     payload: {
@@ -30,4 +30,4 @@ export const updateProfileNameAC = ({ name }: updateNameProfileType) => {
     },
   }
 }
-export type ProfileActionsType = setProfileACType | updateProfileNameACType
+export type ProfileActionsType = setProfileACType | updateProfileTitleACType
