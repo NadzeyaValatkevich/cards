@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Toolbar from '@mui/material/Toolbar'
 
-import logo from '../../common/assets/image/logo.svg'
+import logo from '../../assets/image/logo.svg'
 
 export const Header = () => {
   return (

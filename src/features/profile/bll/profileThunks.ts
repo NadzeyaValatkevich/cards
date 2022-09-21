@@ -1,9 +1,9 @@
 import { setAppStatusAC } from '../../../app/bll/appActions'
 import { RequestStatusType } from '../../../app/bll/appReducer'
 import { AppThunk } from '../../../app/bll/store'
+import { profileAPI } from '../dal/profileAPI'
 
 import { updateProfileTitleAC, updateProfileType } from './profileActions'
-import { profileAPI } from './profileAPI'
 
 export const logoutTC = (): AppThunk => async dispatch => {
   dispatch(setAppStatusAC(RequestStatusType.loading))

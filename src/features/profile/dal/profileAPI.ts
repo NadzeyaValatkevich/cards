@@ -1,7 +1,6 @@
-import { instance } from '../../../common/instance/instance'
-
-import { updateProfileType } from './profileActions'
-import { ProfileStateType } from './profileReducer'
+import { instance } from '../../../app/dal/instance'
+import { updateProfileType } from '../bll/profileActions'
+import { ProfileStateType } from '../bll/profileReducer'
 
 export const profileAPI = {
   logout() {
