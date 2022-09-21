@@ -3,6 +3,8 @@ import { AppActionsType } from './appActions'
 export enum RequestStatusType {
   idle,
   loading,
+  succeeded,
+  failed,
 }
 
 export type AppStateType = {
