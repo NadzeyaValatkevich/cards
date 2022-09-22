@@ -24,13 +24,13 @@ export const RoutesComponent: React.FC = () => {
   ]
 
   return (
-    <div>
+    <>
       <Routes>
         <Route path={'/'} element={<Navigate to={SIGN_UP} />} />
         {routes.map((route, index) => (
           <Route key={index} path={route.path} element={route.component} />
         ))}
       </Routes>
-    </div>
+    </>
   )
 }
