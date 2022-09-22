@@ -12,14 +12,14 @@ type PropsType = {
 
 export const ContentWrapper: React.FC<PropsType> = ({ children, sx }) => (
   <Container
+    maxWidth="md"
     sx={{
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
       height: '100%',
-      marginTop: '20px',
-      ...sx,
+      flex: 1,
     }}
   >
     <Paper
@@ -29,7 +29,8 @@ export const ContentWrapper: React.FC<PropsType> = ({ children, sx }) => (
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '2rem 3rem',
+        padding: '2rem',
+        ...sx,
       }}
     >
       {children}
