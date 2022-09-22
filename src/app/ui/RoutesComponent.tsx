@@ -26,7 +26,7 @@ export const RoutesComponent: React.FC = () => {
   return (
     <div>
       <Routes>
-        <Route path={'/'} element={<Navigate to={SIGN_UP} />} />
+        <Route path={'/'} element={<Navigate to={SIGN_IN} />} />
         {routes.map((route, index) => (
           <Route key={index} path={route.path} element={route.component} />
         ))}
