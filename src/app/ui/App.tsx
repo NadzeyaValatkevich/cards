@@ -9,7 +9,6 @@ import { store } from '../bll/store'
 
 import { RoutesComponent } from './RoutesComponent'
 
-import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 import { Header } from 'common/components/header/Header'
 import { theme } from 'common/styles/theme'
 
@@ -19,9 +18,7 @@ const App = () => (
       <Provider store={store}>
         <div className="App">
           <Header />
-          <ContentWrapper>
-            <RoutesComponent />
-          </ContentWrapper>
+          <RoutesComponent />
         </div>
       </Provider>
     </ThemeProvider>
