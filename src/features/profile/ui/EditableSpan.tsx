@@ -4,6 +4,8 @@ import CreateIcon from '@mui/icons-material/Create'
 import { TextField } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 
+import s from './profile.module.css'
+
 type EditableSpanPropsType = {
   value: string
   onChange: (newValue: string) => void
@@ -28,7 +30,7 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
   }
 
   return (
-    <div>
+    <div className={s.blockName}>
       {editMode ? (
         <TextField value={title} onChange={changeTitle} autoFocus onBlur={activeViewMode} />
       ) : (
