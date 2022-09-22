@@ -1,7 +1,7 @@
 import React from 'react'
 
 import './App.css'
-import { ThemeProvider } from '@mui/material'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 
@@ -16,6 +16,7 @@ const App = () => (
   <HashRouter>
     <ThemeProvider theme={theme}>
       <Provider store={store}>
+        <CssBaseline />
         <div className="App">
           <Header />
           <RoutesComponent />
