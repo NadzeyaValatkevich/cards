@@ -1,9 +1,20 @@
-.profileBlock {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 .photo {
     width: 100px;
     height: 100px;
+}
+.blockName {
+    width: 300px;
+
+    text-align: center;
+}
+.iconPhoto {
+    position: absolute;
+    top: 65px;
+    right: -20px;
+
+    display: inline-block;
+
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 100%
 }
