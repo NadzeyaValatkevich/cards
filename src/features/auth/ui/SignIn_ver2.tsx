@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { loginTC } from '../bll/authThunks'
 
-import { PROFILE } from 'app/ui/RoutesComponent'
+import { PROFILE, SIGN_UP } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
 
@@ -38,6 +38,7 @@ export const SignIn: FC<PropsType> = ({}) => {
 
   const signUpOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
+    navigate(SIGN_UP)
   }
 
   isLoggedIn && navigate(PROFILE)
@@ -113,7 +114,6 @@ export const SignIn: FC<PropsType> = ({}) => {
               Already have an account?
             </Typography>
             <Link
-              href="#"
               variant="subtitle1"
               onClick={signUpOnClickHandler}
               sx={{
