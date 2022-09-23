@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useState, KeyboardEvent } from 'react'
 
 import CreateIcon from '@mui/icons-material/Create'
 import { TextField } from '@mui/material'
@@ -15,7 +15,7 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
   const [editMode, setEditMode] = useState(false)
   const [title, setTitle] = useState(props.value)
 
-  const activeViewMode = () => {
+  const activateViewMode = () => {
     setEditMode(false)
     props.onChange(title)
   }
@@ -25,6 +25,12 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
     setTitle(props.value)
   }
 
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      activateViewMode()
+    }
+  }
+
   const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value)
   }
@@ -32,11 +38,17 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
   return (
     <div className={s.blockName}>
       {editMode ? (
-        <TextField value={title} onChange={changeTitle} autoFocus onBlur={activeViewMode} />
+        <TextField
+          value={title}
+          onChange={changeTitle}
+          onKeyPress={handleKeyPress}
+          autoFocus
+          onBlur={activateViewMode}
+        />
       ) : (
         <span onClick={activateEditMode}>{props.value}</span>
       )}
-      <IconButton aria-label="create" color={'primary'} onClick={() => {}}>
+      <IconButton aria-label="create" color={'primary'} onClick={activateEditMode}>
         <CreateIcon />
       </IconButton>
     </div>

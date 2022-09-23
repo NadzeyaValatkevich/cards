@@ -60,7 +60,7 @@ export const Profile: React.FC<PropsType> = () => {
         </Typography>
       </div>
       <Typography variant="h6" style={{ marginBottom: '30px' }}>
-        profile.email
+        {profile.email}
       </Typography>
       <Button
         style={{ width: '100%', marginBottom: '31px', borderRadius: '20px' }}
