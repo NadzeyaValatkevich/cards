@@ -7,14 +7,11 @@ export enum RequestStatusType {
   failed,
 }
 
-export type AppStateType = {
-  status: RequestStatusType
-  error: string | null
-}
+export type AppStateType = typeof initialState
 
-const initialState: AppStateType = {
-  status: RequestStatusType.idle,
-  error: null,
+const initialState = {
+  status: RequestStatusType.idle as RequestStatusType,
+  error: null as string | null,
 }
 
 export const appReducer = (
