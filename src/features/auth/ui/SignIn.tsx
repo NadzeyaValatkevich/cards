@@ -4,7 +4,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import { Button, Checkbox, FormControlLabel, Link, TextField, Typography } from '@mui/material'
 
-import { ContentWrapper } from '../../../common/components/contentWrapper/ContentWrapper'
+import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 
 export const SignIn: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false)
