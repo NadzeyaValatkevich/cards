@@ -47,7 +47,7 @@ export const SignUp: FC<PropsType> = ({}) => {
 
   const signInOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    alert('SignIn page')
+    navigate(SIGN_IN)
   }
 
   isRegistered && navigate(SIGN_IN)
@@ -122,7 +122,6 @@ export const SignUp: FC<PropsType> = ({}) => {
               Already have an account?
             </Typography>
             <Link
-              href="#"
               variant="subtitle1"
               onClick={signInOnClickHandler}
               sx={{
