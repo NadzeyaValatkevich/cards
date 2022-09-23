@@ -1,5 +1,5 @@
-export type setProfileACType = ReturnType<typeof setProfileAC>
-export type updateProfileTitleACType = ReturnType<typeof updateProfileTitleAC>
+export type SetProfileActionType = ReturnType<typeof setProfileAC>
+export type UpdateProfileTitleActionType = ReturnType<typeof updateProfileTitleAC>
 
 export type ResponseProfileType = {
   _id: string | null
@@ -30,4 +30,4 @@ export const updateProfileTitleAC = ({ name }: updateProfileType) => {
     },
   }
 }
-export type ProfileActionsType = setProfileACType | updateProfileTitleACType
+export type ProfileActionsType = SetProfileActionType | UpdateProfileTitleActionType

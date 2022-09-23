@@ -10,11 +10,13 @@ export enum RequestStatusType {
 export type AppStateType = {
   status: RequestStatusType
   error: string | null
+  isInitialized: boolean
 }
 
 const initialState: AppStateType = {
   status: RequestStatusType.idle,
   error: null,
+  isInitialized: false,
 }
 
 export const appReducer = (
@@ -26,6 +28,8 @@ export const appReducer = (
       return { ...state, status: action.status }
     case 'APP/SET-ERROR':
       return { ...state, error: action.error }
+    case 'APP/SET-IS-INITIALIZED':
+      return { ...state, isInitialized: action.value }
     default:
       return state
   }

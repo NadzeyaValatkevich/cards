@@ -4,7 +4,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { Recovery } from 'features/auth/ui/Recovery'
 import { SignIn } from 'features/auth/ui/SignIn'
-import { SignUp } from 'features/auth/ui/SignUp'
+import { SignUp } from 'features/signUp/ui/SignUp'
 import { PageNotFound } from 'features/pageNotFound/ui/PageNotFound'
 import { Profile } from 'features/profile/ui/Profile'
 

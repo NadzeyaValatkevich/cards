@@ -6,8 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { SIGN_IN } from '../../../app/ui/RoutesComponent'
 import { ContentWrapper } from '../../../common/components/contentWrapper/ContentWrapper'
-
-import { emailValidation } from './validation'
+import { emailValidation } from '../../../common/validation/validation'
 
 type FormValues = {
   email: string

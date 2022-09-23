@@ -1,6 +1,8 @@
 import { setAppStatusAC } from '../../../app/bll/appActions'
 import { RequestStatusType } from '../../../app/bll/appReducer'
 import { AppThunk } from '../../../app/bll/store'
+import { handleServerAppError } from '../../../utils/error-utils'
+import { setIsLoggedInAC } from '../../auth/bll/authActions'
 import { profileAPI } from '../dal/profileAPI'
 
 import { updateProfileTitleAC, updateProfileType } from './profileActions'
@@ -10,14 +12,14 @@ export const logoutTC = (): AppThunk => async dispatch => {
   try {
     const res = await profileAPI.logout()
 
-    // dispatch(setIsLoggedInAC(false))
+    dispatch(setIsLoggedInAC(false))
     dispatch(setAppStatusAC(RequestStatusType.succeeded))
   } catch (error: any) {
     const errorResponse = error.response
       ? error.response.data.error
       : error.message + ', more details in the console'
 
-    // handleServerAppError(errorResponse, dispatch)
+    handleServerAppError(errorResponse, dispatch)
     dispatch(setAppStatusAC(RequestStatusType.failed))
   }
 }
@@ -35,7 +37,7 @@ export const updateProfileTitleTC = ({ name }: updateProfileType): AppThunk => {
         ? error.response.data.error
         : error.message + ', more details in the console'
 
-      // handleServerAppError(errorResponse, dispatch)
+      handleServerAppError(errorResponse, dispatch)
       dispatch(setAppStatusAC(RequestStatusType.failed))
     }
   }
