@@ -40,7 +40,7 @@ export const SignIn: React.FC = () => {
   const { handleSubmit } = methods
 
   const onSubmit: SubmitHandler<FormInputType> = data => {
-    dispatch(loginTC(data.email, data.password, data.rememberMe))
+    dispatch(loginTC(data))
   }
 
   if (isLoggedIn) {
