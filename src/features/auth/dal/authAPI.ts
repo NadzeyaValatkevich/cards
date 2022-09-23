@@ -28,7 +28,7 @@ type logoutReturnType = {
 }
 
 export const authAPI = {
-  getAuthStatus() {
+  me() {
     return instance.post<loginReturnType>('auth/me')
   },
   register(data: registerType) {
