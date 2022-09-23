@@ -1,37 +1,22 @@
 import { ProfileActionsType } from './profileActions'
 
-export type ProfileStateType = {
-  _id: string | null
-  email: string | null
-  name: string | null
-  avatar?: string | null
-  publicCardPacksCount: number | null
-  created: Date | null
-  updated: Date | null
-  isAdmin: boolean | null
-  verified: boolean | null
-  rememberMe: boolean | null
-  error?: string | null
-  __v: number | null
-  token?: string | null
-  tokenDeathTime?: number | null
-}
+export type ProfileStateType = typeof initialState
 
-const initialState: ProfileStateType = {
-  _id: null,
-  email: null,
-  name: null,
-  avatar: null,
-  publicCardPacksCount: null,
-  created: null,
-  updated: null,
-  isAdmin: null,
-  verified: null,
-  rememberMe: null,
-  error: null,
-  __v: null,
-  token: null,
-  tokenDeathTime: null,
+const initialState = {
+  _id: null as string | null,
+  email: null as string | null,
+  name: null as string | null,
+  avatar: null as string | null,
+  publicCardPacksCount: null as number | null,
+  created: null as Date | null,
+  updated: null as Date | null,
+  isAdmin: null as boolean | null,
+  verified: null as boolean | null,
+  rememberMe: null as boolean | null,
+  error: null as string | null,
+  __v: null as number | null,
+  token: null as string | null,
+  tokenDeathTime: null as number | null,
 }
 
 export const profileReducer = (
@@ -39,12 +24,10 @@ export const profileReducer = (
   action: ProfileActionsType
 ): ProfileStateType => {
   switch (action.type) {
-    // case 'PROFILE':
-    //   return action.profile
-    case 'PROFILE/UPDATE-NAME-PROFILE':
-      return { ...state, name: action.payload.name }
     case 'PROFILE/SET-PROFILE':
       return { ...state, ...action.payload }
+    case 'PROFILE/UPDATE-NAME-PROFILE':
+      return { ...state, name: action.payload.name }
     default:
       return state
   }

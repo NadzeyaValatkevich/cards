@@ -1,11 +1,8 @@
 import { AuthActionsType } from './authActions'
 
-export type AuthStateType = {
-  isLoggedIn: boolean
-  isRegistered: boolean
-}
+export type AuthStateType = typeof initialState
 
-const initialState: AuthStateType = {
+const initialState = {
   isLoggedIn: false,
   isRegistered: false,
 }
