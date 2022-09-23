@@ -1,3 +1,4 @@
-export type AuthActionsType = ReturnType<typeof fakeAC>
+export type AuthActionsType = ReturnType<typeof setLoggedInAC>
 
-export const fakeAC = () => ({ type: 'FAKE-ACTION' } as const)
+export const setLoggedInAC = (isLoggedIn: boolean) =>
+  ({ type: 'AUTH/SET-LOGGED-IN', isLoggedIn } as const)
