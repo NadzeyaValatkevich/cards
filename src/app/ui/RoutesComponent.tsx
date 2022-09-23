@@ -3,7 +3,7 @@ import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 import { Recovery } from 'features/auth/ui/Recovery'
-import { SignIn } from 'features/auth/ui/SignIn'
+import { SignIn } from 'features/auth/ui/SignIn_ver2'
 import { SignUp } from 'features/auth/ui/SignUp'
 import { PageNotFound } from 'features/pageNotFound/ui/PageNotFound'
 import { Profile } from 'features/profile/ui/Profile'
@@ -26,7 +26,7 @@ export const RoutesComponent: React.FC = () => {
   return (
     <>
       <Routes>
-        <Route path={'/'} element={<Navigate to={SIGN_UP} />} />
+        <Route path={'/'} element={<Navigate to={SIGN_IN} />} />
         {routes.map((route, index) => (
           <Route key={index} path={route.path} element={route.component} />
         ))}
