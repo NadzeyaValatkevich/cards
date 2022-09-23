@@ -1,22 +1,26 @@
-import React, { MouseEvent } from 'react'
+import React, { FC, MouseEvent } from 'react'
 
-import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Typography } from '@mui/material'
+import { Button, Link, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler } from 'react-hook-form'
 import {
   FormContainer,
   PasswordElement,
   PasswordRepeatElement,
   TextFieldElement,
 } from 'react-hook-form-mui'
+import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 
-import { ContentWrapper } from '../../../common/components/contentWrapper/ContentWrapper'
+import { SIGN_IN } from '../../../app/ui/RoutesComponent'
+import { useAppDispatch, useAppSelector } from '../../../common/hooks/hooks'
+import { registerTC } from '../bll/authThunks'
+
+import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 
 type PropsType = {}
 
-export type LoginType = {
+export type registerType = {
   email: string
   password: string
 }
@@ -28,23 +32,34 @@ const schema = yup
   })
   .required()
 
-export const SignUp: React.FC<PropsType> = ({}) => {
-  const onSuccessHandler: SubmitHandler<LoginType> = data => {
-    console.log(data)
+export const SignUp: FC<PropsType> = ({}) => {
+  const navigate = useNavigate()
+
+  const dispatch = useAppDispatch()
+
+  const isRegistered = useAppSelector(state => state.auth.isRegistered)
+
+  const onSuccessHandler: SubmitHandler<registerType> = data => {
+    const { email, password } = data
+
+    dispatch(registerTC({ email, password }))
   }
 
   const signInOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
+    alert('SignIn page')
   }
+
+  isRegistered && navigate(SIGN_IN)
 
   return (
     <ContentWrapper>
-      <FormContainer<LoginType> onSuccess={onSuccessHandler}>
+      <FormContainer<registerType> onSuccess={onSuccessHandler}>
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            width: '21.875rem',
+            width: '22rem',
           }}
         >
           <Typography
@@ -59,7 +74,7 @@ export const SignUp: React.FC<PropsType> = ({}) => {
           <Box marginTop={'2.5rem'}>
             <TextFieldElement
               type={'email'}
-              margin={'none'}
+              margin={'dense'}
               label={'Email'}
               name={'email'}
               variant={'standard'}
@@ -67,7 +82,7 @@ export const SignUp: React.FC<PropsType> = ({}) => {
             />
             <PasswordElement
               type={'password'}
-              margin={'none'}
+              margin={'dense'}
               label={'Password'}
               name={'password'}
               variant={'standard'}
@@ -106,18 +121,17 @@ export const SignUp: React.FC<PropsType> = ({}) => {
             >
               Already have an account?
             </Typography>
-            <a href={'#'} onClick={signInOnClickHandler}>
-              <Typography
-                variant={'subtitle1'}
-                align={'center'}
-                sx={{
-                  margin: '0.625rem',
-                  fontWeight: '600',
-                }}
-              >
-                Sign In
-              </Typography>
-            </a>
+            <Link
+              href="#"
+              variant="subtitle1"
+              onClick={signInOnClickHandler}
+              sx={{
+                margin: '0.625rem',
+                fontWeight: '600',
+              }}
+            >
+              Sign In
+            </Link>
           </Box>
         </Box>
       </FormContainer>
