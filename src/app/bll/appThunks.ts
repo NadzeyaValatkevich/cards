@@ -1,5 +1,25 @@
-import { Dispatch } from 'redux'
+import { setIsLoggedInAC } from '../../features/auth/bll/authActions'
+import { setProfileAC } from '../../features/profile/bll/profileActions'
 
-import { AllActionsType } from './store'
+import { setAppInitializedAC, setAppStatusAC } from './appActions'
+import { RequestStatusType } from './appReducer'
+import { AppThunk } from './store'
 
-export const fakeTC = () => (dispatch: Dispatch<AllActionsType>) => {}
+import { errorUtils } from 'common/utils/error-utils'
+import { authAPI } from 'features/auth/dal/authAPI'
+import { ProfileStateType } from 'features/profile/bll/profileReducer'
+
+export const initTC = (): AppThunk => async dispatch => {
+  dispatch(setAppStatusAC(RequestStatusType.loading))
+  try {
+    const res = await authAPI.me()
+
+    dispatch(setProfileAC(res.data as ProfileStateType))
+    dispatch(setIsLoggedInAC(true))
+    dispatch(setAppStatusAC(RequestStatusType.succeeded))
+  } catch (error: any) {
+    errorUtils(error, dispatch)
+  } finally {
+    dispatch(setAppInitializedAC(true))
+  }
+}

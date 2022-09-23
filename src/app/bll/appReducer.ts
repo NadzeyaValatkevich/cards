@@ -12,6 +12,7 @@ export type AppStateType = typeof initialState
 const initialState = {
   status: RequestStatusType.idle as RequestStatusType,
   error: null as string | null,
+  isInitialized: false,
 }
 
 export const appReducer = (
@@ -20,9 +21,11 @@ export const appReducer = (
 ): AppStateType => {
   switch (action.type) {
     case 'APP/SET-STATUS':
-      return { ...state, status: action.status }
+      return { ...state, status: action.payload.status }
     case 'APP/SET-ERROR':
-      return { ...state, error: action.error }
+      return { ...state, error: action.payload.error }
+    case 'APP/SET-IS-INITIALIZED':
+      return { ...state, isInitialized: action.payload.value }
     default:
       return state
   }
