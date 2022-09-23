@@ -1,5 +1,7 @@
+import { composeWithDevTools } from '@redux-devtools/extension'
 import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
+import thunk from 'redux-thunk'
 
 import { AppActionsType } from './appActions'
 import { appReducer } from './appReducer'
@@ -25,7 +27,9 @@ export type AllActionsType =
   | AuthActionsType
   | SetNewUserActionType
 
-export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
+const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 })
+
+export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)))
 
 export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AllActionsType>
 export type AppThunk<ReturnType = void> = ThunkAction<

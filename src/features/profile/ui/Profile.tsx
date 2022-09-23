@@ -23,6 +23,8 @@ type PropsType = {}
 export const Profile: React.FC<PropsType> = () => {
   const dispatch = useAppDispatch()
   const profile = useAppSelector((state: AppRootStateType) => state.profile)
+
+  console.log(profile)
   const isLoggedIn = useAppSelector((state: AppRootStateType) => state.auth.isLoggedIn)
   const navigate = useNavigate()
   const onClickHandler = () => {

@@ -21,13 +21,15 @@ export type updateProfileType = {
   name: string | null
 }
 
-export const setProfileAC = (profile: ResponseProfileType) => ({ type: 'PROFILE' } as const)
+export const setProfileAC = (profile: ResponseProfileType) => {
+  return { type: 'PROFILE', profile } as const
+}
 export const updateProfileTitleAC = ({ name }: updateProfileType) => {
   return {
     type: 'UPDATE-NAME-PROFILE',
     payload: {
       name,
     },
-  }
+  } as const
 }
 export type ProfileActionsType = SetProfileActionType | UpdateProfileTitleActionType

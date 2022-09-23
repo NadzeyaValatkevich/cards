@@ -39,8 +39,8 @@ export const profileReducer = (
   action: ProfileActionsType
 ): ProfileStateType => {
   switch (action.type) {
-    // case 'PROFILE':
-    //   return action.profile
+    case 'PROFILE':
+      return action.profile
     case 'UPDATE-NAME-PROFILE':
       return { ...state, name: action.payload.name }
     default:
