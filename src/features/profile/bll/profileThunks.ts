@@ -1,4 +1,3 @@
-import { errorUtils } from '../../../common/utils/error-utils'
 import { profileAPI } from '../dal/profileAPI'
 
 import { updateProfileTitleAC, updateProfileType } from './profileActions'
@@ -6,6 +5,7 @@ import { updateProfileTitleAC, updateProfileType } from './profileActions'
 import { setAppStatusAC } from 'app/bll/appActions'
 import { RequestStatusType } from 'app/bll/appReducer'
 import { AppThunk } from 'app/bll/store'
+import { errorUtils } from 'common/utils/error-utils'
 
 export const updateProfileTitleTC = ({ name }: updateProfileType): AppThunk => {
   return async dispatch => {

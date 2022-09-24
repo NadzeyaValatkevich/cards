@@ -1,7 +1,8 @@
 import React, { FC, MouseEvent } from 'react'
 
-import { Button, Link, Typography } from '@mui/material'
+import { Link, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import { SubmitHandler } from 'react-hook-form'
 import {
   FormContainer,
@@ -10,10 +11,10 @@ import {
   TextFieldElement,
 } from 'react-hook-form-mui'
 import { useNavigate } from 'react-router-dom'
-import * as yup from 'yup'
 
 import { SIGN_IN } from '../../../app/ui/RoutesComponent'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/hooks'
+import { passwordValidation } from '../../../common/validation/validation'
 import { registerTC } from '../bll/authThunks'
 
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
@@ -24,13 +25,6 @@ export type registerType = {
   email: string
   password: string
 }
-
-const schema = yup
-  .object({
-    email: yup.string().required(),
-    password: yup.string().required(),
-  })
-  .required()
 
 export const SignUp: FC<PropsType> = ({}) => {
   const navigate = useNavigate()
@@ -87,6 +81,7 @@ export const SignUp: FC<PropsType> = ({}) => {
               name={'password'}
               variant={'standard'}
               fullWidth
+              validation={passwordValidation}
             />
             <PasswordRepeatElement
               passwordFieldName={'password'}

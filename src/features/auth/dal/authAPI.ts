@@ -1,5 +1,5 @@
 import { ProfileStateType } from '../../profile/bll/profileReducer'
-import { LoginType } from '../ui/SignIn_ver2'
+import { LoginType } from '../ui/SignIn'
 import { registerType } from '../ui/SignUp'
 
 import { instance } from 'app/dal/instance'

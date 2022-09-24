@@ -1,9 +1,10 @@
-export type AuthActionsType =
-  | ReturnType<typeof setIsLoggedInAC>
-  | ReturnType<typeof setIsRegisteredAC>
+export type AuthActionsType = setIsLoggedInActionType | setIsRegisteredActionType
 
 export const setIsLoggedInAC = (value: boolean) =>
-  ({ type: 'login/SET-IS-LOGGED-IN', payload: { value } } as const)
+  ({ type: 'auth/SET-IS-LOGGED-IN', payload: { value } } as const)
 
 export const setIsRegisteredAC = (value: boolean) =>
-  ({ type: 'login/SET-IS-REGISTERED', payload: { value } } as const)
+  ({ type: 'auth/SET-IS-REGISTERED', payload: { value } } as const)
+
+export type setIsLoggedInActionType = ReturnType<typeof setIsLoggedInAC>
+export type setIsRegisteredActionType = ReturnType<typeof setIsRegisteredAC>

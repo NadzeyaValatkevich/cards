@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { FC, ReactNode } from 'react'
 
 import { Paper } from '@mui/material'
 import Container from '@mui/material/Container'
@@ -10,7 +10,7 @@ type PropsType = {
   children: ReactNode
 }
 
-export const ContentWrapper: React.FC<PropsType> = ({ children, sx }) => (
+export const ContentWrapper: FC<PropsType> = ({ children, sx }) => (
   <Container
     maxWidth="md"
     sx={{

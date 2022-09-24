@@ -1,12 +1,11 @@
 import React from 'react'
 
 import { Button, FormControl, TextField, Typography } from '@mui/material'
-import { Controller, FormProvider, useForm, useFormContext } from 'react-hook-form'
+import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { SIGN_IN } from '../../../app/ui/RoutesComponent'
-import { ContentWrapper } from '../../../common/components/contentWrapper/ContentWrapper'
-import { emailValidation } from '../../../common/validation/validation'
+import { SIGN_IN } from 'app/ui/RoutesComponent'
+import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 
 type FormValues = {
   email: string
@@ -41,7 +40,6 @@ export const Recovery: React.FC = () => {
             <Controller
               name={'email'}
               // control={control}
-              rules={emailValidation}
               render={({ field: { onChange, value, onBlur }, fieldState: { error } }) => (
                 <TextField
                   label={'Email'}

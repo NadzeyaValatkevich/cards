@@ -1,14 +1,15 @@
-import { setAppStatusAC } from '../../../app/bll/appActions'
-import { RequestStatusType } from '../../../app/bll/appReducer'
-import { AppThunk } from '../../../app/bll/store'
-import { errorUtils } from '../../../common/utils/error-utils'
 import { setProfileAC } from '../../profile/bll/profileActions'
 import { ProfileStateType } from '../../profile/bll/profileReducer'
 import { authAPI } from '../dal/authAPI'
-import { LoginType } from '../ui/SignIn_ver2'
+import { LoginType } from '../ui/SignIn'
 import { registerType } from '../ui/SignUp'
 
 import { setIsLoggedInAC, setIsRegisteredAC } from './authActions'
+
+import { setAppStatusAC } from 'app/bll/appActions'
+import { RequestStatusType } from 'app/bll/appReducer'
+import { AppThunk } from 'app/bll/store'
+import { errorUtils } from 'common/utils/error-utils'
 
 export const logoutTC = (): AppThunk => async dispatch => {
   dispatch(setAppStatusAC(RequestStatusType.loading))
