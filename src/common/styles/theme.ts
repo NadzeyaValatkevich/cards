@@ -10,7 +10,7 @@ export const theme = createTheme({
     fontFamily: 'Montserrat',
     button: {
       fontSize: '1rem',
-      fontWeight: 400,
+      fontWeight: 500,
       textTransform: 'none',
       letterSpacing: '.01rem',
       lineHeight: 1.25,
@@ -22,6 +22,18 @@ export const theme = createTheme({
         root: {
           borderRadius: 30,
         },
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          display: 'block',
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: { borderRadius: 2 },
       },
     },
   },

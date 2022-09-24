@@ -21,12 +21,11 @@ export type updateProfileType = {
   name: string | null
 }
 
-export const setProfileAC = (profile: ResponseProfileType) => {
-  return { type: 'PROFILE', profile } as const
-}
+export const setProfileAC = (profile: ResponseProfileType) =>
+  ({ type: 'PROFILE/SET-PROFILE', payload: { profile } } as const)
 export const updateProfileTitleAC = ({ name }: updateProfileType) => {
   return {
-    type: 'UPDATE-NAME-PROFILE',
+    type: 'PROFILE/UPDATE-NAME-PROFILE',
     payload: {
       name,
     },

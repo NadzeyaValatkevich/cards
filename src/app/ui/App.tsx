@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react'
 
 import './App.css'
-import { ThemeProvider } from '@mui/material'
-import { Provider } from 'react-redux'
-import { HashRouter } from 'react-router-dom'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 
 import { useAppDispatch, useAppSelector } from '../../common/hooks/hooks'
 import { initTC } from '../bll/appThunks'
@@ -15,9 +13,6 @@ import { Header } from 'common/components/header/Header'
 import { theme } from 'common/styles/theme'
 
 export const App = () => {
-  // const isInitialized = useAppSelector(
-  //   (state: AppRootStateType): boolean => state.app.isInitialized
-  // )
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -26,6 +21,7 @@ export const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <div className="App">
         <Header />
         <RoutesComponent />

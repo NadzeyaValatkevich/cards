@@ -7,15 +7,11 @@ export enum RequestStatusType {
   failed,
 }
 
-export type AppStateType = {
-  status: RequestStatusType
-  error: string | null
-  isInitialized: boolean
-}
+export type AppStateType = typeof initialState
 
-const initialState: AppStateType = {
-  status: RequestStatusType.idle,
-  error: null,
+const initialState = {
+  status: RequestStatusType.idle as RequestStatusType,
+  error: null as string | null,
   isInitialized: false,
 }
 
@@ -25,11 +21,11 @@ export const appReducer = (
 ): AppStateType => {
   switch (action.type) {
     case 'APP/SET-STATUS':
-      return { ...state, status: action.status }
+      return { ...state, status: action.payload.status }
     case 'APP/SET-ERROR':
-      return { ...state, error: action.error }
+      return { ...state, error: action.payload.error }
     case 'APP/SET-IS-INITIALIZED':
-      return { ...state, isInitialized: action.value }
+      return { ...state, isInitialized: action.payload.value }
     default:
       return state
   }

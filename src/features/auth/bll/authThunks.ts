@@ -1,19 +1,54 @@
-import { Dispatch } from 'redux'
-
-import { AllActionsType } from '../../../app/bll/store'
+import { setAppStatusAC } from '../../../app/bll/appActions'
+import { RequestStatusType } from '../../../app/bll/appReducer'
+import { AppThunk } from '../../../app/bll/store'
+import { errorUtils } from '../../../common/utils/error-utils'
 import { setProfileAC } from '../../profile/bll/profileActions'
-import { LoginParamsType, signInAPI } from '../dal/signInAPI'
+import { ProfileStateType } from '../../profile/bll/profileReducer'
+import { authAPI } from '../dal/authAPI'
+import { LoginType } from '../ui/SignIn_ver2'
+import { registerType } from '../ui/SignUp'
 
-import { setIsLoggedInAC } from './authActions'
+import { setIsLoggedInAC, setIsRegisteredAC } from './authActions'
 
-export const loginTC = (data: LoginParamsType) => async (dispatch: Dispatch<AllActionsType>) => {
+export const logoutTC = (): AppThunk => async dispatch => {
+  dispatch(setAppStatusAC(RequestStatusType.loading))
   try {
-    const response = await signInAPI.login(data)
+    const res = await authAPI.logout()
 
-    dispatch(setProfileAC(response.data))
-    dispatch(setIsLoggedInAC(true))
-    console.log(response)
-  } catch (error) {
-    console.log(error)
+    dispatch(setProfileAC({} as ProfileStateType))
+    dispatch(setIsLoggedInAC(false))
+    dispatch(setIsRegisteredAC(false))
+    dispatch(setAppStatusAC(RequestStatusType.succeeded))
+  } catch (error: any) {
+    errorUtils(error, dispatch)
   }
 }
+
+export const loginTC =
+  (data: LoginType): AppThunk =>
+  async dispatch => {
+    dispatch(setAppStatusAC(RequestStatusType.loading))
+    try {
+      const res = await authAPI.login(data)
+
+      dispatch(setProfileAC(res.data as ProfileStateType))
+      dispatch(setIsLoggedInAC(true))
+      dispatch(setAppStatusAC(RequestStatusType.succeeded))
+    } catch (error: any) {
+      errorUtils(error, dispatch)
+    }
+  }
+
+export const registerTC =
+  (data: registerType): AppThunk =>
+  async dispatch => {
+    dispatch(setAppStatusAC(RequestStatusType.loading))
+    try {
+      const res = await authAPI.register(data)
+
+      dispatch(setIsRegisteredAC(true))
+      dispatch(setAppStatusAC(RequestStatusType.succeeded))
+    } catch (error: any) {
+      errorUtils(error, dispatch)
+    }
+  }
