@@ -1,6 +1,7 @@
 import { setProfileAC } from '../../profile/bll/profileActions'
 import { ProfileStateType } from '../../profile/bll/profileReducer'
 import { authAPI } from '../dal/authAPI'
+import { recoverySendType } from '../ui/Recovery'
 import { LoginType } from '../ui/SignIn'
 import { registerType } from '../ui/SignUp'
 
@@ -45,6 +46,19 @@ export const registerTC =
     dispatch(setAppStatusAC(RequestStatusType.loading))
     try {
       const res = await authAPI.register(data)
+
+      dispatch(setAppStatusAC(RequestStatusType.succeeded))
+    } catch (error: any) {
+      errorUtils(error, dispatch)
+    }
+  }
+
+export const forgotTC =
+  (data: recoverySendType): AppThunk =>
+  async dispatch => {
+    dispatch(setAppStatusAC(RequestStatusType.loading))
+    try {
+      const res = await authAPI.forgot(data)
 
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {

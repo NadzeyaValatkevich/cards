@@ -1,89 +1,117 @@
-import React from 'react'
+import React, { FC, MouseEvent } from 'react'
 
-import { Button, FormControl, TextField, Typography } from '@mui/material'
-import { Controller, FormProvider, useForm } from 'react-hook-form'
+import { Link, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import { SubmitHandler } from 'react-hook-form'
+import { FormContainer, TextFieldElement } from 'react-hook-form-mui'
 import { useNavigate } from 'react-router-dom'
+
+import { useAppDispatch } from '../../../common/hooks/hooks'
+import { forgotTC } from '../bll/authThunks'
 
 import { SIGN_IN } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 
-type FormValues = {
+export type recoverySendType = {
   email: string
 }
-const defaultValues = {
-  email: '',
-}
 
-export const Recovery: React.FC = () => {
-  const methods = useForm<FormValues>({ defaultValues: defaultValues, mode: 'onBlur' })
-  const {
-    handleSubmit,
-    formState: { isValid },
-  } = methods
-  // const { control } = useFormContext()
+export const Recovery: FC = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const onSuccessHandler: SubmitHandler<recoverySendType> = data => {
+    dispatch(forgotTC(data))
+  }
+
+  const signInOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    navigate(SIGN_IN)
+  }
 
   return (
     <ContentWrapper>
-      <Typography variant="h4">Forgot your password?</Typography>
-      <FormProvider {...methods}>
-        <form
-          style={{
+      <FormContainer<recoverySendType> onSuccess={onSuccessHandler}>
+        <Box
+          sx={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            marginTop: '30px',
-            width: '347px',
+            width: '22rem',
           }}
         >
-          <FormControl style={{ width: '100%' }}>
-            <Controller
+          <Typography
+            variant={'h5'}
+            align={'center'}
+            sx={{
+              fontWeight: '600',
+            }}
+          >
+            Forgot your password?
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              marginTop: '2.5rem',
+            }}
+          >
+            <TextFieldElement
+              type={'email'}
+              margin={'dense'}
+              label={'Email'}
               name={'email'}
-              // control={control}
-              render={({ field: { onChange, value, onBlur }, fieldState: { error } }) => (
-                <TextField
-                  label={'Email'}
-                  helperText={error ? error.message : null}
-                  size="medium"
-                  error={!!error}
-                  onChange={onChange}
-                  value={value}
-                  fullWidth
-                  variant="standard"
-                  required={true}
-                  onBlur={onBlur}
-                />
-              )}
+              variant={'standard'}
+              // autoComplete={'username'}
+              fullWidth
             />
-            <Typography variant={'subtitle1'} style={{ marginBottom: '60px' }}>
-              Enter your email address and we will send you further instructions
-            </Typography>
-            <Button
-              onClick={() => {}}
-              variant={'contained'}
-              disabled={!isValid}
-              style={{
-                width: '100%',
+
+            <Typography
+              variant={'subtitle1'}
+              sx={{
+                marginTop: '1.5rem',
+                opacity: '.5',
               }}
             >
-              Send instructions
+              Enter your email address and we will send you further instructions{' '}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: '4rem',
+            }}
+          >
+            <Button type={'submit'} color={'primary'} variant={'contained'} fullWidth>
+              Send Instructions
             </Button>
-            <Typography variant={'subtitle2'} component={'div'}>
+            <Typography
+              variant={'subtitle2'}
+              align={'center'}
+              sx={{
+                opacity: '50%',
+                marginTop: '2rem',
+                fontWeight: '600',
+              }}
+            >
               Did you remember your password?
             </Typography>
-            <Button
-              variant={'text'}
-              color={'primary'}
-              onClick={() => {
-                navigate(SIGN_IN, { replace: true })
+            <Link
+              href={SIGN_IN}
+              variant="subtitle1"
+              onClick={signInOnClickHandler}
+              sx={{
+                margin: '0.625rem',
+                fontWeight: '600',
               }}
-              style={{ marginBottom: '60px' }}
             >
               Try logging in
-            </Button>
-          </FormControl>
-        </form>
-      </FormProvider>
+            </Link>
+          </Box>
+        </Box>
+      </FormContainer>
     </ContentWrapper>
   )
 }
