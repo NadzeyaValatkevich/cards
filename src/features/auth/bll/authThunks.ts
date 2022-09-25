@@ -4,7 +4,7 @@ import { authAPI } from '../dal/authAPI'
 import { LoginType } from '../ui/SignIn'
 import { registerType } from '../ui/SignUp'
 
-import { setIsLoggedInAC, setIsRegisteredAC } from './authActions'
+import { setIsLoggedInAC } from './authActions'
 
 import { setAppStatusAC } from 'app/bll/appActions'
 import { RequestStatusType } from 'app/bll/appReducer'
@@ -18,7 +18,6 @@ export const logoutTC = (): AppThunk => async dispatch => {
 
     dispatch(setProfileAC({} as ProfileStateType))
     dispatch(setIsLoggedInAC(false))
-    dispatch(setIsRegisteredAC(false))
     dispatch(setAppStatusAC(RequestStatusType.succeeded))
   } catch (error: any) {
     errorUtils(error, dispatch)
@@ -47,7 +46,6 @@ export const registerTC =
     try {
       const res = await authAPI.register(data)
 
-      dispatch(setIsRegisteredAC(true))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)

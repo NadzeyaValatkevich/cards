@@ -13,7 +13,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 
 import { SIGN_IN } from '../../../app/ui/RoutesComponent'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/hooks'
+import { useAppDispatch } from '../../../common/hooks/hooks'
 import { passwordValidation } from '../../../common/validation/validation'
 import { registerTC } from '../bll/authThunks'
 
@@ -31,8 +31,6 @@ export const SignUp: FC<PropsType> = ({}) => {
 
   const dispatch = useAppDispatch()
 
-  const isRegistered = useAppSelector(state => state.auth.isRegistered)
-
   const onSuccessHandler: SubmitHandler<registerType> = data => {
     const { email, password } = data
 
@@ -43,8 +41,6 @@ export const SignUp: FC<PropsType> = ({}) => {
     e.preventDefault()
     navigate(SIGN_IN)
   }
-
-  isRegistered && navigate(SIGN_IN)
 
   return (
     <ContentWrapper>
@@ -76,9 +72,9 @@ export const SignUp: FC<PropsType> = ({}) => {
             />
             <PasswordElement
               type={'password'}
+              name={'password'}
               margin={'dense'}
               label={'Password'}
-              name={'password'}
               variant={'standard'}
               fullWidth
               validation={passwordValidation}
@@ -89,7 +85,6 @@ export const SignUp: FC<PropsType> = ({}) => {
               margin={'dense'}
               label={'Confirm password'}
               variant={'standard'}
-              required
               fullWidth
             />
           </Box>
@@ -117,6 +112,7 @@ export const SignUp: FC<PropsType> = ({}) => {
               Already have an account?
             </Typography>
             <Link
+              href={SIGN_IN}
               variant="subtitle1"
               onClick={signInOnClickHandler}
               sx={{
