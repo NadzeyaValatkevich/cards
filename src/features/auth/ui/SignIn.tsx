@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent } from 'react'
+import React, { FC, MouseEvent, useEffect } from 'react'
 
 import { Button, Link, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { loginTC } from '../bll/authThunks'
 
-import { PROFILE, SIGN_UP } from 'app/ui/RoutesComponent'
+import { PROFILE, REC_PASSWORD, SIGN_UP } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
 
@@ -27,10 +27,8 @@ export type LoginType = {
 
 export const SignIn: FC<PropsType> = ({}) => {
   const navigate = useNavigate()
-
-  const dispatch = useAppDispatch()
-
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const dispatch = useAppDispatch()
 
   const onSuccessHandler: SubmitHandler<LoginType> = data => {
     dispatch(loginTC(data))
@@ -41,7 +39,14 @@ export const SignIn: FC<PropsType> = ({}) => {
     navigate(SIGN_UP)
   }
 
-  isLoggedIn && navigate(PROFILE)
+  const forgotOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    navigate(REC_PASSWORD)
+  }
+
+  useEffect(() => {
+    isLoggedIn && navigate(PROFILE)
+  }, [isLoggedIn])
 
   return (
     <ContentWrapper>
@@ -86,7 +91,12 @@ export const SignIn: FC<PropsType> = ({}) => {
               fullWidth
             />
             <CheckboxElement name={'rememberMe'} label={'Remember me'} />
-            <Link style={{ alignSelf: 'flex-end', marginTop: '2rem' }} href="#" variant="body2">
+            <Link
+              href={REC_PASSWORD}
+              style={{ alignSelf: 'flex-end', marginTop: '2rem' }}
+              variant="body2"
+              onClick={forgotOnClickHandler}
+            >
               Forgot Password?
             </Link>
           </Box>
@@ -114,6 +124,7 @@ export const SignIn: FC<PropsType> = ({}) => {
               Already have an account?
             </Typography>
             <Link
+              href={SIGN_UP}
               variant="subtitle1"
               onClick={signUpOnClickHandler}
               sx={{

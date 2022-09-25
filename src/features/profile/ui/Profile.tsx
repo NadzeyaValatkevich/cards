@@ -4,12 +4,7 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import { Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
-import { useNavigate } from 'react-router-dom'
 
-import { AppRootStateType } from '../../../app/bll/store'
-import { SIGN_IN } from '../../../app/ui/RoutesComponent'
-import userPhoto from '../../../common/assets/image/user.png'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/hooks'
 import { logoutTC } from '../../auth/bll/authThunks'
 import { updateProfileType } from '../bll/profileActions'
 import { updateProfileTitleTC } from '../bll/profileThunks'
@@ -17,7 +12,10 @@ import { updateProfileTitleTC } from '../bll/profileThunks'
 import { EditableSpan } from './EditableSpan'
 import s from './profile.module.css'
 
+import { AppRootStateType } from 'app/bll/store'
+import userPhoto from 'common/assets/image/user.png'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
+import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
 
 type PropsType = {}
 
@@ -25,9 +23,6 @@ export const Profile: React.FC<PropsType> = () => {
   const dispatch = useAppDispatch()
   const profile = useAppSelector((state: AppRootStateType) => state.profile)
 
-  console.log(profile)
-  const isLoggedIn = useAppSelector((state: AppRootStateType) => state.auth.isLoggedIn)
-  const navigate = useNavigate()
   const onClickHandler = () => {
     dispatch(logoutTC())
   }
@@ -38,10 +33,6 @@ export const Profile: React.FC<PropsType> = () => {
   const onTitleChangeHandler = (value: string) => {
     user.name = value
     dispatch(updateProfileTitleTC(user))
-  }
-
-  if (!isLoggedIn) {
-    navigate(SIGN_IN)
   }
 
   return (
