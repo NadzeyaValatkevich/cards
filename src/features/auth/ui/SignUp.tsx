@@ -68,6 +68,7 @@ export const SignUp: FC<PropsType> = ({}) => {
               label={'Email'}
               name={'email'}
               variant={'standard'}
+              // autoComplete={'username'}
               fullWidth
             />
             <PasswordElement
@@ -77,6 +78,7 @@ export const SignUp: FC<PropsType> = ({}) => {
               label={'Password'}
               variant={'standard'}
               fullWidth
+              // autoComplete={'new-password'}
               validation={passwordValidation}
             />
             <PasswordRepeatElement
@@ -85,6 +87,7 @@ export const SignUp: FC<PropsType> = ({}) => {
               margin={'dense'}
               label={'Confirm password'}
               variant={'standard'}
+              // autoComplete={'new-password'}
               fullWidth
             />
           </Box>

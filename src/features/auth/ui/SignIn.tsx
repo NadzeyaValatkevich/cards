@@ -80,6 +80,7 @@ export const SignIn: FC<PropsType> = ({}) => {
               label={'Email'}
               name={'email'}
               variant={'standard'}
+              // autoComplete={'username'}
               fullWidth
             />
             <PasswordElement
@@ -88,6 +89,7 @@ export const SignIn: FC<PropsType> = ({}) => {
               label={'Password'}
               name={'password'}
               variant={'standard'}
+              // autoComplete={'current-password'}
               fullWidth
             />
             <CheckboxElement name={'rememberMe'} label={'Remember me'} />
