@@ -7,7 +7,7 @@ import { registerType } from '../ui/SignUp'
 
 import { setIsLoggedInAC } from './authActions'
 
-import { setAppStatusAC } from 'app/bll/appActions'
+import { setAppInfoAC, setAppStatusAC } from 'app/bll/appActions'
 import { RequestStatusType } from 'app/bll/appReducer'
 import { AppThunk } from 'app/bll/store'
 import { errorUtils } from 'common/utils/error-utils'
@@ -19,6 +19,7 @@ export const logoutTC = (): AppThunk => async dispatch => {
 
     dispatch(setProfileAC({} as ProfileStateType))
     dispatch(setIsLoggedInAC(false))
+    dispatch(setAppInfoAC(res.data.info))
     dispatch(setAppStatusAC(RequestStatusType.succeeded))
   } catch (error: any) {
     errorUtils(error, dispatch)
@@ -34,6 +35,7 @@ export const loginTC =
 
       dispatch(setProfileAC(res.data as ProfileStateType))
       dispatch(setIsLoggedInAC(true))
+      dispatch(setAppInfoAC('Sign in successful'))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
@@ -47,6 +49,7 @@ export const registerTC =
     try {
       const res = await authAPI.register(data)
 
+      dispatch(setAppInfoAC('Register successful'))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)

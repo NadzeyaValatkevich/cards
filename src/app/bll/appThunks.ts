@@ -1,7 +1,7 @@
 import { setIsLoggedInAC } from '../../features/auth/bll/authActions'
 import { setProfileAC } from '../../features/profile/bll/profileActions'
 
-import { setAppInitializedAC, setAppStatusAC } from './appActions'
+import { setAppInfoAC, setAppInitializedAC, setAppStatusAC } from './appActions'
 import { RequestStatusType } from './appReducer'
 import { AppThunk } from './store'
 
@@ -17,6 +17,7 @@ export const initTC = (): AppThunk => async dispatch => {
     dispatch(setProfileAC(res.data as ProfileStateType))
     dispatch(setIsLoggedInAC(true))
     dispatch(setAppStatusAC(RequestStatusType.succeeded))
+    dispatch(setAppInfoAC('You are logged in'))
   } catch (error: any) {
     errorUtils(error, dispatch)
   } finally {
