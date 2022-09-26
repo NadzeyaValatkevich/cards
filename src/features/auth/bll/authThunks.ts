@@ -1,10 +1,10 @@
 import { setProfileAC } from '../../profile/bll/profileActions'
 import { ProfileStateType } from '../../profile/bll/profileReducer'
-import { authAPI } from '../dal/authAPI'
+import { authAPI, RecoveryPasswordRequestType } from '../dal/authAPI'
 import { LoginType } from '../ui/SignIn'
 import { registerType } from '../ui/SignUp'
 
-import { setIsLoggedInAC, setIsRegisteredAC } from './authActions'
+import { setIsLoggedInAC, setIsRegisteredAC, setSendEmailAC } from './authActions'
 
 import { setAppStatusAC } from 'app/bll/appActions'
 import { RequestStatusType } from 'app/bll/appReducer'
@@ -48,6 +48,20 @@ export const registerTC =
       const res = await authAPI.register(data)
 
       dispatch(setIsRegisteredAC(true))
+      dispatch(setAppStatusAC(RequestStatusType.succeeded))
+    } catch (error: any) {
+      errorUtils(error, dispatch)
+    }
+  }
+
+export const sendEmailTC =
+  (data: RecoveryPasswordRequestType): AppThunk =>
+  async dispatch => {
+    dispatch(setAppStatusAC(RequestStatusType.loading))
+    try {
+      const res = await authAPI.sendEmail(data)
+
+      dispatch(setSendEmailAC(true))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
