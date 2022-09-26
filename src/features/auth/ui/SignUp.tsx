@@ -31,10 +31,11 @@ export const SignUp: FC<PropsType> = ({}) => {
 
   const dispatch = useAppDispatch()
 
-  const onSuccessHandler: SubmitHandler<registerType> = data => {
+  const onSuccessHandler: SubmitHandler<registerType> = async data => {
     const { email, password } = data
 
-    dispatch(registerTC({ email, password }))
+    await dispatch(registerTC({ email, password }))
+    navigate(SIGN_IN)
   }
 
   const signInOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
