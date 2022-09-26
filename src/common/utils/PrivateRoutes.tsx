@@ -14,8 +14,8 @@ export const PrivateRoutes: FC<PrivateRoutesPropsType> = ({ loggedIn }) => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
   if (loggedIn) {
-    return isLoggedIn ? <Outlet /> : <Navigate to={SIGN_IN} replace />
+    return isLoggedIn ? <Outlet /> : <Navigate to={SIGN_IN} />
   } else {
-    return !isLoggedIn ? <Outlet /> : <Navigate to={SIGN_IN} replace />
+    return isLoggedIn ? <Navigate to={SIGN_IN} /> : <Outlet />
   }
 }
