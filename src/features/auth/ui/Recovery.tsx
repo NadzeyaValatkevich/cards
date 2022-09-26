@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../../common/hooks/hooks'
 import { forgotTC } from '../bll/authThunks'
 
-import { SIGN_IN } from 'app/ui/RoutesComponent'
+import { CHECK_EMAIL, SIGN_IN } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 
 export type recoverySendType = {
@@ -20,8 +20,9 @@ export type recoverySendType = {
 export const Recovery: FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const onSuccessHandler: SubmitHandler<recoverySendType> = data => {
-    dispatch(forgotTC(data))
+  const onSuccessHandler: SubmitHandler<recoverySendType> = async data => {
+    await dispatch(forgotTC(data))
+    navigate(CHECK_EMAIL)
   }
 
   const signInOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {

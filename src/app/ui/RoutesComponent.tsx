@@ -3,6 +3,8 @@ import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { PrivateRoutes } from '../../common/utils/PrivateRoutes'
+import { CheckEmail } from '../../features/auth/ui/CheckEmail'
+import { SetNewPassword } from '../../features/auth/ui/SetNewPassword'
 
 import { PageNotFound } from 'common/components/PageNotFound/PageNotFound'
 import { Recovery } from 'features/auth/ui/Recovery'
@@ -15,6 +17,8 @@ export const PROFILE = '/profile'
 export const SIGN_IN = '/login'
 export const SIGN_UP = '/registration'
 export const REC_PASSWORD = '/forgot'
+export const CHECK_EMAIL = '/check-email'
+export const SET_NEW_PASSWORD = '/set-new-password/:resetPasswordToken'
 export const Page_Not_Found = '*'
 
 export const RoutesComponent: React.FC = () => {
@@ -27,6 +31,8 @@ export const RoutesComponent: React.FC = () => {
     { path: MAIN, component: <Navigate to={SIGN_IN} /> },
     { path: SIGN_UP, component: <SignUp /> },
     { path: REC_PASSWORD, component: <Recovery /> },
+    { path: SET_NEW_PASSWORD, component: <SetNewPassword /> },
+    { path: CHECK_EMAIL, component: <CheckEmail /> },
     { path: Page_Not_Found, component: <PageNotFound /> },
   ]
 

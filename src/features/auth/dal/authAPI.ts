@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 import { ProfileStateType } from '../../profile/bll/profileReducer'
 import { LoginType } from '../ui/SignIn'
@@ -11,9 +11,16 @@ type registerReturnType = {
   error?: string
 }
 
-type logoutReturnType = {
+type commonResponseType = {
   info: string
   error: string
+}
+
+type forgotRequestType = typeof forgotRequestData
+
+export type createNewPasswordRequestType = {
+  password: string
+  resetPasswordToken: string | undefined
 }
 
 const forgotRequestData = {
@@ -26,8 +33,6 @@ link</a>
 </div>`,
 }
 
-type forgotRequestType = typeof forgotRequestData
-
 export const authAPI = {
   me() {
     return instance.post<ProfileStateType>('auth/me')
@@ -39,15 +44,22 @@ export const authAPI = {
     return instance.post<ProfileStateType>('auth/login', data)
   },
   logout() {
-    return instance.delete<logoutReturnType>('auth/me')
+    return instance.delete<commonResponseType>('auth/me')
   },
   forgot({ email }: { email: string }) {
-    return axios.post<forgotRequestType>(
+    return axios.post<null, AxiosResponse<commonResponseType>, forgotRequestType>(
       'https://neko-back.herokuapp.com/2.0/auth/forgot',
       {
         ...forgotRequestData,
         email,
       },
+      { withCredentials: true }
+    )
+  },
+  createNewPassword(data: createNewPasswordRequestType) {
+    return axios.post<null, AxiosResponse<commonResponseType>, createNewPasswordRequestType>(
+      'https://neko-back.herokuapp.com/2.0/auth/set-new-password',
+      data,
       { withCredentials: true }
     )
   },
