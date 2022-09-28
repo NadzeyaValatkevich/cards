@@ -11,11 +11,10 @@ import {
 } from 'react-hook-form-mui'
 import { useNavigate } from 'react-router-dom'
 
-import { loginTC } from '../bll/authThunks'
-
-import { PROFILE, SIGN_UP } from 'app/ui/RoutesComponent'
+import { PROFILE, REC_PASSWORD, SIGN_UP } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
+import { loginTC } from 'features/auth/bll/authThunks'
 
 type PropsType = {}
 
@@ -39,6 +38,11 @@ export const SignIn: FC<PropsType> = ({}) => {
   const signUpOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     navigate(SIGN_UP)
+  }
+
+  const forgotOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    navigate(REC_PASSWORD)
   }
 
   isLoggedIn && navigate(PROFILE)
@@ -86,7 +90,12 @@ export const SignIn: FC<PropsType> = ({}) => {
               fullWidth
             />
             <CheckboxElement name={'rememberMe'} label={'Remember me'} />
-            <Link style={{ alignSelf: 'flex-end', marginTop: '2rem' }} href="#" variant="body2">
+            <Link
+              style={{ alignSelf: 'flex-end', marginTop: '2rem' }}
+              href="#"
+              variant="body2"
+              onClick={forgotOnClickHandler}
+            >
               Forgot Password?
             </Link>
           </Box>

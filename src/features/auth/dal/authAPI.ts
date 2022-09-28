@@ -20,12 +20,10 @@ export type RecoveryPasswordRequestType = {
   message: string
 }
 
-const from = 'test-front-admin <ai73a@yandex.by>'
-const message = `<div style="background-color: lime; padding: 15px">
-password recovery link: 
-<a href='http://localhost:3000/#/set-new-password/$token$'>
-link</a>
-</div>`
+export type NewPasswordRequestType = {
+  password: string
+  resetPasswordToken: string
+}
 
 export const authAPI = {
   me() {
@@ -42,5 +40,8 @@ export const authAPI = {
   },
   sendEmail(data: RecoveryPasswordRequestType) {
     return instance.post('/auth/forgot', data)
+  },
+  sendNewPassword(password: string, resetPasswordToken: string | undefined) {
+    return instance.post('/auth/set-new-password', { password, resetPasswordToken })
   },
 }

@@ -6,6 +6,7 @@ const initialState = {
   isLoggedIn: false,
   isRegistered: false,
   isSendEmail: false,
+  isSendNewPassword: false,
 }
 
 export const authReducer = (
@@ -19,6 +20,8 @@ export const authReducer = (
       return { ...state, isRegistered: action.payload.value }
     case 'auth/SET-IS-SEND-EMAIL':
       return { ...state, isSendEmail: action.payload.value }
+    case 'auth/SET-NEW-PASSWORD':
+      return { ...state, isSendNewPassword: action.payload.value }
     default:
       return state
   }

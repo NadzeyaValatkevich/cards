@@ -12,12 +12,11 @@ import {
 } from 'react-hook-form-mui'
 import { useNavigate } from 'react-router-dom'
 
-import { SIGN_IN } from '../../../app/ui/RoutesComponent'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/hooks'
-import { passwordValidation } from '../../../common/validation/validation'
-import { registerTC } from '../bll/authThunks'
-
+import { PROFILE, SIGN_IN } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
+import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
+import { passwordValidation } from 'common/validation/validation'
+import { registerTC } from 'features/auth/bll/authThunks'
 
 type PropsType = {}
 
@@ -44,7 +43,7 @@ export const SignUp: FC<PropsType> = ({}) => {
     navigate(SIGN_IN)
   }
 
-  isRegistered && navigate(SIGN_IN)
+  isRegistered && navigate(PROFILE)
 
   return (
     <ContentWrapper>

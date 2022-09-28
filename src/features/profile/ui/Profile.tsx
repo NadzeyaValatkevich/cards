@@ -6,27 +6,25 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import { useNavigate } from 'react-router-dom'
 
-import { AppRootStateType } from '../../../app/bll/store'
-import { SIGN_IN } from '../../../app/ui/RoutesComponent'
-import userPhoto from '../../../common/assets/image/user.png'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/hooks'
-import { logoutTC } from '../../auth/bll/authThunks'
-import { updateProfileType } from '../bll/profileActions'
-import { updateProfileTitleTC } from '../bll/profileThunks'
-
 import { EditableSpan } from './EditableSpan'
 import s from './profile.module.css'
 
+import { SIGN_IN } from 'app/ui/RoutesComponent'
+import userPhoto from 'common/assets/image/user.png'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
+import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
+import { logoutTC } from 'features/auth/bll/authThunks'
+import { updateProfileType } from 'features/profile/bll/profileActions'
+import { updateProfileTitleTC } from 'features/profile/bll/profileThunks'
 
 type PropsType = {}
 
 export const Profile: React.FC<PropsType> = () => {
   const dispatch = useAppDispatch()
-  const profile = useAppSelector((state: AppRootStateType) => state.profile)
+  const profile = useAppSelector(state => state.profile)
 
   console.log(profile)
-  const isLoggedIn = useAppSelector((state: AppRootStateType) => state.auth.isLoggedIn)
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const navigate = useNavigate()
   const onClickHandler = () => {
     dispatch(logoutTC())
