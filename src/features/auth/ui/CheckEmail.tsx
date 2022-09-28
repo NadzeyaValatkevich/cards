@@ -5,7 +5,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
 
-import { SIGN_IN } from 'app/ui/RoutesComponent'
+import { AppRoutes } from 'app/ui/RoutesComponent'
 import emailImg from 'common/assets/image/email.svg'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 
@@ -17,7 +17,7 @@ export const CheckEmail: FC<recoverySendType> = ({ email }) => {
   const navigate = useNavigate()
 
   const signInOnClickHandler = () => {
-    navigate(SIGN_IN)
+    navigate(AppRoutes.SIGN_IN)
   }
 
   return (

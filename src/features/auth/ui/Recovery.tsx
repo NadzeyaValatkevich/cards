@@ -7,11 +7,11 @@ import { SubmitHandler } from 'react-hook-form'
 import { FormContainer, TextFieldElement } from 'react-hook-form-mui'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppDispatch } from '../../../common/hooks/hooks'
 import { forgotTC } from '../bll/authThunks'
 
-import { CHECK_EMAIL, SIGN_IN } from 'app/ui/RoutesComponent'
+import { AppRoutes } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
+import { useAppDispatch } from 'common/hooks/hooks'
 
 export type recoverySendType = {
   email: string
@@ -22,12 +22,12 @@ export const Recovery: FC = () => {
   const dispatch = useAppDispatch()
   const onSuccessHandler: SubmitHandler<recoverySendType> = async data => {
     await dispatch(forgotTC(data))
-    navigate(CHECK_EMAIL)
+    navigate(AppRoutes.CHECK_EMAIL)
   }
 
   const signInOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    navigate(SIGN_IN)
+    navigate(AppRoutes.SIGN_IN)
   }
 
   return (
@@ -100,7 +100,7 @@ export const Recovery: FC = () => {
               Did you remember your password?
             </Typography>
             <Link
-              href={SIGN_IN}
+              href={AppRoutes.SIGN_IN}
               variant="subtitle1"
               onClick={signInOnClickHandler}
               sx={{

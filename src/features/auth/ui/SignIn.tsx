@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { loginTC } from '../bll/authThunks'
 
-import { PROFILE, REC_PASSWORD, SIGN_UP } from 'app/ui/RoutesComponent'
+import { AppRoutes } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
 
@@ -36,16 +36,16 @@ export const SignIn: FC<PropsType> = ({}) => {
 
   const signUpOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    navigate(SIGN_UP)
+    navigate(AppRoutes.SIGN_UP)
   }
 
   const forgotOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    navigate(REC_PASSWORD)
+    navigate(AppRoutes.REC_PASSWORD)
   }
 
   useEffect(() => {
-    isLoggedIn && navigate(PROFILE)
+    isLoggedIn && navigate(AppRoutes.PROFILE)
   }, [isLoggedIn])
 
   return (
@@ -94,7 +94,7 @@ export const SignIn: FC<PropsType> = ({}) => {
             />
             <CheckboxElement name={'rememberMe'} label={'Remember me'} />
             <Link
-              href={REC_PASSWORD}
+              href={AppRoutes.REC_PASSWORD}
               style={{ alignSelf: 'flex-end', marginTop: '2rem' }}
               variant="body2"
               onClick={forgotOnClickHandler}
@@ -126,7 +126,7 @@ export const SignIn: FC<PropsType> = ({}) => {
               Already have an account?
             </Typography>
             <Link
-              href={SIGN_UP}
+              href={AppRoutes.SIGN_UP}
               variant="subtitle1"
               onClick={signUpOnClickHandler}
               sx={{

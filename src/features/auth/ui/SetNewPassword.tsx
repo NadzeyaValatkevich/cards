@@ -9,7 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { createNewPasswordTC } from '../bll/authThunks'
 
-import { SIGN_IN } from 'app/ui/RoutesComponent'
+import { AppRoutes } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/hooks'
 import { errorUtils } from 'common/utils/error-utils'
@@ -31,7 +31,7 @@ export const SetNewPassword: FC = () => {
 
     try {
       await dispatch(createNewPasswordTC(data))
-      navigate(SIGN_IN)
+      navigate(AppRoutes.SIGN_IN)
     } catch (e: any) {
       errorUtils(e, dispatch)
     }

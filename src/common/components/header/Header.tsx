@@ -11,14 +11,14 @@ import { useAppSelector } from '../../hooks/hooks'
 
 import { AvatarHeader } from './AvatarHeader'
 
-import { SIGN_IN } from 'app/ui/RoutesComponent'
+import { AppRoutes } from 'app/ui/RoutesComponent'
 import logo from 'common/assets/image/logo.svg'
 
 export const Header = () => {
   const navigate = useNavigate()
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const signInOnClickHandler = () => {
-    navigate(SIGN_IN)
+    navigate(AppRoutes.SIGN_IN)
   }
 
   return (

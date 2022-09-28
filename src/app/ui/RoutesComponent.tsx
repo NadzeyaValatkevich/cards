@@ -11,28 +11,30 @@ import { SignIn } from 'features/auth/ui/SignIn'
 import { SignUp } from 'features/auth/ui/SignUp'
 import { Profile } from 'features/profile/ui/Profile'
 
-export const MAIN = '/'
-export const PROFILE = '/profile'
-export const SIGN_IN = '/login'
-export const SIGN_UP = '/registration'
-export const REC_PASSWORD = '/forgot'
-export const CHECK_EMAIL = '/check-email'
-export const SET_NEW_PASSWORD = '/set-new-password/:resetPasswordToken'
-export const Page_Not_Found = '*'
+export enum AppRoutes {
+  MAIN = '/',
+  PROFILE = '/profile',
+  SIGN_IN = '/login',
+  SIGN_UP = '/registration',
+  REC_PASSWORD = '/forgot',
+  CHECK_EMAIL = '/check-email',
+  SET_NEW_PASSWORD = '/set-new-password/:resetPasswordToken',
+  Page_Not_Found = '*',
+}
 
 export const RoutesComponent: React.FC = () => {
   const loggedRoutes = [
-    { path: MAIN, component: <Navigate to={PROFILE} /> },
-    { path: PROFILE, component: <Profile /> },
-    { path: Page_Not_Found, component: <PageNotFound /> },
+    { path: AppRoutes.MAIN, component: <Navigate to={AppRoutes.PROFILE} /> },
+    { path: AppRoutes.PROFILE, component: <Profile /> },
+    { path: AppRoutes.Page_Not_Found, component: <PageNotFound /> },
   ]
   const unLoggedRoutes = [
-    { path: MAIN, component: <Navigate to={SIGN_IN} /> },
-    { path: SIGN_UP, component: <SignUp /> },
-    { path: REC_PASSWORD, component: <Recovery /> },
-    { path: SET_NEW_PASSWORD, component: <SetNewPassword /> },
-    { path: CHECK_EMAIL, component: <CheckEmail /> },
-    { path: Page_Not_Found, component: <PageNotFound /> },
+    { path: AppRoutes.MAIN, component: <Navigate to={AppRoutes.SIGN_IN} /> },
+    { path: AppRoutes.SIGN_UP, component: <SignUp /> },
+    { path: AppRoutes.REC_PASSWORD, component: <Recovery /> },
+    { path: AppRoutes.SET_NEW_PASSWORD, component: <SetNewPassword /> },
+    { path: AppRoutes.CHECK_EMAIL, component: <CheckEmail /> },
+    { path: AppRoutes.Page_Not_Found, component: <PageNotFound /> },
   ]
 
   return (
@@ -48,7 +50,7 @@ export const RoutesComponent: React.FC = () => {
             <Route key={index} path={route.path} element={route.component} />
           ))}
         </Route>
-        <Route path={SIGN_IN} element={<SignIn />} />
+        <Route path={AppRoutes.SIGN_IN} element={<SignIn />} />
       </Routes>
     </>
   )

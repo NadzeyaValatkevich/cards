@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { registerTC } from '../bll/authThunks'
 
-import { SIGN_IN } from 'app/ui/RoutesComponent'
+import { AppRoutes } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/hooks'
 import { passwordValidation } from 'common/validation/validation'
@@ -35,12 +35,12 @@ export const SignUp: FC<PropsType> = ({}) => {
     const { email, password } = data
 
     await dispatch(registerTC({ email, password }))
-    navigate(SIGN_IN)
+    navigate(AppRoutes.SIGN_IN)
   }
 
   const signInOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    navigate(SIGN_IN)
+    navigate(AppRoutes.SIGN_IN)
   }
 
   return (
@@ -116,7 +116,7 @@ export const SignUp: FC<PropsType> = ({}) => {
               Already have an account?
             </Typography>
             <Link
-              href={SIGN_IN}
+              href={AppRoutes.SIGN_IN}
               variant="subtitle1"
               onClick={signInOnClickHandler}
               sx={{
