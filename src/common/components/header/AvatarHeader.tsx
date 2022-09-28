@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
 
 import { Logout } from '@mui/icons-material'
+import StyleIcon from '@mui/icons-material/Style'
 import { Avatar, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
+import { useNavigate } from 'react-router-dom'
 
+import { AppRoutes } from '../../../app/ui/RoutesComponent'
 import { logoutTC } from '../../../features/auth/bll/authThunks'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 
 export const AvatarHeader = () => {
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -45,17 +49,17 @@ export const AvatarHeader = () => {
     if (avatarName.length === 1) {
       return {
         sx: {
-          bgcolor: stringToColor(name),
+          bgColor: stringToColor(name),
         },
-        children: `${name[0][0]}`,
+        children: `${avatarName[0][0]}`,
       }
     }
 
     return {
       sx: {
-        bgcolor: stringToColor(name),
+        bgColor: stringToColor(name),
       },
-      children: `${name.split(' ')[0][0]}${name.split(' ')[1] && name.split(' ')[1][0]}`,
+      children: `${avatarName[0][0]}${avatarName[1][0]}`,
     }
   }
 
@@ -124,6 +128,12 @@ export const AvatarHeader = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+        <MenuItem onClick={() => navigate(AppRoutes.PACKS)}>
+          <ListItemIcon>
+            <StyleIcon fontSize="small" />
+          </ListItemIcon>
+          Packs
+        </MenuItem>
         <MenuItem onClick={menuLogoutHandler}>
           <ListItemIcon>
             <Logout fontSize="small" />
