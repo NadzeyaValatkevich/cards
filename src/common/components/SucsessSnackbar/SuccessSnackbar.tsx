@@ -28,7 +28,7 @@ export function SuccessSnackbar() {
   }
 
   return (
-    <Snackbar open={info !== null} autoHideDuration={6000} onClose={handleClose}>
+    <Snackbar open={info !== null} autoHideDuration={1000} onClose={handleClose}>
       <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
         {info}
       </Alert>

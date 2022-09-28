@@ -2,12 +2,11 @@ import React from 'react'
 
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { PrivateRoutes } from '../../common/utils/PrivateRoutes'
-import { CheckEmail } from '../../features/auth/ui/CheckEmail'
-import { SetNewPassword } from '../../features/auth/ui/SetNewPassword'
-
 import { PageNotFound } from 'common/components/PageNotFound/PageNotFound'
+import { PrivateRoutes } from 'common/utils/PrivateRoutes'
+import { CheckEmail } from 'features/auth/ui/CheckEmail'
 import { Recovery } from 'features/auth/ui/Recovery'
+import { SetNewPassword } from 'features/auth/ui/SetNewPassword'
 import { SignIn } from 'features/auth/ui/SignIn'
 import { SignUp } from 'features/auth/ui/SignUp'
 import { Profile } from 'features/profile/ui/Profile'

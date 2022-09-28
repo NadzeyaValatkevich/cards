@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton'
 import { logoutTC } from '../../../features/auth/bll/authThunks'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 
-const AvatarHeader = () => {
+export const AvatarHeader = () => {
   const dispatch = useAppDispatch()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -40,11 +40,22 @@ const AvatarHeader = () => {
   }
 
   function stringAvatar(name: string) {
+    const avatarName = name.split(' ')
+
+    if (avatarName.length === 1) {
+      return {
+        sx: {
+          bgcolor: stringToColor(name),
+        },
+        children: `${name[0][0]}`,
+      }
+    }
+
     return {
       sx: {
         bgcolor: stringToColor(name),
       },
-      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+      children: `${name.split(' ')[0][0]}${name.split(' ')[1] && name.split(' ')[1][0]}`,
     }
   }
 
@@ -123,5 +134,3 @@ const AvatarHeader = () => {
     </Box>
   )
 }
-
-export default AvatarHeader

@@ -5,9 +5,7 @@ import { Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 
-import { logoutTC } from 'auth/bll/authThunks'
-import { updateProfileType } from '../bll/profileActions'
-import { updateProfileTitleTC } from '../bll/profileThunks'
+import { updateProfileTC, updateProfileType } from '../bll/profileThunks'
 
 import { EditableSpan } from './EditableSpan'
 import s from './profile.module.css'
@@ -15,6 +13,7 @@ import s from './profile.module.css'
 import userPhoto from 'common/assets/image/user.png'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
+import { logoutTC } from 'features/auth/bll/authThunks'
 
 type PropsType = {}
 
@@ -31,7 +30,7 @@ export const Profile: React.FC<PropsType> = () => {
   }
   const onTitleChangeHandler = (value: string) => {
     user.name = value
-    dispatch(updateProfileTitleTC(user))
+    dispatch(updateProfileTC(user))
   }
 
   return (

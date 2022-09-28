@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { useAppSelector } from '../../hooks/hooks'
 
-import AvatarHeader from './AvatarHeader'
+import { AvatarHeader } from './AvatarHeader'
 
 import { SIGN_IN } from 'app/ui/RoutesComponent'
 import logo from 'common/assets/image/logo.svg'

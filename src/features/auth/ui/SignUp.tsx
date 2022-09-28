@@ -12,12 +12,12 @@ import {
 } from 'react-hook-form-mui'
 import { useNavigate } from 'react-router-dom'
 
-import { SIGN_IN } from '../../../app/ui/RoutesComponent'
-import { useAppDispatch } from '../../../common/hooks/hooks'
-import { passwordValidation } from '../../../common/validation/validation'
 import { registerTC } from '../bll/authThunks'
 
+import { SIGN_IN } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
+import { useAppDispatch } from 'common/hooks/hooks'
+import { passwordValidation } from 'common/validation/validation'
 
 type PropsType = {}
 

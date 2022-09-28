@@ -1,11 +1,11 @@
 import { setProfileAC } from '../../profile/bll/profileActions'
 import { ProfileStateType } from '../../profile/bll/profileReducer'
-import { authAPI, NewPasswordRequestType } from "../dal/authAPI";
+import { authAPI, CreateNewPasswordRequestType } from '../dal/authAPI'
+import { recoverySendType } from '../ui/Recovery'
 import { LoginType } from '../ui/SignIn'
 import { registerType } from '../ui/SignUp'
-import { recoverySendType } from '../ui/Recovery'
 
-import { setIsLoggedInAC, setIsRegisteredAC } from './authActions'
+import { setIsLoggedInAC } from './authActions'
 
 import { setAppInfoAC, setAppStatusAC } from 'app/bll/appActions'
 import { RequestStatusType } from 'app/bll/appReducer'
@@ -15,7 +15,7 @@ import { errorUtils } from 'common/utils/error-utils'
 const from = 'test-front-admin <ai73a@yandex.by>'
 const message = `<div style="background-color: lime; padding: 15px">
 password recovery link: 
-<a href='http://localhost:3000/#/set-new-password/$token$'>
+<a href="http://localhost:3000/#/set-new-password/$token$">
 link</a>
 </div>`
 
@@ -64,11 +64,11 @@ export const registerTC =
   }
 
 export const forgotTC =
-  (email: string): AppThunk =>
+  (data: recoverySendType): AppThunk =>
   async dispatch => {
     dispatch(setAppStatusAC(RequestStatusType.loading))
     try {
-      const res = await authAPI.sendEmail({ email, from, message })
+      const res = await authAPI.sendEmail({ ...data, from, message })
 
       dispatch(setAppInfoAC(res.data.info))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
@@ -77,12 +77,12 @@ export const forgotTC =
     }
   }
 
-export const sendNewPasswordTC =
-  (data: NewPasswordRequestType): AppThunk =>
+export const createNewPasswordTC =
+  (data: CreateNewPasswordRequestType): AppThunk =>
   async dispatch => {
     dispatch(setAppStatusAC(RequestStatusType.loading))
     try {
-      const res = await authAPI.sendNewPassword(data)
+      const res = await authAPI.createNewPassword(data)
 
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
