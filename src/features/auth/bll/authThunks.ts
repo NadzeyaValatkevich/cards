@@ -1,18 +1,16 @@
-import { setAppStatusAC } from 'app/bll/appActions'
+import { setProfileAC } from '../../profile/bll/profileActions'
+import { ProfileStateType } from '../../profile/bll/profileReducer'
+import { authAPI, NewPasswordRequestType } from "../dal/authAPI";
+import { LoginType } from '../ui/SignIn'
+import { registerType } from '../ui/SignUp'
+import { recoverySendType } from '../ui/Recovery'
+
+import { setIsLoggedInAC, setIsRegisteredAC } from './authActions'
+
+import { setAppInfoAC, setAppStatusAC } from 'app/bll/appActions'
 import { RequestStatusType } from 'app/bll/appReducer'
 import { AppThunk } from 'app/bll/store'
 import { errorUtils } from 'common/utils/error-utils'
-import {
-  setIsLoggedInAC,
-  setIsRegisteredAC,
-  setSendEmailAC,
-  setSendNewPasswordAC,
-} from 'features/auth/bll/authActions'
-import { authAPI } from 'features/auth/dal/authAPI'
-import { LoginType } from 'features/auth/ui/SignIn'
-import { registerType } from 'features/auth/ui/SignUp'
-import { setProfileAC } from 'features/profile/bll/profileActions'
-import { ProfileStateType } from 'features/profile/bll/profileReducer'
 
 const from = 'test-front-admin <ai73a@yandex.by>'
 const message = `<div style="background-color: lime; padding: 15px">
@@ -28,7 +26,7 @@ export const logoutTC = (): AppThunk => async dispatch => {
 
     dispatch(setProfileAC({} as ProfileStateType))
     dispatch(setIsLoggedInAC(false))
-    dispatch(setIsRegisteredAC(false))
+    dispatch(setAppInfoAC(res.data.info))
     dispatch(setAppStatusAC(RequestStatusType.succeeded))
   } catch (error: any) {
     errorUtils(error, dispatch)
@@ -44,6 +42,7 @@ export const loginTC =
 
       dispatch(setProfileAC(res.data as ProfileStateType))
       dispatch(setIsLoggedInAC(true))
+      dispatch(setAppInfoAC('Sign in successful'))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
@@ -57,21 +56,21 @@ export const registerTC =
     try {
       const res = await authAPI.register(data)
 
-      dispatch(setIsRegisteredAC(true))
+      dispatch(setAppInfoAC('Register successful'))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
     }
   }
 
-export const sendEmailTC =
+export const forgotTC =
   (email: string): AppThunk =>
   async dispatch => {
     dispatch(setAppStatusAC(RequestStatusType.loading))
     try {
       const res = await authAPI.sendEmail({ email, from, message })
 
-      dispatch(setSendEmailAC(true))
+      dispatch(setAppInfoAC(res.data.info))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
@@ -79,13 +78,12 @@ export const sendEmailTC =
   }
 
 export const sendNewPasswordTC =
-  (password: string, resetPasswordToken: string | undefined): AppThunk =>
+  (data: NewPasswordRequestType): AppThunk =>
   async dispatch => {
     dispatch(setAppStatusAC(RequestStatusType.loading))
     try {
-      const res = await authAPI.sendNewPassword(password, resetPasswordToken)
+      const res = await authAPI.sendNewPassword(data)
 
-      dispatch(setSendNewPasswordAC(true))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)

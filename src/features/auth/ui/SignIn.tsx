@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent } from 'react'
+import React, { FC, MouseEvent, useEffect } from 'react'
 
 import { Button, Link, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -11,10 +11,11 @@ import {
 } from 'react-hook-form-mui'
 import { useNavigate } from 'react-router-dom'
 
+import { loginTC } from '../bll/authThunks'
+
 import { PROFILE, REC_PASSWORD, SIGN_UP } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
-import { loginTC } from 'features/auth/bll/authThunks'
 
 type PropsType = {}
 
@@ -26,10 +27,8 @@ export type LoginType = {
 
 export const SignIn: FC<PropsType> = ({}) => {
   const navigate = useNavigate()
-
-  const dispatch = useAppDispatch()
-
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const dispatch = useAppDispatch()
 
   const onSuccessHandler: SubmitHandler<LoginType> = data => {
     dispatch(loginTC(data))
@@ -45,7 +44,9 @@ export const SignIn: FC<PropsType> = ({}) => {
     navigate(REC_PASSWORD)
   }
 
-  isLoggedIn && navigate(PROFILE)
+  useEffect(() => {
+    isLoggedIn && navigate(PROFILE)
+  }, [isLoggedIn])
 
   return (
     <ContentWrapper>
@@ -79,6 +80,7 @@ export const SignIn: FC<PropsType> = ({}) => {
               label={'Email'}
               name={'email'}
               variant={'standard'}
+              // autoComplete={'username'}
               fullWidth
             />
             <PasswordElement
@@ -87,12 +89,13 @@ export const SignIn: FC<PropsType> = ({}) => {
               label={'Password'}
               name={'password'}
               variant={'standard'}
+              // autoComplete={'current-password'}
               fullWidth
             />
             <CheckboxElement name={'rememberMe'} label={'Remember me'} />
             <Link
+              href={REC_PASSWORD}
               style={{ alignSelf: 'flex-end', marginTop: '2rem' }}
-              href="#"
               variant="body2"
               onClick={forgotOnClickHandler}
             >
@@ -123,6 +126,7 @@ export const SignIn: FC<PropsType> = ({}) => {
               Already have an account?
             </Typography>
             <Link
+              href={SIGN_UP}
               variant="subtitle1"
               onClick={signUpOnClickHandler}
               sx={{

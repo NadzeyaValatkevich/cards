@@ -1,16 +1,24 @@
-import React from 'react'
+import React, { FC } from 'react'
 
+import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
 import { useNavigate } from 'react-router-dom'
 
 import { SIGN_IN } from 'app/ui/RoutesComponent'
-import { SVGMail } from 'common/assets/image/SVGMail'
+import emailImg from 'common/assets/image/email.svg'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 
-export const CheckEmail = () => {
+export type recoverySendType = {
+  email?: string
+}
+
+export const CheckEmail: FC<recoverySendType> = ({ email }) => {
   const navigate = useNavigate()
+
+  const signInOnClickHandler = () => {
+    navigate(SIGN_IN)
+  }
 
   return (
     <ContentWrapper>
@@ -19,35 +27,49 @@ export const CheckEmail = () => {
           display: 'flex',
           flexDirection: 'column',
           width: '22rem',
-          alignItems: 'center',
         }}
       >
         <Typography
-          variant={'h4'}
+          variant={'h5'}
           align={'center'}
-          style={{ marginBottom: '20px', fontWeight: '600' }}
+          sx={{
+            fontWeight: '600',
+          }}
         >
           Check Email
         </Typography>
-        <SVGMail />
-        <Typography
-          variant={'subtitle2'}
-          component={'div'}
-          style={{ marginTop: '20px' }}
-          align={'center'}
-        >
-          We have sent an Email with instructions to example@mail.com
-        </Typography>
-        <Button
-          variant={'contained'}
-          color={'primary'}
-          style={{ marginTop: '80px', width: '100%' }}
-          onClick={() => {
-            navigate(SIGN_IN, { replace: true })
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginTop: '2rem',
           }}
         >
-          Back to login
-        </Button>
+          <Box
+            component={'img'}
+            src={emailImg}
+            alt={'email logo'}
+            sx={{
+              width: '6.75rem',
+            }}
+          />
+          <Typography
+            variant={'subtitle1'}
+            textAlign={'center'}
+            sx={{
+              marginTop: '2em',
+              marginBottom: '2em',
+              opacity: '.5',
+            }}
+          >{`
+              We’ve sent an Email with instructions to
+              ${email}
+            `}</Typography>
+          <Button color={'primary'} variant={'contained'} fullWidth onClick={signInOnClickHandler}>
+            Back to login
+          </Button>
+        </Box>
       </Box>
     </ContentWrapper>
   )

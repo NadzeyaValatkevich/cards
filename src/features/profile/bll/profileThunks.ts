@@ -1,6 +1,6 @@
 import { profileAPI } from '../dal/profileAPI'
 
-import { updateProfileTitleAC, updateProfileType } from './profileActions'
+import { setProfileAC, updateProfileTitleAC, updateProfileType } from './profileActions'
 
 import { setAppStatusAC } from 'app/bll/appActions'
 import { RequestStatusType } from 'app/bll/appReducer'
@@ -13,6 +13,7 @@ export const updateProfileTitleTC = ({ name }: updateProfileType): AppThunk => {
     try {
       let res = await profileAPI.updateProfile({ name })
 
+      dispatch(setProfileAC(res.data))
       dispatch(updateProfileTitleAC({ name }))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {

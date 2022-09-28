@@ -12,11 +12,12 @@ import {
 } from 'react-hook-form-mui'
 import { useNavigate } from 'react-router-dom'
 
-import { PROFILE, SIGN_IN } from 'app/ui/RoutesComponent'
+import { SIGN_IN } from '../../../app/ui/RoutesComponent'
+import { useAppDispatch } from '../../../common/hooks/hooks'
+import { passwordValidation } from '../../../common/validation/validation'
+import { registerTC } from '../bll/authThunks'
+
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
-import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
-import { passwordValidation } from 'common/validation/validation'
-import { registerTC } from 'features/auth/bll/authThunks'
 
 type PropsType = {}
 
@@ -30,20 +31,17 @@ export const SignUp: FC<PropsType> = ({}) => {
 
   const dispatch = useAppDispatch()
 
-  const isRegistered = useAppSelector(state => state.auth.isRegistered)
-
-  const onSuccessHandler: SubmitHandler<registerType> = data => {
+  const onSuccessHandler: SubmitHandler<registerType> = async data => {
     const { email, password } = data
 
-    dispatch(registerTC({ email, password }))
+    await dispatch(registerTC({ email, password }))
+    navigate(SIGN_IN)
   }
 
   const signInOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     navigate(SIGN_IN)
   }
-
-  isRegistered && navigate(PROFILE)
 
   return (
     <ContentWrapper>
@@ -71,15 +69,17 @@ export const SignUp: FC<PropsType> = ({}) => {
               label={'Email'}
               name={'email'}
               variant={'standard'}
+              // autoComplete={'username'}
               fullWidth
             />
             <PasswordElement
               type={'password'}
+              name={'password'}
               margin={'dense'}
               label={'Password'}
-              name={'password'}
               variant={'standard'}
               fullWidth
+              // autoComplete={'new-password'}
               validation={passwordValidation}
             />
             <PasswordRepeatElement
@@ -88,7 +88,7 @@ export const SignUp: FC<PropsType> = ({}) => {
               margin={'dense'}
               label={'Confirm password'}
               variant={'standard'}
-              required
+              // autoComplete={'new-password'}
               fullWidth
             />
           </Box>
@@ -116,6 +116,7 @@ export const SignUp: FC<PropsType> = ({}) => {
               Already have an account?
             </Typography>
             <Link
+              href={SIGN_IN}
               variant="subtitle1"
               onClick={signInOnClickHandler}
               sx={{

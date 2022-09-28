@@ -1,38 +1,38 @@
-import React, { FC } from 'react'
+import React, { FC, MouseEvent } from 'react'
 
-import { Button, Link, Typography } from '@mui/material'
+import { Link, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import { SubmitHandler } from 'react-hook-form'
-import { TextFieldElement, FormContainer } from 'react-hook-form-mui'
+import { FormContainer, TextFieldElement } from 'react-hook-form-mui'
 import { useNavigate } from 'react-router-dom'
 
-import { setSendEmailAC } from '../bll/authActions'
-import { sendEmailTC } from '../bll/authThunks'
+import { useAppDispatch } from '../../../common/hooks/hooks'
+import { forgotTC } from '../bll/authThunks'
 
 import { CHECK_EMAIL, SIGN_IN } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
-import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
 
-export type FormValues = {
+export type recoverySendType = {
   email: string
 }
 
 export const Recovery: FC = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const isSendEmail = useAppSelector(state => state.auth.isSendEmail)
-  const onSuccessHandler: SubmitHandler<FormValues> = data => {
-    dispatch(setSendEmailAC(false))
-    dispatch(sendEmailTC(data.email))
+  const onSuccessHandler: SubmitHandler<recoverySendType> = async data => {
+    await dispatch(forgotTC(data))
+    navigate(CHECK_EMAIL)
   }
 
-  if (isSendEmail) {
-    navigate(CHECK_EMAIL)
+  const signInOnClickHandler = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    navigate(SIGN_IN)
   }
 
   return (
     <ContentWrapper>
-      <FormContainer<FormValues> onSuccess={onSuccessHandler}>
+      <FormContainer<recoverySendType> onSuccess={onSuccessHandler}>
         <Box
           sx={{
             display: 'flex',
@@ -41,7 +41,7 @@ export const Recovery: FC = () => {
           }}
         >
           <Typography
-            variant="h4"
+            variant={'h5'}
             align={'center'}
             sx={{
               fontWeight: '600',
@@ -50,12 +50,10 @@ export const Recovery: FC = () => {
             Forgot your password?
           </Typography>
           <Box
-            marginTop={'2.5rem'}
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
-              width: '22rem',
+              marginTop: '2.5rem',
             }}
           >
             <TextFieldElement
@@ -64,22 +62,47 @@ export const Recovery: FC = () => {
               label={'Email'}
               name={'email'}
               variant={'standard'}
+              // autoComplete={'username'}
               fullWidth
             />
-            <Typography variant={'subtitle1'} style={{ marginBottom: '60px' }}>
-              Enter your email address and we will send you further instructions
+
+            <Typography
+              variant={'subtitle1'}
+              sx={{
+                marginTop: '1.5rem',
+                opacity: '.5',
+              }}
+            >
+              Enter your email address and we will send you further instructions{' '}
             </Typography>
-            <Button onClick={() => {}} type={'submit'} variant={'contained'} fullWidth>
-              Send instructions
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: '4rem',
+            }}
+          >
+            <Button type={'submit'} color={'primary'} variant={'contained'} fullWidth>
+              Send Instructions
             </Button>
-            <Typography variant={'subtitle2'} component={'div'}>
+            <Typography
+              variant={'subtitle2'}
+              align={'center'}
+              sx={{
+                opacity: '50%',
+                marginTop: '2rem',
+                fontWeight: '600',
+              }}
+            >
               Did you remember your password?
             </Typography>
             <Link
+              href={SIGN_IN}
               variant="subtitle1"
-              onClick={() => {
-                navigate(SIGN_IN, { replace: true })
-              }}
+              onClick={signInOnClickHandler}
               sx={{
                 margin: '0.625rem',
                 fontWeight: '600',
