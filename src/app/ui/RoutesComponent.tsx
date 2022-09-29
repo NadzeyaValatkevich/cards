@@ -17,6 +17,8 @@ export const SIGN_IN = '/login'
 export const SIGN_UP = '/registration'
 export const REC_PASSWORD = '/forgot'
 export const CHECK_EMAIL = '/check-email'
+export const PACKS = '/packs'
+export const CARDS = '/cards/:cardsPackID'
 export const SET_NEW_PASSWORD = '/set-new-password/:resetPasswordToken'
 export const Page_Not_Found = '*'
 
