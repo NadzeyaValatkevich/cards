@@ -1,13 +1,15 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { InputLabel, MenuItem, TextField } from '@mui/material'
+import { Backdrop, InputLabel, MenuItem, TextField } from '@mui/material'
 import Button from '@mui/material/Button'
-import { CellProps, FilterProps, FilterValue, IdType, Row, TableInstance } from 'react-table'
+import { Column, FilterProps, FilterValue, IdType, Row, TableInstance } from 'react-table'
 
-import { makeData, PersonData } from '../../../common/utils'
+import { useAppDispatch, useAppSelector } from '../../../common/hooks/hooks'
+import { getPacksTC } from '../bll/packsThunks'
 
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
-import { Table } from 'common/components/Table'
+import { Table } from 'common/components/Table/Table'
+import { PersonData } from 'common/utils'
 
 // This is a custom aggregator that
 // takes in an array of values and
@@ -45,7 +47,7 @@ filterGreaterThan.autoRemove = (val: any) => typeof val !== 'number'
 function SelectColumnFilter({
   column: { filterValue, render, setFilter, preFilteredRows, id },
 }: FilterProps<PersonData>) {
-  const options = React.useMemo(() => {
+  const options = useMemo(() => {
     const options = new Set<any>()
 
     preFilteredRows.forEach(row => {
@@ -90,7 +92,7 @@ const getMinMax = (rows: Row<PersonData>[], id: IdType<PersonData>) => {
 function SliderColumnFilter({
   column: { render, filterValue, setFilter, preFilteredRows, id },
 }: FilterProps<PersonData>) {
-  const [min, max] = React.useMemo(() => getMinMax(preFilteredRows, id), [id, preFilteredRows])
+  const [min, max] = useMemo(() => getMinMax(preFilteredRows, id), [id, preFilteredRows])
 
   return (
     <div
@@ -126,13 +128,13 @@ function SliderColumnFilter({
 }
 
 const useActiveElement = () => {
-  const [active, setActive] = React.useState(document.activeElement)
+  const [active, setActive] = useState(document.activeElement)
 
   const handleFocusIn = () => {
     setActive(document.activeElement)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener('focusin', handleFocusIn)
 
     return () => {
@@ -149,7 +151,7 @@ const useActiveElement = () => {
 function NumberRangeColumnFilter({
   column: { filterValue = [], render, preFilteredRows, setFilter, id },
 }: FilterProps<PersonData>) {
-  const [min, max] = React.useMemo(() => getMinMax(preFilteredRows, id), [id, preFilteredRows])
+  const [min, max] = useMemo(() => getMinMax(preFilteredRows, id), [id, preFilteredRows])
   const focusedElement = useActiveElement()
   const hasFocus =
     focusedElement && (focusedElement.id === `${id}_1` || focusedElement.id === `${id}_2`)
@@ -205,91 +207,154 @@ function NumberRangeColumnFilter({
   )
 }
 
-const columns = [
+// const columns = [
+//   {
+//     Header: 'Name',
+//     columns: [
+//       {
+//         Header: 'First Name',
+//         accessor: 'firstName',
+//         aggregate: 'count',
+//         Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Names`,
+//       },
+//       {
+//         Header: 'Last Name',
+//         accessor: 'lastName',
+//         aggregate: 'uniqueCount',
+//         filter: 'fuzzyText',
+//         Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Unique Names`,
+//       },
+//     ],
+//   },
+//   {
+//     Header: 'Info',
+//     columns: [
+//       {
+//         Header: 'Age',
+//         accessor: 'age',
+//         width: 50,
+//         minWidth: 50,
+//         align: 'right',
+//         Filter: SliderColumnFilter,
+//         filter: 'equals',
+//         aggregate: 'average',
+//         disableGroupBy: true,
+//         defaultCanSort: false,
+//         disableSortBy: false,
+//         Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} (avg)`,
+//       },
+//       {
+//         Header: 'Visits',
+//         accessor: 'visits',
+//         width: 50,
+//         minWidth: 50,
+//         align: 'right',
+//         Filter: NumberRangeColumnFilter,
+//         filter: 'between',
+//         aggregate: 'sum',
+//         Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} (total)`,
+//       },
+//       {
+//         Header: 'Status',
+//         accessor: 'status',
+//         Filter: SelectColumnFilter,
+//         filter: 'includes',
+//       },
+//       {
+//         Header: 'Profile Progress',
+//         accessor: 'progress',
+//         Filter: SliderColumnFilter,
+//         filter: filterGreaterThan,
+//         aggregate: roundedMedian,
+//         Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} (med)`,
+//       },
+//     ],
+//   },
+// ] //.flatMap((c:any)=>c.columns) // remove comment to drop header groups
+
+type PacksTableDataType = {
+  name: string
+  cards: number
+  lastUpdated: string
+  createdBy: string
+  actions: any
+}
+
+const columns: Column<PacksTableDataType>[] = [
   {
     Header: 'Name',
-    columns: [
-      {
-        Header: 'First Name',
-        accessor: 'firstName',
-        aggregate: 'count',
-        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Names`,
-      },
-      {
-        Header: 'Last Name',
-        accessor: 'lastName',
-        aggregate: 'uniqueCount',
-        filter: 'fuzzyText',
-        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Unique Names`,
-      },
-    ],
+    accessor: 'name',
+    aggregate: 'count',
+    filter: 'fuzzyText',
+    // Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Names`,
   },
   {
-    Header: 'Info',
-    columns: [
-      {
-        Header: 'Age',
-        accessor: 'age',
-        width: 50,
-        minWidth: 50,
-        align: 'right',
-        Filter: SliderColumnFilter,
-        filter: 'equals',
-        aggregate: 'average',
-        disableGroupBy: true,
-        defaultCanSort: false,
-        disableSortBy: false,
-        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} (avg)`,
-      },
-      {
-        Header: 'Visits',
-        accessor: 'visits',
-        width: 50,
-        minWidth: 50,
-        align: 'right',
-        Filter: NumberRangeColumnFilter,
-        filter: 'between',
-        aggregate: 'sum',
-        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} (total)`,
-      },
-      {
-        Header: 'Status',
-        accessor: 'status',
-        Filter: SelectColumnFilter,
-        filter: 'includes',
-      },
-      {
-        Header: 'Profile Progress',
-        accessor: 'progress',
-        Filter: SliderColumnFilter,
-        filter: filterGreaterThan,
-        aggregate: roundedMedian,
-        Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} (med)`,
-      },
-    ],
+    Header: 'Cards',
+    accessor: 'cards',
+    aggregate: 'uniqueCount',
+    filter: 'numeric',
+    // Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Unique Names`,
   },
-] //.flatMap((c:any)=>c.columns) // remove comment to drop header groups
+  {
+    Header: 'LastUpdated',
+    accessor: 'lastUpdated',
+    // Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Unique Names`,
+  },
+  {
+    Header: 'Created by',
+    accessor: 'createdBy',
+    aggregate: 'uniqueCount',
+    filter: 'fuzzyText',
+    // Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Unique Names`,
+  },
+  {
+    Header: 'Actions',
+    accessor: 'actions',
+    // Aggregated: ({ cell: { value } }: CellProps<PersonData>) => `${value} Unique Names`,
+  },
+]
 
-export const Pack = () => {
-  const [data] = useState<PersonData[]>(() => makeData(100))
+export const Packs = () => {
+  const dispatch = useAppDispatch()
+
+  const cardPacks = useAppSelector(state => state.packs.cardPacks)
+
+  let data = [] as PacksTableDataType[]
+
+  // const [data] = useState<PersonData[]>(() => makeData(100))
 
   const dummy = useCallback(
-    (instance: TableInstance<PersonData>) => () => {
-      console.log(
-        'Selected',
-        instance.selectedFlatRows
-          .map(v => `'${v.original.firstName} ${v.original.lastName}'`)
-          .join(', ')
-      )
+    (instance: TableInstance<PacksTableDataType>) => () => {
+      console.log('Selected')
     },
     []
   )
 
+  useEffect(() => {
+    dispatch(getPacksTC())
+  }, [])
+
+  useEffect(() => {
+    if (cardPacks) {
+      data = cardPacks.map(
+        c =>
+          ({
+            name: c.name,
+            cards: c.cardsCount,
+            lastUpdated: c.updated,
+            createdBy: c.user_name,
+            actions: 'Some actions',
+          } as PacksTableDataType)
+      )
+    }
+  }, [cardPacks])
+
+  if (!cardPacks) return <Backdrop open={true} />
+
   return (
-    <ContentWrapper>
-      {' '}
-      <Table<PersonData>
-        name={'testTable'}
+    <ContentWrapper withoutPaper>
+      <Table<PacksTableDataType>
+        name={'packsTable'}
         columns={columns}
         data={data}
         onAdd={dummy}
