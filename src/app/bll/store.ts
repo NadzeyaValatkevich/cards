@@ -2,10 +2,13 @@ import { composeWithDevTools } from '@redux-devtools/extension'
 import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
+import { ActionCardsType } from '../../features/cards/bll/cardsActions'
+
 import { AppActionsType } from 'app/bll/appActions'
 import { appReducer } from 'app/bll/appReducer'
 import { AuthActionsType } from 'features/auth/bll/authActions'
 import { authReducer } from 'features/auth/bll/authReducer'
+import { cardsReducer } from 'features/cards/bll/cardsReducer'
 import { ActionPacksType } from 'features/packs/bll/packsActions'
 import { packsReducer } from 'features/packs/bll/packsReducer'
 import { ProfileActionsType } from 'features/profile/bll/profileActions'
@@ -16,10 +19,16 @@ const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
   packs: packsReducer,
+  cards: cardsReducer,
 })
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
-export type AllActionsType = AppActionsType | ProfileActionsType | AuthActionsType | ActionPacksType
+export type AllActionsType =
+  | AppActionsType
+  | ProfileActionsType
+  | AuthActionsType
+  | ActionPacksType
+  | ActionCardsType
 
 const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 })
 

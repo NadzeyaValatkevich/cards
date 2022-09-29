@@ -43,7 +43,7 @@ export type AddPackDataType = {
   deckCover: string
   private: boolean
 }
-type TokenType = {
+export type TokenType = {
   token: string
   tokenDeathTime: Date
 }
