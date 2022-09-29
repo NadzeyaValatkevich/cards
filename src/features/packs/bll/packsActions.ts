@@ -1,5 +1,7 @@
 import { PacksParamsType, PacksResponseType } from 'features/packs/dal/packsAPI'
 
+export type ActionPacksType = GetPacksActionType | SetParamsActionType
+
 export const getPacksAC = (packsData: PacksResponseType) =>
   ({
     type: 'PACKS/GET-PACKS',
@@ -14,5 +16,3 @@ export const setParamsAC = (params: PacksParamsType) =>
 
 export type GetPacksActionType = ReturnType<typeof getPacksAC>
 export type SetParamsActionType = ReturnType<typeof setParamsAC>
-
-export type ActionPacksType = GetPacksActionType | SetParamsActionType

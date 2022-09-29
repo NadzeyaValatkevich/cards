@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios'
+
 import { instance } from 'app/dal/instance'
 import { TokenType } from 'features/packs/dal/packsAPI'
 
@@ -78,12 +80,15 @@ export const cardsAPI = {
     return instance.get<CardsResponseType>('cards/card', { params })
   },
   addCard(data: AddCardDataType) {
-    return instance.post<AddCardDataType, CardResponseType>('cards/card', { card: data })
+    return instance.post<null, AxiosResponse<CardResponseType>, AddCardDataType>('cards/card', data)
   },
   deleteCards(_id: string) {
     return instance.delete<DeleteCardResponseType>(`cards/card?id=${_id}`)
   },
   updateCards(updateCard: UpdateCardsType) {
-    return instance.put<UpdateCardsType, UpdateCardResponseType>('cards/card', { card: updateCard })
+    return instance.put<null, AxiosResponse<UpdateCardResponseType>, UpdateCardsType>(
+      'cards/card',
+      updateCard
+    )
   },
 }

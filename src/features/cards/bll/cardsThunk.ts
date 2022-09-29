@@ -1,10 +1,11 @@
-import { setAppStatusAC } from '../../../app/bll/appActions'
-import { RequestStatusType } from '../../../app/bll/appReducer'
-import { AppThunk } from '../../../app/bll/store'
-import { errorUtils } from '../../../common/utils/error-utils'
 import { AddCardDataType, cardsAPI, CardsParamsType, UpdateCardsType } from '../dal/cardsAPI'
 
 import { getCardsAC, setParamsCardsAC } from './cardsActions'
+
+import { setAppStatusAC } from 'app/bll/appActions'
+import { RequestStatusType } from 'app/bll/appReducer'
+import { AppThunk } from 'app/bll/store'
+import { errorUtils } from 'common/utils/error-utils'
 
 export const getCardsTC =
   (cardsPack_id: string, params?: CardsParamsType): AppThunk =>
@@ -27,7 +28,6 @@ export const getCardsTC =
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
-      dispatch(setAppStatusAC(RequestStatusType.failed))
     }
   }
 
@@ -38,11 +38,10 @@ export const addCardTC =
     try {
       const res = await cardsAPI.addCard(newCard)
 
-      dispatch(getCardsTC(res.newCard.cardsPack_id))
+      dispatch(getCardsTC(res.data.newCard.cardsPack_id))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
-      dispatch(setAppStatusAC(RequestStatusType.failed))
     }
   }
 
@@ -57,7 +56,6 @@ export const deleteCardTC =
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
-      dispatch(setAppStatusAC(RequestStatusType.failed))
     }
   }
 export const updateCardTC =
@@ -67,10 +65,9 @@ export const updateCardTC =
     try {
       const res = await cardsAPI.updateCards(updatedCard)
 
-      dispatch(getCardsTC(res.updatedCard.cardsPack_id))
+      dispatch(getCardsTC(res.data.updatedCard.cardsPack_id))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
-      dispatch(setAppStatusAC(RequestStatusType.failed))
     }
   }

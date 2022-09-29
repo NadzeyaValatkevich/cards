@@ -1,5 +1,7 @@
 import { CardsParamsType, CardsResponseType } from 'features/cards/dal/cardsAPI'
 
+export type ActionCardsType = GetCardsActionType | SetParamsCardsActionType
+
 export const getCardsAC = (cardsData: CardsResponseType) =>
   ({
     type: 'CARDS/GET-CARDS',
@@ -14,5 +16,3 @@ export const setParamsCardsAC = (params: CardsParamsType) =>
 
 export type GetCardsActionType = ReturnType<typeof getCardsAC>
 export type SetParamsCardsActionType = ReturnType<typeof setParamsCardsAC>
-
-export type ActionCardsType = GetCardsActionType | SetParamsCardsActionType

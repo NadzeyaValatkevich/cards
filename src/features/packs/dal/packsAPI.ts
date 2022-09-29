@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios'
+
 import { instance } from 'app/dal/instance'
 
 export type PackType = {
@@ -65,14 +67,18 @@ export const packsAPI = {
     return instance.get<PacksResponseType>('cards/pack', { params })
   },
   addPack(data: AddPackDataType) {
-    return instance.post<AddPackDataType, AddPackResponseType>('cards/pack', { cardsPack: data })
+    return instance.post<null, AxiosResponse<AddPackResponseType>, AddPackDataType>(
+      'cards/pack',
+      data
+    )
   },
   deletePack(idPack: string) {
     return instance.delete<DeletedPackResponseType>(`cards/pack?id=${idPack}`)
   },
   updatePack(data: UpdatePackDataType) {
-    return instance.put<UpdatePackDataType, UpdatePackResponseType>('cards/pack', {
-      cardsPack: data,
-    })
+    return instance.put<null, AxiosResponse<UpdatePackResponseType>, UpdatePackDataType>(
+      'cards/pack',
+      data
+    )
   },
 }

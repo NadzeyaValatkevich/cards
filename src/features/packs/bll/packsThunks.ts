@@ -25,7 +25,6 @@ export const getPacksTC = (params?: PacksParamsType): AppThunk => {
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
-      dispatch(setAppStatusAC(RequestStatusType.failed))
     }
   }
 }
@@ -40,7 +39,6 @@ export const addPackTC = (data: AddPackDataType): AppThunk => {
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
-      dispatch(setAppStatusAC(RequestStatusType.failed))
     }
   }
 }
@@ -55,7 +53,6 @@ export const deletePackTC = (idPack: string): AppThunk => {
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
-      dispatch(setAppStatusAC(RequestStatusType.failed))
     }
   }
 }
@@ -70,7 +67,6 @@ export const updatePackTC = (data: UpdatePackDataType): AppThunk => {
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
-      dispatch(setAppStatusAC(RequestStatusType.failed))
     }
   }
 }
