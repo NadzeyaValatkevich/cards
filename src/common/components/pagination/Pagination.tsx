@@ -31,7 +31,7 @@ export const Pagination = (props: PaginationPropsType) => {
   }
 
   return (
-    <Box style={{ display: 'flex' }}>
+    <Box style={{ display: 'flex', alignItems: 'center' }}>
       <Box>
         <PaginationRounded
           totalCount={props.totalCount}
@@ -40,7 +40,7 @@ export const Pagination = (props: PaginationPropsType) => {
           onChangePage={handleChangePage}
         />
       </Box>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography variant="subtitle1" sx={{ marginRight: '10px' }}>
           Show
         </Typography>
