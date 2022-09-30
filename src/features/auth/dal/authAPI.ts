@@ -9,7 +9,7 @@ type RegisterReturnType = {
   error?: string
 }
 
-type CommonResponseType = {
+type LogoutResponseType = {
   info: string
   error: string
 }
@@ -36,12 +36,12 @@ export const authAPI = {
     return instance.post<ProfileStateType>('auth/login', data)
   },
   logout() {
-    return instance.delete<CommonResponseType>('auth/me')
+    return instance.delete<LogoutResponseType>('auth/me')
   },
   sendEmail(data: RecoveryPasswordRequestType) {
-    return instance.post('/auth/forgot', data)
+    return instance.post('auth/forgot', data)
   },
   createNewPassword(data: CreateNewPasswordRequestType) {
-    return instance.post('/auth/set-new-password', { ...data })
+    return instance.post('auth/set-new-password', data)
   },
 }

@@ -6,7 +6,7 @@ import { getPacksTC } from '../bll/packsThunks'
 import { PackType } from '../dal/packsAPI'
 
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
-import { PaginationPropsType } from 'common/components/pagination/Pagination'
+import { PaginationPropsType } from 'common/components/Pagination/Pagination'
 import { Table } from 'common/components/Table/Table'
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
 

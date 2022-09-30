@@ -9,7 +9,7 @@ import { initTC } from '../bll/appThunks'
 import { RoutesComponent } from './RoutesComponent'
 
 import { ErrorSnackbar } from 'common/components/ErrorSnackbar/ErrorSnackbar'
-import { Header } from 'common/components/header/Header'
+import { Header } from 'common/components/Header/Header'
 import { Loader } from 'common/components/Loader/Loader'
 import { SuccessSnackbar } from 'common/components/SucsessSnackbar/SuccessSnackbar'
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'

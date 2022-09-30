@@ -142,7 +142,7 @@ const useSelectionUi = (hooks: Hooks<any>) => {
       width: 45,
       maxWidth: 45,
       Aggregated: undefined,
-      // The header can use the table's getToggleAllRowsSelectedProps method
+      // The Header can use the table's getToggleAllRowsSelectedProps method
       // to render a checkbox
       Header: ({ getToggleAllRowsSelectedProps }: HeaderProps<any>) => (
         <HeaderCheckbox {...getToggleAllRowsSelectedProps()} />

@@ -9,7 +9,7 @@ import s from './profile.module.css'
 
 import userPhoto from 'common/assets/image/user.png'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
-import { EditableSpan } from 'common/components/editableSpan/EditableSpan'
+import { EditableSpan } from 'common/components/EditableSpan/EditableSpan'
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
 import { logoutTC } from 'features/auth/bll/authThunks'
 import { updateProfileTC, updateProfileType } from 'features/profile/bll/profileThunks'

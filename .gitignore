@@ -29,3 +29,4 @@ yarn-error.log*
 /.vscode
 /yarn.lock
 /src/common/components/Table_example/
+/src/_deprecated/

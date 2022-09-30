@@ -1,5 +1,3 @@
-import { AxiosResponse } from 'axios'
-
 import { ProfileStateType } from '../bll/profileReducer'
 import { updateProfileType } from '../bll/profileThunks'
 
@@ -12,9 +10,6 @@ export type updateProfileResponseType = {
 
 export const profileAPI = {
   updateProfile(data: updateProfileType) {
-    return instance.put<null, AxiosResponse<updateProfileResponseType>, updateProfileType>(
-      'auth/me',
-      data
-    )
+    return instance.put<updateProfileResponseType>('auth/me', data)
   },
 }

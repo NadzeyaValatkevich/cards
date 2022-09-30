@@ -3,9 +3,9 @@ import React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { SelectCountRow } from '../selectCountRow/SelectCountRow'
+import { SelectCountRow } from '../SelectCountRow/SelectCountRow'
 
-import { PaginationRounded } from 'common/components/pagination/PaginationRounded'
+import { PaginationRounded } from 'common/components/Pagination/PaginationRounded'
 import { useAppDispatch } from 'common/hooks/hooks'
 import { CardsParamsType } from 'features/cards/dal/cardsAPI'
 import { PacksParamsType } from 'features/packs/dal/packsAPI'

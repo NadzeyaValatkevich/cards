@@ -37,7 +37,7 @@ import {
 } from 'react-table'
 
 import { camelToWords, isDev, notEmpty, useDebounce } from '../../utils'
-import { Pagination, PaginationPropsType } from '../pagination/Pagination'
+import { Pagination, PaginationPropsType } from '../Pagination/Pagination'
 
 import { FilterChipBar } from './FilterChipBar'
 import { fuzzyTextFilter, numericTextFilter } from './filters'
