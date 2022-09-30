@@ -136,7 +136,7 @@ const cellProps = <T extends Record<string, unknown>>(
   { cell }: Meta<T, { cell: Cell<T> }>
 ) => getStyles(props, cell.column.disableResizing, cell.column.align)
 
-const DEFAULT_PAGE_SIZE = 50
+// const DEFAULT_PAGE_SIZE = 50
 
 const filterTypes = {
   fuzzyText: fuzzyTextFilter,
@@ -356,7 +356,15 @@ export function Table<T extends Record<string, unknown>>(
           })}
         </TableBody>
       </TableTable>
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          width: '100%',
+          margin: '1rem 0',
+        }}
+      >
         <TableDebugButton enabled={isDev} instance={instance} />
         {/*<TablePagination<T> instance={instance} />*/}
         <Pagination {...props.pagination} />
