@@ -28,5 +28,5 @@ yarn-error.log*
 # vscode
 /.vscode
 /yarn.lock
-/src/common/components/Table_example/
+/src/_deprecated/Table_example/
 /src/_deprecated/

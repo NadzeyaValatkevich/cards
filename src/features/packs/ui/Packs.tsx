@@ -7,7 +7,6 @@ import { PackType } from '../dal/packsAPI'
 
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
 import { PaginationPropsType } from 'common/components/Pagination/Pagination'
-import { Table } from 'common/components/Table/Table'
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
 
 type PacksTableDataType = PackType & {
@@ -92,15 +91,15 @@ export const Packs = () => {
 
   return (
     <ContentWrapper withoutPaper>
-      <Table<PacksTableDataType>
-        name={'packsTable'}
-        columns={columns}
-        data={data || ([] as PacksTableDataType[])}
-        onAdd={dummy}
-        onEdit={dummy}
-        onDelete={dummy}
-        pagination={paginationProps}
-      />
+      {/*<Table<PacksTableDataType>*/}
+      {/*  name={'packsTable'}*/}
+      {/*  columns={columns}*/}
+      {/*  data={data || ([] as PacksTableDataType[])}*/}
+      {/*  onAdd={dummy}*/}
+      {/*  onEdit={dummy}*/}
+      {/*  onDelete={dummy}*/}
+      {/*  pagination={paginationProps}*/}
+      {/*/>*/}
     </ContentWrapper>
   )
 }
