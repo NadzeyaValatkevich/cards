@@ -1,8 +1,18 @@
-import { PackStateType } from './packsReducer'
+import { PacksParamsType, PacksResponseType } from 'features/packs/dal/packsAPI'
 
-export type PacksActionsType = setPacksActionType
+export type ActionPacksType = GetPacksActionType | SetParamsActionType
 
-export const setPacksAC = (packs: PackStateType) =>
-  ({ type: 'packs/SET-PACKS', payload: { packs } } as const)
+export const getPacksAC = (packsData: PacksResponseType) =>
+  ({
+    type: 'PACKS/GET-PACKS',
+    payload: { packsData },
+  } as const)
 
-export type setPacksActionType = ReturnType<typeof setPacksAC>
+export const setParamsAC = (params: PacksParamsType) =>
+  ({
+    type: 'PACKS/SET-PARAMS',
+    payload: { params },
+  } as const)
+
+export type GetPacksActionType = ReturnType<typeof getPacksAC>
+export type SetParamsActionType = ReturnType<typeof setParamsAC>
