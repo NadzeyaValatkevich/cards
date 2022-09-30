@@ -28,3 +28,4 @@ yarn-error.log*
 # vscode
 /.vscode
 /yarn.lock
+/src/common/components/Table_example/

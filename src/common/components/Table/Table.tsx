@@ -9,8 +9,6 @@ import React, {
   useState,
 } from 'react'
 
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
-import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp'
 import { TableSortLabel, TextField, Tooltip } from '@mui/material'
 import {
   Cell,
@@ -20,7 +18,6 @@ import {
   FilterProps,
   HeaderGroup,
   HeaderProps,
-  Hooks,
   Meta,
   Row,
   TableInstance,
@@ -40,15 +37,12 @@ import {
 } from 'react-table'
 
 import { camelToWords, isDev, notEmpty, useDebounce } from '../../utils'
+import { Pagination, PaginationPropsType } from '../pagination/Pagination'
 
 import { FilterChipBar } from './FilterChipBar'
 import { fuzzyTextFilter, numericTextFilter } from './filters'
-import { ResizeHandle } from './ResizeHandle'
 import { TableDebug, TableDebugButton } from './TableDebug'
-import { TablePagination } from './TablePagination'
 import {
-  HeaderCheckbox,
-  RowCheckbox,
   TableBody,
   TableCell,
   TableHead,
@@ -72,6 +66,7 @@ export interface TableProps<T extends Record<string, unknown>> extends TableOpti
   extraCommands?: Command<T>[]
   onRefresh?: MouseEventHandler
   initialState?: Partial<TableState<T>>
+  pagination: PaginationPropsType
 }
 
 const DefaultHeader = <T extends Record<string, unknown>>({ column }: HeaderProps<T>) => (
@@ -131,36 +126,6 @@ const getStyles = (props: any, disableResizing = false, align = 'left') => [
   },
 ]
 
-const useSelectionUi = (hooks: Hooks<any>) => {
-  hooks.allColumns.push((columns, { instance }) => [
-    // Let's make a column for selection
-    {
-      id: '_selector',
-      disableResizing: true,
-      disableGroupBy: true,
-      minWidth: 45,
-      width: 45,
-      maxWidth: 45,
-      Aggregated: undefined,
-      // The header can use the table's getToggleAllRowsSelectedProps method
-      // to render a checkbox
-      Header: ({ getToggleAllRowsSelectedProps }: HeaderProps<any>) => (
-        <HeaderCheckbox {...getToggleAllRowsSelectedProps()} />
-      ),
-      // The cell can use the individual row's getToggleRowSelectedProps method
-      // to the render a checkbox
-      Cell: ({ row }: CellProps<any>) => <RowCheckbox {...row.getToggleRowSelectedProps()} />,
-    },
-    ...columns,
-  ])
-  hooks.useInstanceBeforeDimensions.push(({ headerGroups }) => {
-    // fix the parent group of the selection button to not be resizable
-    const selectionGroupHeader = headerGroups[0].headers[0]
-
-    selectionGroupHeader.canResize = false
-  })
-}
-
 const headerProps = <T extends Record<string, unknown>>(
   props: any,
   { column }: Meta<T, { column: HeaderGroup<T> }>
@@ -171,7 +136,7 @@ const cellProps = <T extends Record<string, unknown>>(
   { cell }: Meta<T, { cell: Cell<T> }>
 ) => getStyles(props, cell.column.disableResizing, cell.column.align)
 
-const DEFAULT_PAGE_SIZE = 10
+const DEFAULT_PAGE_SIZE = 50
 
 const filterTypes = {
   fuzzyText: fuzzyTextFilter,
@@ -206,7 +171,7 @@ export function Table<T extends Record<string, unknown>>(
     usePagination,
     useResizeColumns,
     useRowSelect,
-    useSelectionUi,
+    // useSelectionUi,
   ].filter(notEmpty)
 
   const defaultColumn = useMemo<Partial<Column<T>>>(
@@ -227,7 +192,7 @@ export function Table<T extends Record<string, unknown>>(
   )
 
   const [initialState, setInitialState] = useInitialTableState(`tableState:${name}`, columns, {
-    pageSize: DEFAULT_PAGE_SIZE,
+    pageSize: props.pagination.pageCount,
     ...userInitialState,
   })
 
@@ -361,27 +326,28 @@ export function Table<T extends Record<string, unknown>>(
                   return (
                     <TableCell key={cellKey} {...getCellProps} onClick={cellClickHandler(cell)}>
                       {/* eslint-disable-next-line no-nested-ternary */}
-                      {cell.isGrouped ? (
-                        <>
-                          <TableSortLabel
-                            classes={{
-                              iconDirectionAsc: classes.iconDirectionAsc,
-                              iconDirectionDesc: classes.iconDirectionDesc,
-                            }}
-                            active
-                            direction={row.isExpanded ? 'desc' : 'asc'}
-                            IconComponent={KeyboardArrowUp}
-                            {...row.getToggleRowExpandedProps()}
-                            className={classes.cellIcon}
-                          />
-                          {cell.render('Cell', { editable: false })} ({row.subRows.length})
-                        </>
-                      ) : // eslint-disable-next-line no-nested-ternary
-                      cell.isAggregated ? (
-                        cell.render('Aggregated')
-                      ) : cell.isPlaceholder ? null : (
-                        cell.render('Cell')
-                      )}
+                      {/*{cell.isGrouped ? (*/}
+                      {/*  <>*/}
+                      {/*    <TableSortLabel*/}
+                      {/*      classes={{*/}
+                      {/*        iconDirectionAsc: classes.iconDirectionAsc,*/}
+                      {/*        iconDirectionDesc: classes.iconDirectionDesc,*/}
+                      {/*      }}*/}
+                      {/*      active*/}
+                      {/*      direction={row.isExpanded ? 'desc' : 'asc'}*/}
+                      {/*      IconComponent={KeyboardArrowUp}*/}
+                      {/*      {...row.getToggleRowExpandedProps()}*/}
+                      {/*      className={classes.cellIcon}*/}
+                      {/*    />*/}
+                      {/*    {cell.render('Cell', { editable: true })} ({row.subRows.length})*/}
+                      {/*  </>*/}
+                      {/*) : // eslint-disable-next-line no-nested-ternary*/}
+                      {/*cell.isAggregated ? (*/}
+                      {/*  cell.render('Aggregated')*/}
+                      {/*) : cell.isPlaceholder ? null : (*/}
+                      {/*  cell.render('Cell')*/}
+                      {/*)}*/}
+                      {cell.render('Cell')}
                     </TableCell>
                   )
                 })}
@@ -392,7 +358,8 @@ export function Table<T extends Record<string, unknown>>(
       </TableTable>
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <TableDebugButton enabled={isDev} instance={instance} />
-        <TablePagination<T> instance={instance} />
+        {/*<TablePagination<T> instance={instance} />*/}
+        <Pagination {...props.pagination} />
       </div>
       <TableDebug enabled={isDev} instance={instance} />
     </>

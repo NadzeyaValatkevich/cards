@@ -31,17 +31,17 @@ export const useStyles = makeStyles<void, 'resizeHandle'>()((theme: Theme, _para
     },
   },
   tableHeadCell: {
-    padding: '16px 1px 16px 16px',
+    padding: '16px 1px 16px 36px',
     fontSize: '0.875rem',
     textAlign: 'left',
     verticalAlign: 'inherit',
     color: theme.palette.text.primary,
     fontWeight: 500,
     lineHeight: '1.5rem',
-    borderRight: '1px solid rgba(224, 224, 224, 1)',
-    '&:last-child': {
-      borderRight: 'none',
-    },
+    // borderRight: '1px solid rgba(224, 224, 224, 1)',
+    // '&:last-child': {
+    //   borderRight: 'none',
+    // },
   },
   tableBody: {},
   tableRow: {
@@ -67,17 +67,17 @@ export const useStyles = makeStyles<void, 'resizeHandle'>()((theme: Theme, _para
   },
   tableLabel: {},
   tableCell: {
-    padding: '8px 16px',
+    padding: '16px 36px',
     fontSize: '0.875rem',
     textAlign: 'left',
     fontWeight: 300,
     lineHeight: 1.3,
     verticalAlign: 'inherit',
     color: theme.palette.text.primary,
-    borderRight: '1px solid rgba(224, 224, 224, 1)',
-    '&:last-child': {
-      borderRight: 'none',
-    },
+    // borderRight: '1px solid rgba(224, 224, 224, 1)',
+    // '&:last-child': {
+    //   borderRight: 'none',
+    // },
     '&:hover': {
       backgroundColor: 'rgba(0, 0, 0, 0.07)',
     },

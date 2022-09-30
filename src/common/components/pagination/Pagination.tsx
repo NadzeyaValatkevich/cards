@@ -12,7 +12,7 @@ import { PacksParamsType } from 'features/packs/dal/packsAPI'
 
 type ParamsType = PacksParamsType | CardsParamsType
 
-type PaginationPropsType = {
+export type PaginationPropsType = {
   page: number
   totalCount: number
   pageCount: number

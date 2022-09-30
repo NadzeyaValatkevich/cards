@@ -2,7 +2,7 @@ import { setAppInfoAC, setAppStatusAC } from 'app/bll/appActions'
 import { RequestStatusType } from 'app/bll/appReducer'
 import { AppThunk } from 'app/bll/store'
 import { errorUtils } from 'common/utils/error-utils'
-import { getPacksAC, setParamsAC } from 'features/packs/bll/packsActions'
+import { getPacksAC, setPacksParamsAC } from 'features/packs/bll/packsActions'
 import {
   AddPackDataType,
   packsAPI,
@@ -16,7 +16,7 @@ export const getPacksTC =
     dispatch(setAppStatusAC(RequestStatusType.loading))
     //TODO проверить params, по моему вместо packsOptions надо передавать напрямую params с аргументов фунцкии
     if (params) {
-      dispatch(setParamsAC(params))
+      await dispatch(setPacksParamsAC(params))
     }
     const packsOptions = getState().packs.params
 
