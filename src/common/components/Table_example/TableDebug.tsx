@@ -5,7 +5,7 @@ import { IconButton, Theme, Tooltip } from '@mui/material'
 import { atom, useAtom } from 'jotai'
 import { makeStyles } from 'tss-react/mui'
 
-import { Loader } from '../Loader'
+import { Loader } from '../Loader/Loader'
 
 // @ts-ignore
 const ReactJson = React.lazy(() => import('react-json-view'))

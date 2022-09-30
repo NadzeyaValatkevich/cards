@@ -171,7 +171,7 @@ const cellProps = <T extends Record<string, unknown>>(
   { cell }: Meta<T, { cell: Cell<T> }>
 ) => getStyles(props, cell.column.disableResizing, cell.column.align)
 
-const DEFAULT_PAGE_SIZE = 25
+const DEFAULT_PAGE_SIZE = 10
 
 const filterTypes = {
   fuzzyText: fuzzyTextFilter,
@@ -291,31 +291,31 @@ export function Table<T extends Record<string, unknown>>(
               <TableHeadRow key={headerGroupKey} {...getHeaderGroupProps}>
                 {headerGroup.headers.map(column => {
                   const style = {
-                    textAlign: column.align ? column.align : 'left ',
+                    textAlign: column.align ? column.align : 'left',
                   } as CSSProperties
                   const {
                     key: headerKey,
                     role: headerRole,
                     ...getHeaderProps
                   } = column.getHeaderProps(headerProps)
-                  const { title: groupTitle = '', ...columnGroupByProps } =
-                    column.getGroupByToggleProps()
+                  // const { title: groupTitle = '', ...columnGroupByProps } =
+                  //   column.getGroupByToggleProps()
                   const { title: sortTitle = '', ...columnSortByProps } =
                     column.getSortByToggleProps()
 
                   return (
                     <TableHeadCell key={headerKey} {...getHeaderProps}>
-                      {column.canGroupBy && (
-                        <Tooltip title={groupTitle}>
-                          <TableSortLabel
-                            active
-                            direction={column.isGrouped ? 'desc' : 'asc'}
-                            IconComponent={KeyboardArrowRight}
-                            {...columnGroupByProps}
-                            className={classes.headerIcon}
-                          />
-                        </Tooltip>
-                      )}
+                      {/*{column.canGroupBy && (*/}
+                      {/*  <Tooltip title={groupTitle}>*/}
+                      {/*    <TableSortLabel*/}
+                      {/*      active*/}
+                      {/*      direction={column.isGrouped ? 'desc' : 'asc'}*/}
+                      {/*      IconComponent={KeyboardArrowRight}*/}
+                      {/*      {...columnGroupByProps}*/}
+                      {/*      className={classes.headerIcon}*/}
+                      {/*    />*/}
+                      {/*  </Tooltip>*/}
+                      {/*)}*/}
                       {column.canSort ? (
                         <Tooltip title={sortTitle}>
                           <TableSortLabel
@@ -332,7 +332,7 @@ export function Table<T extends Record<string, unknown>>(
                         <TableLabel style={style}>{column.render('Header')}</TableLabel>
                       )}
                       {/*<div>{column.canFilter ? column.render('Filter') : null}</div>*/}
-                      {column.canResize && <ResizeHandle column={column} />}
+                      {/*{column.canResize && <ResizeHandle column={column} />}*/}
                     </TableHeadCell>
                   )
                 })}

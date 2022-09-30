@@ -1,4 +1,4 @@
-import { setAppStatusAC } from 'app/bll/appActions'
+import { setAppInfoAC, setAppStatusAC } from 'app/bll/appActions'
 import { RequestStatusType } from 'app/bll/appReducer'
 import { AppThunk } from 'app/bll/store'
 import { errorUtils } from 'common/utils/error-utils'
@@ -10,9 +10,11 @@ import {
   UpdatePackDataType,
 } from 'features/packs/dal/packsAPI'
 
-export const getPacksTC = (params?: PacksParamsType): AppThunk => {
-  return async (dispatch, getState) => {
+export const getPacksTC =
+  (params?: PacksParamsType): AppThunk =>
+  async (dispatch, getState) => {
     dispatch(setAppStatusAC(RequestStatusType.loading))
+    //TODO проверить params, по моему вместо packsOptions надо передавать напрямую params с аргументов фунцкии
     if (params) {
       dispatch(setParamsAC(params))
     }
@@ -28,7 +30,6 @@ export const getPacksTC = (params?: PacksParamsType): AppThunk => {
       errorUtils(error, dispatch)
     }
   }
-}
 
 export const addPackTC = (data: AddPackDataType): AppThunk => {
   return async dispatch => {
@@ -37,6 +38,7 @@ export const addPackTC = (data: AddPackDataType): AppThunk => {
       const res = await packsAPI.addPack(data)
 
       dispatch(getPacksTC())
+      dispatch(setAppInfoAC('Pack added successfully'))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
@@ -51,6 +53,7 @@ export const deletePackTC = (idPack: string): AppThunk => {
       const res = await packsAPI.deletePack(idPack)
 
       dispatch(getPacksTC())
+      dispatch(setAppInfoAC('Pack deleted successfully'))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
@@ -65,6 +68,7 @@ export const updatePackTC = (data: UpdatePackDataType): AppThunk => {
       const res = await packsAPI.updatePack(data)
 
       dispatch(getPacksTC())
+      dispatch(setAppInfoAC('Pack updated successfully'))
       dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)

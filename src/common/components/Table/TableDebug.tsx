@@ -5,7 +5,7 @@ import { IconButton, Theme, Tooltip } from '@mui/material'
 import { atom, useAtom } from 'jotai'
 import { makeStyles } from 'tss-react/mui'
 
-import { Loader } from '../Loader'
+import { Loader_old } from '../Loader/Loader_old'
 
 // @ts-ignore
 const ReactJson = React.lazy(() => import('react-json-view'))
@@ -56,7 +56,7 @@ export const TableDebug: React.FC<{
     <>
       <br />
       <br />
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<Loader_old />}>
         <ReactJson
           src={{ ...instance }}
           collapsed={1}

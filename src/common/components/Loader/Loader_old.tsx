@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { Box, CircularProgress } from '@mui/material'
+import { CircularProgress } from '@mui/material'
+import Box from '@mui/material/Box'
 
 interface LoaderProps {
   error?: boolean
@@ -9,7 +10,7 @@ interface LoaderProps {
   pastDelay?: boolean
 }
 
-export const Loader: React.FC<LoaderProps> = ({ error, retry, timedOut, pastDelay }) => (
+export const Loader_old: React.FC<LoaderProps> = ({ error, retry, timedOut, pastDelay }) => (
   <Box
     sx={{
       display: 'flex',
@@ -34,3 +35,11 @@ export const Loader: React.FC<LoaderProps> = ({ error, retry, timedOut, pastDela
     <CircularProgress sx={{ m: 2 }} />
   </Box>
 )
+
+// export const Loader = () => {
+//   return (
+//     <Backdrop open={true}>
+//       <CircularProgress color="inherit" />
+//     </Backdrop>
+//   )
+// }
