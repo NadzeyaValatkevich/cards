@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 
 import { Logout } from '@mui/icons-material'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import StyleIcon from '@mui/icons-material/Style'
 import { Avatar, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import { useNavigate } from 'react-router-dom'
 
-import { AppRoutes } from '../../../app/ui/RoutesComponent'
-import { logoutTC } from '../../../features/auth/bll/authThunks'
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { AppRoutes } from 'app/ui/RoutesComponent'
+import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
+import { logoutTC } from 'features/auth/bll/authThunks'
 
 export const AvatarHeader = () => {
   const navigate = useNavigate()
@@ -128,6 +129,12 @@ export const AvatarHeader = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+        <MenuItem onClick={() => navigate(AppRoutes.PROFILE)}>
+          <ListItemIcon>
+            <AccountCircleIcon fontSize="small" />
+          </ListItemIcon>
+          Profile
+        </MenuItem>
         <MenuItem onClick={() => navigate(AppRoutes.PACKS)}>
           <ListItemIcon>
             <StyleIcon fontSize="small" />
