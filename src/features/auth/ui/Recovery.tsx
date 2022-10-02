@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { forgotTC } from '../bll/authThunks'
 
 import { AppRoutes } from 'app/ui/RoutesComponent'
-import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
+import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/hooks'
 
 export type recoverySendType = {

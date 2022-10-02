@@ -16,6 +16,7 @@ export const ContentWrapper: FC<PropsType> = ({ children, sx, withoutPaper }) =>
     return (
       <Container
         maxWidth="md"
+        disableGutters
         sx={{
           display: 'flex',
           flexDirection: 'column',

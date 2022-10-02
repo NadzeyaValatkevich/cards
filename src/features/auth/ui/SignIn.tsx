@@ -11,10 +11,11 @@ import {
 } from 'react-hook-form-mui'
 import { useNavigate } from 'react-router-dom'
 
+import { LoaderWrapper } from '../../../common/HOCs/LoaderWrapper/LoaderWrapper'
 import { loginTC } from '../bll/authThunks'
 
 import { AppRoutes } from 'app/ui/RoutesComponent'
-import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
+import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
 
 type PropsType = {}
@@ -49,96 +50,98 @@ export const SignIn: FC<PropsType> = ({}) => {
   }, [isLoggedIn])
 
   return (
-    <ContentWrapper>
-      <FormContainer<LoginType> onSuccess={onSuccessHandler}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '22rem',
-          }}
-        >
-          <Typography
-            variant={'h4'}
-            align={'center'}
-            sx={{
-              fontWeight: '600',
-            }}
-          >
-            Sign In
-          </Typography>
+    <LoaderWrapper>
+      <ContentWrapper>
+        <FormContainer<LoginType> onSuccess={onSuccessHandler}>
           <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              marginTop: '2.5rem',
+              width: '22rem',
             }}
           >
-            <TextFieldElement
-              type={'email'}
-              margin={'dense'}
-              label={'Email'}
-              name={'email'}
-              variant={'standard'}
-              // autoComplete={'username'}
-              fullWidth
-            />
-            <PasswordElement
-              type={'password'}
-              margin={'dense'}
-              label={'Password'}
-              name={'password'}
-              variant={'standard'}
-              // autoComplete={'current-password'}
-              fullWidth
-            />
-            <CheckboxElement name={'rememberMe'} label={'Remember me'} />
-            <Link
-              href={AppRoutes.REC_PASSWORD}
-              style={{ alignSelf: 'flex-end', marginTop: '2rem' }}
-              variant="body2"
-              onClick={forgotOnClickHandler}
-            >
-              Forgot Password?
-            </Link>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: '4.75rem',
-            }}
-          >
-            <Button type={'submit'} color={'primary'} variant={'contained'} fullWidth>
-              Sign In
-            </Button>
             <Typography
-              variant={'subtitle2'}
+              variant={'h4'}
               align={'center'}
               sx={{
-                opacity: '50%',
-                marginTop: '2rem',
                 fontWeight: '600',
               }}
             >
-              Already have an account?
+              Sign In
             </Typography>
-            <Link
-              href={AppRoutes.SIGN_UP}
-              variant="subtitle1"
-              onClick={signUpOnClickHandler}
+            <Box
               sx={{
-                margin: '0.625rem',
-                fontWeight: '600',
+                display: 'flex',
+                flexDirection: 'column',
+                marginTop: '2.5rem',
               }}
             >
-              Sign Up
-            </Link>
+              <TextFieldElement
+                type={'email'}
+                margin={'dense'}
+                label={'Email'}
+                name={'email'}
+                variant={'standard'}
+                // autoComplete={'username'}
+                fullWidth
+              />
+              <PasswordElement
+                type={'password'}
+                margin={'dense'}
+                label={'Password'}
+                name={'password'}
+                variant={'standard'}
+                // autoComplete={'current-password'}
+                fullWidth
+              />
+              <CheckboxElement name={'rememberMe'} label={'Remember me'} />
+              <Link
+                href={AppRoutes.REC_PASSWORD}
+                style={{ alignSelf: 'flex-end', marginTop: '2rem' }}
+                variant="body2"
+                onClick={forgotOnClickHandler}
+              >
+                Forgot Password?
+              </Link>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: '4.75rem',
+              }}
+            >
+              <Button type={'submit'} color={'primary'} variant={'contained'} fullWidth>
+                Sign In
+              </Button>
+              <Typography
+                variant={'subtitle2'}
+                align={'center'}
+                sx={{
+                  opacity: '50%',
+                  marginTop: '2rem',
+                  fontWeight: '600',
+                }}
+              >
+                Already have an account?
+              </Typography>
+              <Link
+                href={AppRoutes.SIGN_UP}
+                variant="subtitle1"
+                onClick={signUpOnClickHandler}
+                sx={{
+                  margin: '0.625rem',
+                  fontWeight: '600',
+                }}
+              >
+                Sign Up
+              </Link>
+            </Box>
           </Box>
-        </Box>
-      </FormContainer>
-    </ContentWrapper>
+        </FormContainer>
+      </ContentWrapper>
+    </LoaderWrapper>
   )
 }

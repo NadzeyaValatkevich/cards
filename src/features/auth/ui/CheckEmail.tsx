@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { AppRoutes } from 'app/ui/RoutesComponent'
 import emailImg from 'common/assets/image/email.svg'
-import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
+import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 
 export type recoverySendType = {
   email?: string

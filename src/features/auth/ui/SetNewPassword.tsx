@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { createNewPasswordTC } from '../bll/authThunks'
 
 import { AppRoutes } from 'app/ui/RoutesComponent'
-import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
+import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/hooks'
 import { errorUtils } from 'common/utils/error-utils'
 import { passwordValidation } from 'common/validation/validation'

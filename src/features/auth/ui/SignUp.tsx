@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom'
 import { registerTC } from '../bll/authThunks'
 
 import { AppRoutes } from 'app/ui/RoutesComponent'
-import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
+import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/hooks'
 import { passwordValidation } from 'common/validation/validation'
 
