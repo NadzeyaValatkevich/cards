@@ -11,7 +11,7 @@ import { createNewPasswordTC } from '../bll/authThunks'
 
 import { SIGN_IN } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
-import { useAppDispatch } from 'common/hooks/hooks'
+import { useAppDispatch } from 'common/hooks/useAppSelector'
 import { errorUtils } from 'common/utils/error-utils'
 import { passwordValidation } from 'common/validation/validation'
 

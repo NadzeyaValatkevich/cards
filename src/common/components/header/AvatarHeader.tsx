@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 
 import { logoutTC } from '../../../features/auth/bll/authThunks'
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppSelector'
 
 export const AvatarHeader = () => {
   const dispatch = useAppDispatch()

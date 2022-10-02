@@ -12,7 +12,7 @@ import s from './profile.module.css'
 
 import userPhoto from 'common/assets/image/user.png'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
-import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
+import { useAppDispatch, useAppSelector } from 'common/hooks/useAppSelector'
 import { logoutTC } from 'features/auth/bll/authThunks'
 
 type PropsType = {}

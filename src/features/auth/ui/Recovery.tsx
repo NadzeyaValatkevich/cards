@@ -7,7 +7,7 @@ import { SubmitHandler } from 'react-hook-form'
 import { FormContainer, TextFieldElement } from 'react-hook-form-mui'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppDispatch } from '../../../common/hooks/hooks'
+import { useAppDispatch } from '../../../common/hooks/useAppSelector'
 import { forgotTC } from '../bll/authThunks'
 
 import { CHECK_EMAIL, SIGN_IN } from 'app/ui/RoutesComponent'
