@@ -21,6 +21,7 @@ export const SelectCountRow = (props: SelectCountRowType) => {
           id="Count-row-id"
           value={props.pageCount}
           label="Count row"
+          variant={'standard'}
           onChange={handleChange}
         >
           <MenuItem value={5}>5</MenuItem>

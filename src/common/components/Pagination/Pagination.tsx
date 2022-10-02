@@ -31,7 +31,15 @@ export const Pagination = (props: PaginationPropsType) => {
   }
 
   return (
-    <Box style={{ display: 'flex', alignItems: 'center' }}>
+    <Box
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        width: '100%',
+        justifyContent: 'flex-start',
+        margin: '36px 0',
+      }}
+    >
       <Box>
         <PaginationRounded
           totalCount={props.totalCount}
