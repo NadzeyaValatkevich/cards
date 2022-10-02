@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect, useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 
 import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'

@@ -16,9 +16,8 @@ import { registerTC } from '../bll/authThunks'
 
 import { SIGN_IN } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
-
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { passwordValidation } from 'common/validation/validation'
-import {useAppDispatch} from "../../../common/hooks/useAppDispatch";
 
 type PropsType = {}
 
