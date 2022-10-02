@@ -1,3 +1,5 @@
+import { RequestStatusType } from 'app/bll/appReducer'
+import { dateParser } from 'common/utils/dateParser'
 import { ActionPacksType } from 'features/packs/bll/packsActions'
 import { PacksParamsType, PackType } from 'features/packs/dal/packsAPI'
 
@@ -24,7 +26,16 @@ export const packsReducer = (
 ): PacksInitialStateType => {
   switch (action.type) {
     case 'PACKS/GET-PACKS':
-      return { ...state, packsData: action.payload.packsData }
+      return {
+        ...state,
+        packsData: {
+          ...action.payload.packsData,
+          cardPacks: action.payload.packsData.cardPacks.map((c: PackType) => ({
+            ...c,
+            updated: dateParser(c.updated).toString(),
+          })),
+        },
+      }
     case 'PACKS/SET-PARAMS':
       return { ...state, params: { ...state.params, ...action.payload.params } }
     case 'PACKS/SET-STATUS':
