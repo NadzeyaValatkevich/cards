@@ -1,6 +1,7 @@
+import { RequestStatusType } from 'app/bll/appReducer'
 import { PacksParamsType, PacksResponseType } from 'features/packs/dal/packsAPI'
 
-export type ActionPacksType = GetPacksActionType | SetParamsActionType
+export type ActionPacksType = GetPacksActionType | SetParamsActionType | setPacksStatusActionType
 
 export const getPacksAC = (packsData: PacksResponseType) =>
   ({
@@ -14,5 +15,12 @@ export const setPacksParamsAC = (params: PacksParamsType) =>
     payload: { params },
   } as const)
 
+export const setPacksStatusAC = (entityStatus: RequestStatusType) =>
+  ({
+    type: 'PACKS/SET-STATUS',
+    payload: { entityStatus },
+  } as const)
+
 export type GetPacksActionType = ReturnType<typeof getPacksAC>
 export type SetParamsActionType = ReturnType<typeof setPacksParamsAC>
+export type setPacksStatusActionType = ReturnType<typeof setPacksStatusAC>

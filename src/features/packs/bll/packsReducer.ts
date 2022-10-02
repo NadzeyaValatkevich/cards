@@ -12,7 +12,8 @@ const initialState = {
     token: '',
     tokenDeathTime: 0,
   },
-  params: { pageCount: 5, min: 0, max: 100, page: 1, packName: '' } as PacksParamsType,
+  params: initialPackParams,
+  entityStatus: RequestStatusType.idle as RequestStatusType,
 }
 
 export type PacksInitialStateType = typeof initialState
@@ -26,6 +27,8 @@ export const packsReducer = (
       return { ...state, packsData: action.payload.packsData }
     case 'PACKS/SET-PARAMS':
       return { ...state, params: { ...state.params, ...action.payload.params } }
+    case 'PACKS/SET-STATUS':
+      return { ...state, entityStatus: action.payload.entityStatus }
     default:
       return state
   }

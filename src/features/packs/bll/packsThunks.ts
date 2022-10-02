@@ -13,8 +13,7 @@ import {
 export const getPacksTC =
   (params?: PacksParamsType): AppThunk =>
   async (dispatch, getState) => {
-    dispatch(setAppStatusAC(RequestStatusType.loading))
-    //TODO проверить params, по моему вместо packsOptions надо передавать напрямую params с аргументов фунцкии
+    dispatch(setPacksStatusAC(RequestStatusType.loading))
     if (params) {
       await dispatch(setPacksParamsAC(params))
     }
@@ -24,8 +23,8 @@ export const getPacksTC =
       const res = await packsAPI.getPacks(packsOptions)
 
       dispatch(getPacksAC(res.data))
-      dispatch(setAppInfoAC('Packs received successfully'))
-      dispatch(setAppStatusAC(RequestStatusType.succeeded))
+      // dispatch(setAppInfoAC('Packs received successfully'))
+      dispatch(setPacksStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
     }
@@ -33,13 +32,13 @@ export const getPacksTC =
 
 export const addPackTC = (data: AddPackDataType): AppThunk => {
   return async dispatch => {
-    dispatch(setAppStatusAC(RequestStatusType.loading))
+    dispatch(setPacksStatusAC(RequestStatusType.loading))
     try {
       const res = await packsAPI.addPack(data)
 
       dispatch(getPacksTC())
-      dispatch(setAppInfoAC('Pack added successfully'))
-      dispatch(setAppStatusAC(RequestStatusType.succeeded))
+      // dispatch(setAppInfoAC('Pack added successfully'))
+      dispatch(setPacksStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
     }
@@ -48,13 +47,13 @@ export const addPackTC = (data: AddPackDataType): AppThunk => {
 
 export const deletePackTC = (idPack: string): AppThunk => {
   return async dispatch => {
-    dispatch(setAppStatusAC(RequestStatusType.loading))
+    dispatch(setPacksStatusAC(RequestStatusType.loading))
     try {
       const res = await packsAPI.deletePack(idPack)
 
       dispatch(getPacksTC())
       dispatch(setAppInfoAC('Pack deleted successfully'))
-      dispatch(setAppStatusAC(RequestStatusType.succeeded))
+      dispatch(setPacksStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
     }
@@ -63,13 +62,13 @@ export const deletePackTC = (idPack: string): AppThunk => {
 
 export const updatePackTC = (data: UpdatePackDataType): AppThunk => {
   return async dispatch => {
-    dispatch(setAppStatusAC(RequestStatusType.loading))
+    dispatch(setPacksStatusAC(RequestStatusType.loading))
     try {
       const res = await packsAPI.updatePack(data)
 
       dispatch(getPacksTC())
       dispatch(setAppInfoAC('Pack updated successfully'))
-      dispatch(setAppStatusAC(RequestStatusType.succeeded))
+      dispatch(setPacksStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
     }
