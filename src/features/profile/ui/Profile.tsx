@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import { Typography } from '@mui/material'
@@ -11,13 +11,14 @@ import userPhoto from 'common/assets/image/user.png'
 import { EditableSpan } from 'common/components/EditableSpan/EditableSpan'
 import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { LoaderWrapper } from 'common/HOCs/LoaderWrapper/LoaderWrapper'
-import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { useAppSelector } from 'common/hooks/useAppSelector'
 import { logoutTC } from 'features/auth/bll/authThunks'
 import { updateProfileTC, updateProfileType } from 'features/profile/bll/profileThunks'
 
 type PropsType = {}
 
-export const Profile: React.FC<PropsType> = () => {
+export const Profile: FC<PropsType> = () => {
   const dispatch = useAppDispatch()
   const profile = useAppSelector(state => state.profile)
 

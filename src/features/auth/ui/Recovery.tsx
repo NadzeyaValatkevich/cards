@@ -7,11 +7,11 @@ import { SubmitHandler } from 'react-hook-form'
 import { FormContainer, TextFieldElement } from 'react-hook-form-mui'
 import { useNavigate } from 'react-router-dom'
 
+import { useAppDispatch } from '../../../common/hooks/useAppDispatch'
 import { forgotTC } from '../bll/authThunks'
 
 import { AppRoutes } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
-import { useAppDispatch } from 'common/hooks/hooks'
 
 export type recoverySendType = {
   email: string

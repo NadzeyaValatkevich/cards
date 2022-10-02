@@ -2,7 +2,7 @@ import React, { FC, ReactNode } from 'react'
 
 import { RequestStatusType } from 'app/bll/appReducer'
 import { Loader } from 'common/components/Loader/Loader'
-import { useAppSelector } from 'common/hooks/hooks'
+import { useAppSelector } from 'common/hooks/useAppSelector'
 
 type LoaderWrapperPropsType = {
   children: ReactNode

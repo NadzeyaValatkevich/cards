@@ -4,7 +4,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar'
 import { useDispatch } from 'react-redux'
 
-import { useAppSelector } from '../../hooks/hooks'
+import { useAppSelector } from '../../hooks/useAppSelector'
 
 import { setAppErrorAC } from 'app/bll/appActions'
 

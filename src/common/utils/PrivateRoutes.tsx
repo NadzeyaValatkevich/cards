@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { useAppSelector } from '../hooks/hooks'
+import { useAppSelector } from '../hooks/useAppSelector'
 
 import { AppRoutes } from 'app/ui/RoutesComponent'
 

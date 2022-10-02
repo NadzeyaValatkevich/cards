@@ -3,10 +3,10 @@ import React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
+import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { SelectCountRow } from '../SelectCountRow/SelectCountRow'
 
 import { PaginationRounded } from 'common/components/Pagination/PaginationRounded'
-import { useAppDispatch } from 'common/hooks/hooks'
 import { CardsParamsType } from 'features/cards/dal/cardsAPI'
 import { PacksParamsType } from 'features/packs/dal/packsAPI'
 

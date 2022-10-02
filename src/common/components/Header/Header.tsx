@@ -7,7 +7,7 @@ import Container from '@mui/material/Container'
 import Toolbar from '@mui/material/Toolbar'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppSelector } from '../../hooks/hooks'
+import { useAppSelector } from '../../hooks/useAppSelector'
 
 import { AvatarHeader } from './AvatarHeader'
 

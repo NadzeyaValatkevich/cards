@@ -13,7 +13,7 @@ import { PacksActionsComponent } from './PacksActionsComponent/PacksActionsCompo
 
 import { RequestStatusType } from 'app/bll/appReducer'
 import { sortDir } from 'common/enums/enums'
-import { useAppDispatch } from 'common/hooks/hooks'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useStyles } from 'common/styles/PacksTableStyles'
 import { deletePackTC } from 'features/packs/bll/packsThunks'
 

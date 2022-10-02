@@ -8,8 +8,10 @@ import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import { useNavigate } from 'react-router-dom'
 
+import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { useAppSelector } from '../../hooks/useAppSelector'
+
 import { AppRoutes } from 'app/ui/RoutesComponent'
-import { useAppDispatch, useAppSelector } from 'common/hooks/hooks'
 import { logoutTC } from 'features/auth/bll/authThunks'
 
 export const AvatarHeader = () => {
