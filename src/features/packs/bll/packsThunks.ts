@@ -1,8 +1,11 @@
-import { setAppInfoAC, setAppStatusAC } from 'app/bll/appActions'
+import { initialPackParams } from './packsReducer'
+
+import { setAppInfoAC } from 'app/bll/appActions'
 import { RequestStatusType } from 'app/bll/appReducer'
 import { AppThunk } from 'app/bll/store'
 import { errorUtils } from 'common/utils/error-utils'
-import { getPacksAC, setPacksParamsAC } from 'features/packs/bll/packsActions'
+import { compareObj } from 'common/utils/removeEmptyObj'
+import { getPacksAC, setPacksParamsAC, setPacksStatusAC } from 'features/packs/bll/packsActions'
 import {
   AddPackDataType,
   packsAPI,
@@ -17,10 +20,15 @@ export const getPacksTC =
     if (params) {
       await dispatch(setPacksParamsAC(params))
     }
-    const packsOptions = getState().packs.params
+    let statePacksParams: PacksParamsType = compareObj(getState().packs.params, initialPackParams)
+
+    if (!statePacksParams.pageCount) {
+      statePacksParams.pageCount = 5
+      dispatch(setPacksParamsAC({ pageCount: 5 }))
+    }
 
     try {
-      const res = await packsAPI.getPacks(packsOptions)
+      const res = await packsAPI.getPacks(statePacksParams)
 
       dispatch(getPacksAC(res.data))
       // dispatch(setAppInfoAC('Packs received successfully'))
@@ -51,7 +59,7 @@ export const deletePackTC = (idPack: string): AppThunk => {
     try {
       const res = await packsAPI.deletePack(idPack)
 
-      dispatch(getPacksTC())
+      await dispatch(getPacksTC())
       dispatch(setAppInfoAC('Pack deleted successfully'))
       dispatch(setPacksStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {

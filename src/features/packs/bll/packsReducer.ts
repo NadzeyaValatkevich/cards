@@ -3,6 +3,15 @@ import { dateParser } from 'common/utils/dateParser'
 import { ActionPacksType } from 'features/packs/bll/packsActions'
 import { PacksParamsType, PackType } from 'features/packs/dal/packsAPI'
 
+export const initialPackParams: PacksParamsType = {
+  pageCount: 5,
+  min: 0,
+  max: 0,
+  page: 1,
+  packName: '',
+  sortPacks: '',
+}
+
 const initialState = {
   packsData: {
     cardPacks: [] as PackType[],
