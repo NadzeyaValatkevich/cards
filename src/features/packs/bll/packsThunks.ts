@@ -2,7 +2,7 @@ import { setAppStatusAC } from 'app/bll/appActions'
 import { RequestStatusType } from 'app/bll/appReducer'
 import { AppThunk } from 'app/bll/store'
 import { errorUtils } from 'common/utils/error-utils'
-import { getPacksAC, setParamsAC } from 'features/packs/bll/packsActions'
+import { getPacksAC, setParamsPacksAC } from 'features/packs/bll/packsActions'
 import {
   AddPackDataType,
   packsAPI,
@@ -14,7 +14,7 @@ export const getPacksTC = (params?: PacksParamsType): AppThunk => {
   return async (dispatch, getState) => {
     dispatch(setAppStatusAC(RequestStatusType.loading))
     if (params) {
-      dispatch(setParamsAC(params))
+      dispatch(setParamsPacksAC(params))
     }
     const packsOptions = getState().packs.params
 

@@ -7,12 +7,13 @@ import IconButton from '@mui/material/IconButton'
 
 import { updateProfileTC, updateProfileType } from '../bll/profileThunks'
 
-import { EditableSpan } from './EditableSpan'
 import s from './profile.module.css'
 
 import userPhoto from 'common/assets/image/user.png'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
-import { useAppDispatch, useAppSelector } from 'common/hooks/useAppSelector'
+import { EditableSpan } from 'common/editableSpan/EditableSpan'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { useAppSelector } from 'common/hooks/useAppSelector'
 import { logoutTC } from 'features/auth/bll/authThunks'
 
 type PropsType = {}

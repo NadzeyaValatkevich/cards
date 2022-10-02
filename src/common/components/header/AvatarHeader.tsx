@@ -5,8 +5,10 @@ import { Avatar, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from '@mui/
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 
-import { logoutTC } from '../../../features/auth/bll/authThunks'
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppSelector'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
+
+import { useAppSelector } from 'common/hooks/useAppSelector'
+import { logoutTC } from 'features/auth/bll/authThunks'
 
 export const AvatarHeader = () => {
   const dispatch = useAppDispatch()

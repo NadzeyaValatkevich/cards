@@ -26,5 +26,7 @@ export const packsReducer = (
       return { ...state, packsData: action.payload.packsData }
     case 'PACKS/SET-PARAMS':
       return { ...state, params: { ...state.params, ...action.payload.params } }
+    default:
+      return state
   }
 }

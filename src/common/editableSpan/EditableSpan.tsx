@@ -4,7 +4,7 @@ import CreateIcon from '@mui/icons-material/Create'
 import { TextField } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
 
-import s from './profile.module.css'
+import s from '../../features/profile/ui/profile.module.css'
 
 type EditableSpanPropsType = {
   value: string

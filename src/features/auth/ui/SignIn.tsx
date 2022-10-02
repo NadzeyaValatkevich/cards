@@ -11,11 +11,12 @@ import {
 } from 'react-hook-form-mui'
 import { useNavigate } from 'react-router-dom'
 
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { loginTC } from '../bll/authThunks'
 
 import { PROFILE, REC_PASSWORD, SIGN_UP } from 'app/ui/RoutesComponent'
 import { ContentWrapper } from 'common/components/contentWrapper/ContentWrapper'
-import { useAppDispatch, useAppSelector } from 'common/hooks/useAppSelector'
+import { useAppSelector } from 'common/hooks/useAppSelector'
 
 type PropsType = {}
 
