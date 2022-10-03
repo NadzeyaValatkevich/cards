@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
+import CreateIcon from '@mui/icons-material/Create'
 import { Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'

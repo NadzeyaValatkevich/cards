@@ -5,14 +5,21 @@ import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 
 import { getPacksTC } from '../../../../bll/packsThunks'
+import { InputForSlider } from '../InputForSlider/InputForSlider'
 
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
+import { useDebounce } from 'common/hooks/useDebounce'
 
 export const SliderForPacks = () => {
   const dispatch = useAppDispatch()
-  const { min, max } = useAppSelector(state => state.packs.params)
-  const [value, setValue] = useState<number[]>([min || 0, max || 100])
+  const min = useAppSelector(state => state.packs.params.min)
+  const max = useAppSelector(state => state.packs.params.max)
+  const [value, setValue] = useState<number[]>([0, 100])
+  const debouncedValue = useDebounce(value, 500)
+
+  console.log('value', value)
+  console.log('max, min', min, max)
 
   const onChangeCallback = (event: Event, newValue: number | number[]) => {
     if (Array.isArray(newValue)) {
@@ -32,20 +39,47 @@ export const SliderForPacks = () => {
         })
       )
   }
+  const changeMinValue = (newValue: number) => {
+    const newArray = [...value]
+
+    newArray[0] = newValue
+    setValue(newArray)
+  }
+
+  const changeMaxValue = (newValue: number) => {
+    const newArray = [...value]
+
+    newArray[1] = newValue
+    setValue(newArray)
+  }
 
   useEffect(() => {
-    setValue([min!, max!])
+    if (min && min >= 0 && max) {
+      setValue([min, max])
+    }
   }, [min, max])
 
+  // useEffect(() => {
+  //   dispatch(
+  //     getPacksTC({
+  //       min: value[0],
+  //       max: value[1],
+  //     })
+  //   )
+  // }, [value])
+
   return (
-    <Box sx={{}}>
-      <Typography variant="h6">Number of cards</Typography>
-      <Slider
-        value={value}
-        onChange={onChangeCallback}
-        onChangeCommitted={handleChangeCommitted}
-        valueLabelDisplay="on"
-      />
+    <Box>
+      <Typography sx={{ textAlign: 'center' }}>Number of cards</Typography>
+      <Box sx={{ display: 'flex', width: '300px' }}>
+        <InputForSlider value={min} setValue={changeMinValue} />
+        <Slider
+          value={value}
+          onChange={onChangeCallback}
+          onChangeCommitted={handleChangeCommitted}
+        />
+        <InputForSlider value={max} setValue={changeMaxValue} />
+      </Box>
     </Box>
   )
 }

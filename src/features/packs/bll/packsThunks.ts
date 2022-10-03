@@ -18,7 +18,7 @@ export const getPacksTC =
   async (dispatch, getState) => {
     dispatch(setPacksStatusAC(RequestStatusType.loading))
     if (params) {
-      await dispatch(setPacksParamsAC(params))
+      dispatch(setPacksParamsAC(params))
     }
     let statePacksParams: PacksParamsType = compareObj(getState().packs.params, initialPackParams)
 
