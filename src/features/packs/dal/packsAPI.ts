@@ -39,9 +39,9 @@ export type PacksParamsType = {
   block?: boolean
 }
 export type AddPackDataType = {
-  name: string
-  deckCover: string
-  private: boolean
+  name?: string
+  deckCover?: string
+  private?: boolean
 }
 export type TokenType = {
   token: string

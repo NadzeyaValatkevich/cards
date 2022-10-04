@@ -1,8 +1,13 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 
 import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+
+import { NewPackModal } from '../Modals/NewPackModal'
+
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { addPackTC } from 'features/packs/bll/packsThunks'
 
 type ToolbarTablePropsType = {
   addNewPack: () => void
@@ -10,8 +15,14 @@ type ToolbarTablePropsType = {
 }
 
 export const HeaderPacksPage: FC<ToolbarTablePropsType> = ({ addNewPack, disabled }) => {
+  const dispatch = useAppDispatch()
+  const [activeModalAdd, setActiveModalAdd] = useState<boolean>(false)
+
   const buttonOnClickHandler = () => {
-    addNewPack()
+    setActiveModalAdd(true)
+  }
+  const addPack = (name: string, privatePack: boolean) => {
+    dispatch(addPackTC({ name: name, private: privatePack }))
   }
 
   return (
@@ -28,6 +39,11 @@ export const HeaderPacksPage: FC<ToolbarTablePropsType> = ({ addNewPack, disable
       >
         Add new pack
       </Button>
+      <NewPackModal
+        addPack={addPack}
+        activeModalAdd={activeModalAdd}
+        setActiveModalAdd={setActiveModalAdd}
+      />
     </Box>
   )
 }
