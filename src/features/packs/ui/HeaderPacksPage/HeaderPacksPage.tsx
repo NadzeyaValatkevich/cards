@@ -27,18 +27,24 @@ export const HeaderPacksPage: FC<ToolbarTablePropsType> = ({ addNewPack, disable
 
   return (
     <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} width={'100%'}>
-      <Typography variant={'h5'} fontWeight={'600'}>
-        Packs list
-      </Typography>
-      <Button
-        onClick={buttonOnClickHandler}
-        sx={{ margin: '36px 0' }}
-        variant={'contained'}
-        color={'primary'}
-        disabled={disabled}
-      >
-        Add new pack
-      </Button>
+      <Box display={'flex'} justifyContent={'space-between'} width={'100%'}>
+        <Typography
+          variant={'h5'}
+          fontWeight={'600'}
+          sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
+        >
+          Packs list
+        </Typography>
+        <Button
+          onClick={buttonOnClickHandler}
+          sx={{ margin: '36px 0', alignSelf: 'end' }}
+          variant={'contained'}
+          color={'primary'}
+          disabled={disabled}
+        >
+          Add new pack
+        </Button>
+      </Box>
       <NewPackModal
         addPack={addPack}
         activeModalAdd={activeModalAdd}
