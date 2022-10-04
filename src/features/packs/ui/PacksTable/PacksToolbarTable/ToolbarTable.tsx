@@ -5,6 +5,7 @@ import Box from '@mui/material/Box'
 import { getPacksTC } from '../../../bll/packsThunks'
 
 import { EraseFilters } from './EraseFilters/EraseFilters'
+import { MyAllPacks } from './OwnPacks/OwnPacks'
 import { SliderForPacks } from './Slider/Slider'
 
 import { SearchPanel } from 'common/components/SearchPanel/SearchPanel'
@@ -19,8 +20,7 @@ export const ToolbarTable = () => {
       margin={'1.5rem 0'}
     >
       <SearchPanel search={'packName'} setParams={getPacksTC} />
-      <Box>Show my cards buttons</Box>
-      {/*<Box>Number of cards selector</Box>*/}
+      <MyAllPacks />
       <SliderForPacks />
       <EraseFilters />
     </Box>

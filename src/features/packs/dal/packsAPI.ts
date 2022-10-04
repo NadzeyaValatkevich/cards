@@ -35,7 +35,7 @@ export type PacksParamsType = {
   sortPacks?: string
   page?: number
   pageCount?: number
-  user_id?: string
+  user_id?: string | null
   block?: boolean
 }
 export type AddPackDataType = {
