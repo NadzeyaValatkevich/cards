@@ -68,7 +68,7 @@ export const deletePackTC = (idPack: string): AppThunk => {
   }
 }
 
-export const updatePackTC = (data: UpdatePackDataType): AppThunk => {
+export const updatePackTC = (data: { cardsPack: UpdatePackDataType }): AppThunk => {
   return async dispatch => {
     dispatch(setPacksStatusAC(RequestStatusType.loading))
     try {

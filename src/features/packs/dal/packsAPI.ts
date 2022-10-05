@@ -70,7 +70,7 @@ export const packsAPI = {
   deletePack(idPack: string) {
     return instance.delete<DeletedPackResponseType>(`cards/pack?id=${idPack}`)
   },
-  updatePack(data: UpdatePackDataType) {
+  updatePack(data: { cardsPack: UpdatePackDataType }) {
     return instance.put<UpdatePackResponseType>('cards/pack', data)
   },
 }

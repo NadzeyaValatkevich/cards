@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactElement, useMemo } from 'react'
+import React, { PropsWithChildren, ReactElement, useMemo, useState } from 'react'
 
 import { Skeleton, TableHead, TableSortLabel, Tooltip } from '@mui/material'
 import Paper from '@mui/material/Paper'
@@ -9,13 +9,16 @@ import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react-table'
 
+import { useAppSelector } from '../../../../common/hooks/useAppSelector'
+import { EditPackModal } from '../Modals/EditPackModal'
+
 import { PacksActionsComponent } from './PacksActionsComponent/PacksActionsComponent'
 
 import { RequestStatusType } from 'app/bll/appReducer'
 import { sortDir } from 'common/enums/enums'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useStyles } from 'common/styles/PacksTableStyles'
-import { deletePackTC } from 'features/packs/bll/packsThunks'
+import { deletePackTC, updatePackTC } from 'features/packs/bll/packsThunks'
 
 export interface TableProps<T extends Record<string, unknown>> extends TableOptions<T> {
   name: string
@@ -65,9 +68,17 @@ export const PacksTable = <T extends Record<string, unknown>>(
   )
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow, data } = instance
+  // const myId = useAppSelector(state => state.profile._id)
 
   const { role: tableRole, ...tableProps } = getTableProps()
   const { role: tableBodyRole, ...tableBodyProps } = getTableBodyProps()
+
+  const [open, setOpen] = useState(false)
+  const [id, setId] = useState('')
+
+  const editPack = (id: string, name: string, privatePack: boolean) => {
+    dispatch(updatePackTC({ cardsPack: { _id: id, name: name, private: privatePack } }))
+  }
 
   return (
     <>
@@ -125,7 +136,10 @@ export const PacksTable = <T extends Record<string, unknown>>(
                     const disableStudyBtn = !data[cell.row.index]?.cardsCount
 
                     const startStudyingActionHandler = (packId: string) => {}
-                    const editPackActionHandler = (packId: string) => {}
+                    const editPackActionHandler = (packId: string) => {
+                      setId(packId)
+                      setOpen(true)
+                    }
                     const deletePackActionHandler = (packId: string) =>
                       dispatch(deletePackTC(packId))
 
@@ -164,6 +178,7 @@ export const PacksTable = <T extends Record<string, unknown>>(
           </TableBody>
         </Table>
       </TableContainer>
+      <EditPackModal setOpen={setOpen} open={open} editPack={editPack} id={id} />
       {/*<div className={classes.tableDebugSection}>*/}
       {/*  <TableDebugButton enabled={isDev} instance={instance} />*/}
       {/*  <Pagination {...props.pagination} />*/}
