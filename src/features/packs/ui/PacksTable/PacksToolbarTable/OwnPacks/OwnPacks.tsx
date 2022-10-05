@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -10,15 +8,13 @@ import { getPacksTC } from 'features/packs/bll/packsThunks'
 
 export const MyAllPacks = () => {
   const dispatch = useAppDispatch()
-  const userId = useAppSelector(state => state.profile._id)
-  const [buttonPacks, setButtonPacks] = useState(true)
+  const user_id = useAppSelector(state => state.profile._id)
+  const userIdParam = useAppSelector(state => state.packs.params.user_id)
 
   const onClickMyButton = () => {
-    setButtonPacks(buttonPacks => !buttonPacks)
-    dispatch(getPacksTC({ user_id: userId }))
+    dispatch(getPacksTC({ user_id }))
   }
   const onClickAllButton = () => {
-    setButtonPacks(buttonPacks => !buttonPacks)
     dispatch(getPacksTC({ user_id: '' }))
   }
 
@@ -26,10 +22,10 @@ export const MyAllPacks = () => {
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Typography sx={{ alignSelf: 'center' }}>Show packs cards</Typography>
       <div>
-        <Button onClick={onClickMyButton} variant={!buttonPacks ? 'contained' : 'outlined'}>
+        <Button onClick={onClickMyButton} variant={userIdParam ? 'contained' : 'outlined'}>
           My Packs
         </Button>
-        <Button onClick={onClickAllButton} variant={buttonPacks ? 'contained' : 'outlined'}>
+        <Button onClick={onClickAllButton} variant={!userIdParam ? 'contained' : 'outlined'}>
           All Packs
         </Button>
       </div>

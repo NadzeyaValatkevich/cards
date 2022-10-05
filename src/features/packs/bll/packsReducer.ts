@@ -10,6 +10,7 @@ export const initialPackParams: PacksParamsType = {
   page: 1,
   packName: '',
   sortPacks: '',
+  user_id: '',
 }
 
 const initialState = {
