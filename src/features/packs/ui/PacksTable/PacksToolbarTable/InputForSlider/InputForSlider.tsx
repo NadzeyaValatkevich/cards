@@ -1,7 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react'
 
-import { getPacksTC } from '../../../../bll/packsThunks'
-
 import styles from './input.module.css'
 
 import { useDebounce } from 'common/hooks/useDebounce'
@@ -11,26 +9,24 @@ type InputForSliderType = {
   setValue: (newValue: number) => void
 }
 
-export const InputForSlider: FC<InputForSliderType> = ({ value, setValue }) => {
-  const [inputValue, setInputValue] = useState<number>(0)
-
+export const InputForSlider: FC<InputForSliderType> = ({
+  value: newValue,
+  setValue: newSetValue,
+}) => {
+  const [value, setValue] = useState(newValue)
+  const debouncedValue = useDebounce(value, 500)
   const changeInputValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(+event.currentTarget.value)
-    let currentValue = Number(event.currentTarget)
-
-    setValue(Number(currentValue))
+    setValue(+event.currentTarget.value)
   }
 
   useEffect(() => {
-    value && setInputValue(value)
-  }, [value])
+    debouncedValue !== undefined && newSetValue(debouncedValue)
+  }, [debouncedValue])
+  useEffect(() => {
+    newValue !== undefined && setValue(newValue)
+  }, [newValue])
 
   return (
-    <input
-      type={'number'}
-      value={inputValue}
-      onChange={changeInputValue}
-      className={styles.input}
-    />
+    <input type={'number'} value={value} onChange={changeInputValue} className={styles.input} />
   )
 }

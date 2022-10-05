@@ -4,41 +4,26 @@ import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 
-import { getPacksTC } from '../../../../bll/packsThunks'
+import { setPacksParamsAC } from '../../../../bll/packsActions'
 import { InputForSlider } from '../InputForSlider/InputForSlider'
 
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
-import { useDebounce } from 'common/hooks/useDebounce'
 
 export const SliderForPacks = () => {
   const dispatch = useAppDispatch()
-  const min = useAppSelector(state => state.packs.params.min)
-  const max = useAppSelector(state => state.packs.params.max)
+  const { min, max } = useAppSelector(state => state.packs.params)
   const [value, setValue] = useState<number[]>([0, 100])
-  const debouncedValue = useDebounce(value, 500)
 
-  console.log('value', value)
-  console.log('max, min', min, max)
-
-  const onChangeCallback = (event: Event, newValue: number | number[]) => {
+  const onChangeCallback = (
+    event: Event | SyntheticEvent<Element, Event>,
+    newValue: number | number[]
+  ) => {
     if (Array.isArray(newValue)) {
       setValue(newValue)
     }
   }
 
-  const handleChangeCommitted = (
-    event: Event | SyntheticEvent<Element, Event>,
-    newValue: number | number[]
-  ) => {
-    Array.isArray(newValue) &&
-      dispatch(
-        getPacksTC({
-          min: newValue[0],
-          max: newValue[1],
-        })
-      )
-  }
   const changeMinValue = (newValue: number) => {
     const newArray = [...value]
 
@@ -54,31 +39,27 @@ export const SliderForPacks = () => {
   }
 
   useEffect(() => {
-    if (min && min >= 0 && max) {
+    if (min !== undefined && max) {
       setValue([min, max])
     }
   }, [min, max])
 
-  // useEffect(() => {
-  //   dispatch(
-  //     getPacksTC({
-  //       min: value[0],
-  //       max: value[1],
-  //     })
-  //   )
-  // }, [value])
+  useEffect(() => {
+    dispatch(
+      setPacksParamsAC({
+        min: value[0],
+        max: value[1],
+      })
+    )
+  }, [value])
 
   return (
     <Box>
       <Typography sx={{ textAlign: 'center' }}>Number of cards</Typography>
       <Box sx={{ display: 'flex', width: '300px' }}>
-        <InputForSlider value={min} setValue={changeMinValue} />
-        <Slider
-          value={value}
-          onChange={onChangeCallback}
-          onChangeCommitted={handleChangeCommitted}
-        />
-        <InputForSlider value={max} setValue={changeMaxValue} />
+        <InputForSlider value={value[0]} setValue={changeMinValue} />
+        <Slider value={value} onChangeCommitted={onChangeCallback} />
+        <InputForSlider value={value[1]} setValue={changeMaxValue} />
       </Box>
     </Box>
   )
