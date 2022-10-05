@@ -25,11 +25,12 @@ export const logoutTC = (): AppThunk => async dispatch => {
     const res = await authAPI.logout()
 
     dispatch(setProfileAC({} as ProfileStateType))
-    dispatch(setIsLoggedInAC(false))
     dispatch(setAppInfoAC(res.data.info))
     dispatch(setAppStatusAC(RequestStatusType.succeeded))
   } catch (error: any) {
     errorUtils(error, dispatch)
+  } finally {
+    dispatch(setIsLoggedInAC(false))
   }
 }
 

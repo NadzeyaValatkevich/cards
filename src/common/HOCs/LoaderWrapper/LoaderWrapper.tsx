@@ -1,17 +1,15 @@
 import React, { FC, ReactNode } from 'react'
 
 import { RequestStatusType } from 'app/bll/appReducer'
+import { appStatusSelector } from 'app/bll/appSelectors'
 import { Loader } from 'common/components/Loader/Loader'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 
 type LoaderWrapperPropsType = {
   children: ReactNode
 }
-
 export const LoaderWrapper: FC<LoaderWrapperPropsType> = ({ children }) => {
-  const isLoading = useAppSelector(state => state.app.status)
+  const appIsLoading = useAppSelector(appStatusSelector)
 
-  if (isLoading === RequestStatusType.loading) return <Loader />
-
-  return <>{children}</>
+  return appIsLoading === RequestStatusType.loading ? <Loader /> : <>{children}</>
 }
