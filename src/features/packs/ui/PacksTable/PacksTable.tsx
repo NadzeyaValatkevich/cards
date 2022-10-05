@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow'
 import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react-table'
 
 import { useAppSelector } from '../../../../common/hooks/useAppSelector'
+import { DeletePackModal } from '../Modals/DeletePackModal'
 import { EditPackModal } from '../Modals/EditPackModal'
 
 import { PacksActionsComponent } from './PacksActionsComponent/PacksActionsComponent'
@@ -68,16 +69,20 @@ export const PacksTable = <T extends Record<string, unknown>>(
   )
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow, data } = instance
-  // const myId = useAppSelector(state => state.profile._id)
 
   const { role: tableRole, ...tableProps } = getTableProps()
   const { role: tableBodyRole, ...tableBodyProps } = getTableBodyProps()
 
   const [open, setOpen] = useState(false)
+  const [openDelete, setOpenDelete] = React.useState(false)
   const [id, setId] = useState('')
 
   const editPack = (id: string, name: string, privatePack: boolean) => {
     dispatch(updatePackTC({ cardsPack: { _id: id, name: name, private: privatePack } }))
+  }
+
+  const removePackCards = (pack_id: string) => {
+    dispatch(deletePackTC(pack_id))
   }
 
   return (
@@ -140,8 +145,10 @@ export const PacksTable = <T extends Record<string, unknown>>(
                       setId(packId)
                       setOpen(true)
                     }
-                    const deletePackActionHandler = (packId: string) =>
-                      dispatch(deletePackTC(packId))
+                    const deletePackActionHandler = (packId: string) => {
+                      setId(packId)
+                      setOpenDelete(true)
+                    }
 
                     if (cell.column.render('Header') === 'Actions') {
                       return (
@@ -179,6 +186,12 @@ export const PacksTable = <T extends Record<string, unknown>>(
         </Table>
       </TableContainer>
       <EditPackModal setOpen={setOpen} open={open} editPack={editPack} id={id} />
+      <DeletePackModal
+        setOpen={setOpenDelete}
+        open={openDelete}
+        removePackCards={removePackCards}
+        id={id}
+      />
       {/*<div className={classes.tableDebugSection}>*/}
       {/*  <TableDebugButton enabled={isDev} instance={instance} />*/}
       {/*  <Pagination {...props.pagination} />*/}
