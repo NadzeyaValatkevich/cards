@@ -12,12 +12,12 @@ import IconButton from '@mui/material/IconButton'
 import { AppRoutes } from '../../../app/ui/RoutesComponent'
 
 export const MenuEditMyCards = () => {
-  const editNameCardHandler = () => {}
+
 
   return (
     <Menu
       // anchorEl={anchorEl}
-      // id="account-menu"
+      id=""
       open={true}
       // onClose={handleClose}
       // onClick={handleClose}
@@ -51,7 +51,7 @@ export const MenuEditMyCards = () => {
       // anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
       <MenuItem>
-        <IconButton onClick={editNameCardHandler}>
+        <IconButton onClick={() => {}}>
           <BorderColorIcon fontSize={'small'} />
         </IconButton>
         Edit
