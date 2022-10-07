@@ -9,7 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { createNewPasswordTC } from '../bll/authThunks'
 
-import { AppRoutes } from 'app/ui/RoutesComponent'
+import { AppRoutes } from 'common/enums/enums'
 import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { errorUtils } from 'common/utils/error-utils'

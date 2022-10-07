@@ -5,8 +5,8 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { useNavigate } from 'react-router-dom'
 
-import { AppRoutes } from 'app/ui/RoutesComponent'
 import emailImg from 'common/assets/image/email.svg'
+import { AppRoutes } from 'common/enums/enums'
 import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 
 export type recoverySendType = {

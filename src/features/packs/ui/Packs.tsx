@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import Box from '@mui/material/Box'
 import { useSearchParams } from 'react-router-dom'
 import { Column } from 'react-table'
 
-import { setPacksParamsAC } from '../bll/packsActions'
+import { setPacksInitialParamsAC, setPacksPaginationAC, setPacksSortAC } from '../bll/packsActions'
 import { initialPackParams } from '../bll/packsReducer'
+import {
+  packsDataSelector,
+  packsEntityStatusSelector,
+  packsParamsSelector,
+  profileSelector,
+} from '../bll/packsSelectors'
 import { addPackTC, getPacksTC } from '../bll/packsThunks'
 import { AddPackDataType, PackType } from '../dal/packsAPI'
 
@@ -13,7 +19,6 @@ import { PacksTable } from './PacksTable/PacksTable'
 
 import { RequestStatusType } from 'app/bll/appReducer'
 import { Pagination, PaginationPropsType } from 'common/components/Pagination/Pagination'
-import { sortDir } from 'common/enums/enums'
 import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
@@ -49,43 +54,28 @@ const columns: Column<PackType>[] = [
   },
   {
     Header: 'Actions',
-    // accessor: 'actions',
-    // Cell: <PacksActionsComponent />,
     width: 130,
   },
 ]
-const sortDirFunc = (value: string | undefined): string => {
-  if (!value) return sortDir.asc
-
-  return value[0] === sortDir.asc ? sortDir.desc : sortDir.asc
-}
 
 export const Packs = () => {
   //Hooks
-  const [data, setData] = useState<PackType[]>([])
   const dispatch = useAppDispatch()
-  const params = useAppSelector(state => state.packs.params)
-  const entityStatus = useAppSelector(state => state.packs.entityStatus)
-  const { page, pageCount, cardPacksTotalCount, cardPacks } = useAppSelector(
-    state => state.packs.packsData
-  )
-  const profileId = useAppSelector(state => state.profile._id)
+  const params = useAppSelector(packsParamsSelector)
+  const packsEntityStatus = useAppSelector(packsEntityStatusSelector)
+  const { page, pageCount, cardPacksTotalCount, cardPacks } = useAppSelector(packsDataSelector)
+  const { _id: profileId } = useAppSelector(profileSelector)
   const [URLSearchParams, SetURLSearchParams] = useSearchParams()
 
   const paginationProps: PaginationPropsType = {
     page,
     pageCount,
     totalCount: cardPacksTotalCount,
-    setParamsPacksOrCardsAC: getPacksTC,
+    setParamsPacksOrCardsAC: setPacksPaginationAC,
   }
-  const sortDirection = sortDirFunc(params.sortPacks)
-
   //handlers
-  const columnSortHandler = async (e: string) => {
-    const sort = { sortPacks: `${sortDirection}${e}` }
-
-    await dispatch(getPacksTC(sort))
-    SetURLSearchParams(sort)
+  const columnSortHandler = (name: string, dir: 'asc' | 'desc') => {
+    dispatch(setPacksSortAC(name, dir))
   }
   const addNewPackHandler = () => {
     const date = dateParser(new Date(Date.now()).toISOString())
@@ -103,13 +93,11 @@ export const Packs = () => {
     dispatch(getPacksTC())
 
     return () => {
-      dispatch(setPacksParamsAC(initialPackParams))
+      dispatch(setPacksInitialParamsAC())
     }
   }, [])
   useEffect(() => {
-    setData(cardPacks)
-  }, [cardPacks])
-  useEffect(() => {
+    dispatch(getPacksTC())
     SetURLSearchParams(compareObj(params, initialPackParams))
   }, [params])
 
@@ -117,22 +105,21 @@ export const Packs = () => {
     <ContentWrapper withoutPaper>
       <HeaderPacksPage
         addNewPack={addNewPackHandler}
-        disabled={entityStatus === RequestStatusType.loading}
+        disabled={packsEntityStatus === RequestStatusType.loading}
       />
       <ToolbarTable />
-      {data[0] ? (
+      {cardPacks.length ? (
         <>
           <PacksTable<PackType>
             name={'packsTable'}
             columns={columns}
-            data={data}
-            sortDirection={sortDirection}
-            columnSort={columnSortHandler}
-            entityStatus={entityStatus}
+            data={cardPacks}
+            columnSortHandler={columnSortHandler}
+            entityStatus={packsEntityStatus}
             sortParam={params.sortPacks}
             profileId={profileId}
           />
-          <Pagination {...paginationProps} />{' '}
+          <Pagination {...paginationProps} />
         </>
       ) : (
         <Box>

@@ -3,20 +3,12 @@ import React from 'react'
 import './index.css'
 
 import { createRoot } from 'react-dom/client'
-import { Provider } from 'react-redux'
-import { HashRouter } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 
-import { store } from './app/bll/store'
-import { App } from './app/ui/App'
+import { router } from './app/bll/router'
 import reportWebVitals from './reportWebVitals'
 
 const root = createRoot(document.getElementById('root') as HTMLElement)
 
-root.render(
-  <HashRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </HashRouter>
-)
+root.render(<RouterProvider router={router} />)
 reportWebVitals()

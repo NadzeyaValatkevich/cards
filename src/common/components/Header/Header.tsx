@@ -7,12 +7,11 @@ import Container from '@mui/material/Container'
 import Toolbar from '@mui/material/Toolbar'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppSelector } from '../../hooks/useAppSelector'
-
 import { AvatarHeader } from './AvatarHeader'
 
-import { AppRoutes } from 'app/ui/RoutesComponent'
 import logo from 'common/assets/image/logo.svg'
+import { AppRoutes } from 'common/enums/enums'
+import { useAppSelector } from 'common/hooks/useAppSelector'
 
 export const Header = () => {
   const navigate = useNavigate()
