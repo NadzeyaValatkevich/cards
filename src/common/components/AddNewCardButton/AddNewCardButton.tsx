@@ -8,7 +8,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { addCardTC } from 'features/cards/bll/cardsThunk'
 import { NewCardModal } from 'features/Modals/CardsModals/NewCardModal'
 
-export const AddNewCard = () => {
+export const AddNewCardButton = () => {
   const dispatch = useAppDispatch()
   const [openModalAdd, setOpenModalAdd] = useState(false)
   const addCard = (id: string, question: string, answer: string) => {
