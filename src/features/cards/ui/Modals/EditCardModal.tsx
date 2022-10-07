@@ -53,8 +53,6 @@ export const EditCardModal = (props: EditCardModalType) => {
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
-          // value={age}
-          //onChange={handleChange}
           label="Age"
         >
           <MenuItem>Text</MenuItem>

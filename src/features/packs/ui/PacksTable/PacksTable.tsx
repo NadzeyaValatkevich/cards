@@ -9,7 +9,6 @@ import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react-table'
 
-import { useAppSelector } from '../../../../common/hooks/useAppSelector'
 import { DeletePackModal } from '../Modals/DeletePackModal'
 import { EditPackModal } from '../Modals/EditPackModal'
 

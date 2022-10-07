@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, MouseEvent } from 'react'
 
 import BorderColorIcon from '@mui/icons-material/BorderColor'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
@@ -7,14 +7,21 @@ import { Menu, MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 
-import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { useAppSelector } from '../../hooks/useAppSelector'
 
 import ellipsis from 'common/assets/image/ellipsis.svg'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { updateCardTC } from 'features/cards/bll/cardsThunk'
+import { EditCardModal } from 'features/cards/ui/Modals/EditCardModal'
 
 export const MenuEditMyCards = () => {
   const dispatch = useAppDispatch()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+  const [openModalDelete, setOpenModalDelete] = useState(false)
+  const [openModalEdit, setOpenModalEdit] = useState(false)
+  const _id = useAppSelector(state => state.cards.cardsData.packUserId)
+  // const { id } = useParams()
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -22,6 +29,12 @@ export const MenuEditMyCards = () => {
 
   const handleClose = () => {
     setAnchorEl(null)
+  }
+  const updateCard = (id: string, question: string, answer: string) => {
+    dispatch(updateCardTC({ _id: id, question, answer }))
+  }
+  const onClickEditDataHandler = () => {
+    setOpenModalEdit(true)
   }
 
   return (
@@ -67,17 +80,15 @@ export const MenuEditMyCards = () => {
             },
           },
         }}
-        // transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        // anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem>
-          <IconButton onClick={() => {}}>
+        <MenuItem onClick={onClickEditDataHandler}>
+          <IconButton>
             <BorderColorIcon fontSize={'small'} />
           </IconButton>
           Edit
         </MenuItem>
-        <MenuItem>
-          <IconButton onClick={() => {}}>
+        <MenuItem onClick={() => {}}>
+          <IconButton>
             <DeleteForeverIcon fontSize={'small'} />
           </IconButton>
           Delete
@@ -89,6 +100,18 @@ export const MenuEditMyCards = () => {
           Learn
         </MenuItem>
       </Menu>
+      <EditCardModal
+        setOpen={setOpenModalEdit}
+        open={openModalEdit}
+        updateCard={updateCard}
+        _id={_id}
+      />
+      {/*<DeleteCardModal*/}
+      {/*  setOpen={setOpenModalDelete}*/}
+      {/*  open={openModalDelete}*/}
+      {/*  removeCard={removeCard}*/}
+      {/*  _id={_id}*/}
+      {/*/>*/}
     </Box>
   )
 }
