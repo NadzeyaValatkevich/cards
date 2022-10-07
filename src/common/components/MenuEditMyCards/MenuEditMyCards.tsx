@@ -1,15 +1,10 @@
 import React from 'react'
 
-import { Logout } from '@mui/icons-material'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import SchoolIcon from '@mui/icons-material/School'
-import StyleIcon from '@mui/icons-material/Style'
-import { ListItemIcon, Menu, MenuItem } from '@mui/material'
+import { Menu, MenuItem } from '@mui/material'
 import IconButton from '@mui/material/IconButton'
-
-import { AppRoutes } from '../../../app/ui/RoutesComponent'
 
 export const MenuEditMyCards = () => {
   const editNameCardHandler = () => {}
