@@ -3,16 +3,22 @@ import { ChangeEvent, useState } from 'react'
 import { InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 
-import { BasicModal } from 'common/components/Modal/Modal'
+import { useAppSelector } from 'common/hooks/useAppSelector'
+import { BasicModal } from 'features/Modals/BasicModal'
 
-type NewCardModalType = {
+type EditCardModalType = {
   setOpen: (value: boolean) => void
   open: boolean
-  addCard: (id: string, question: string, answer: string) => void
+  updateCard: (_id: string, question: string, answer: string) => void
   id: string
 }
 
-export const NewCardModal = (props: NewCardModalType) => {
+export const EditCardModal = (props: EditCardModalType) => {
+  const cards = useAppSelector(state => state.cards.cardsData.cards)
+  const card = cards.find(card => card._id === props.id)
+  const initQuestion = card && card.question
+  const initAnswer = card && card.answer
+
   const [questionTitle, setQuestionTitle] = useState<string>('')
   const [answerTitle, setAnswerTitle] = useState<string>('')
 
@@ -27,8 +33,8 @@ export const NewCardModal = (props: NewCardModalType) => {
     setAnswerTitle(e.currentTarget.value)
   }
 
-  const addCardHandler = () => {
-    props.addCard(props.id, questionTitle, answerTitle)
+  const updateCardHandler = () => {
+    props.updateCard(props.id, questionTitle, answerTitle)
     props.setOpen(false)
     setQuestionTitle('')
     setAnswerTitle('')
@@ -36,10 +42,10 @@ export const NewCardModal = (props: NewCardModalType) => {
 
   return (
     <BasicModal
-      name={'Add new card'}
+      name={'Edit card'}
       open={props.open}
       setOpen={props.setOpen}
-      onSave={addCardHandler}
+      onSave={updateCardHandler}
       nameButton={'Save'}
     >
       <FormControl variant="standard" sx={{ width: '100%' }}>
@@ -55,6 +61,7 @@ export const NewCardModal = (props: NewCardModalType) => {
       </FormControl>
       <TextField
         onChange={onChangeTextFieldQuestionHandler}
+        defaultValue={initQuestion}
         id="standard-basic"
         label="Question"
         variant="standard"
@@ -62,6 +69,7 @@ export const NewCardModal = (props: NewCardModalType) => {
       />
       <TextField
         onChange={onChangeTextFieldAnswerHandler}
+        defaultValue={initAnswer}
         id="standard-basic"
         label="Answer"
         variant="standard"

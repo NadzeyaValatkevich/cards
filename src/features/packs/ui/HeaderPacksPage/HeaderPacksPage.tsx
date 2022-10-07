@@ -4,9 +4,8 @@ import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 
-import { NewPackModal } from '../Modals/NewPackModal'
+import { NewPackModal } from '../../../Modals/PacksModals/NewPackModal'
 
-import { MenuEditMyCards } from 'common/components/MenuEditMyCards/MenuEditMyCards'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { addPackTC } from 'features/packs/bll/packsThunks'
 
@@ -35,7 +34,6 @@ export const HeaderPacksPage: FC<ToolbarTablePropsType> = ({ addNewPack, disable
           sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
         >
           Packs list
-          <MenuEditMyCards />
         </Typography>
         <Button
           onClick={buttonOnClickHandler}

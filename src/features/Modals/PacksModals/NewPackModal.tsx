@@ -4,7 +4,7 @@ import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import TextField from '@mui/material/TextField'
 
-import { BasicModal } from 'common/components/Modal/Modal'
+import { BasicModal } from 'features/Modals/BasicModal'
 
 type NewPackModalType = {
   addPack: (name: string, privatePack: boolean) => void
@@ -14,7 +14,7 @@ type NewPackModalType = {
 
 export const NewPackModal = (props: NewPackModalType) => {
   const [title, setTitle] = useState('')
-  // const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false)
 
   const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {

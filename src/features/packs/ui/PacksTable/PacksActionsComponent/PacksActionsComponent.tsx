@@ -6,11 +6,6 @@ import SchoolIcon from '@mui/icons-material/School'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 
-import { useAppDispatch } from '../../../../../common/hooks/useAppDispatch'
-import { useAppSelector } from '../../../../../common/hooks/useAppSelector'
-import { updatePackTC } from '../../../bll/packsThunks'
-import { EditPackModal } from '../../Modals/EditPackModal'
-
 type PacksActionsPropsType = {
   packId: string
   enableEdit: boolean

@@ -9,15 +9,14 @@ import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react-table'
 
-import { DeletePackModal } from '../Modals/DeletePackModal'
-import { EditPackModal } from '../Modals/EditPackModal'
-
 import { PacksActionsComponent } from './PacksActionsComponent/PacksActionsComponent'
 
 import { RequestStatusType } from 'app/bll/appReducer'
 import { sortDir } from 'common/enums/enums'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useStyles } from 'common/styles/PacksTableStyles'
+import { DeletePackModal } from 'features/Modals/PacksModals/DeletePackModal'
+import { EditPackModal } from 'features/Modals/PacksModals/EditPackModal'
 import { deletePackTC, updatePackTC } from 'features/packs/bll/packsThunks'
 
 export interface TableProps<T extends Record<string, unknown>> extends TableOptions<T> {

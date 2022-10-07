@@ -1,16 +1,16 @@
 import { Typography } from '@mui/material'
 
-import { BasicModal } from 'common/components/Modal/Modal'
+import { BasicModal } from 'features/Modals/BasicModal'
 
 type DeleteCardModalType = {
   setOpen: (value: boolean) => void
   open: boolean
-  removeCard: (id: string) => void
-  _id: string
+  deleteCard: (id: string) => void
+  id: string
 }
 export const DeleteCardModal = (props: DeleteCardModalType) => {
   const deletePackHandler = () => {
-    props.removeCard(props._id)
+    props.deleteCard(props.id)
     props.setOpen(false)
   }
 

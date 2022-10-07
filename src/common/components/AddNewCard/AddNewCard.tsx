@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 
 import { addCardTC } from 'features/cards/bll/cardsThunk'
-import { NewCardModal } from 'features/cards/ui/Modals/NewCardModal'
+import { NewCardModal } from 'features/Modals/CardsModals/NewCardModal'
 
 export const AddNewCard = () => {
   const dispatch = useAppDispatch()

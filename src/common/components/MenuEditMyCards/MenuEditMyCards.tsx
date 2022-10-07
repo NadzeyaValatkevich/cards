@@ -7,12 +7,12 @@ import { Menu, MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 
-import { useAppSelector } from '../../hooks/useAppSelector'
-
 import ellipsis from 'common/assets/image/ellipsis.svg'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
-import { updateCardTC } from 'features/cards/bll/cardsThunk'
-import { EditCardModal } from 'features/cards/ui/Modals/EditCardModal'
+import { useAppSelector } from 'common/hooks/useAppSelector'
+import { deleteCardTC, updateCardTC } from 'features/cards/bll/cardsThunk'
+import { DeleteCardModal } from 'features/Modals/CardsModals/DeleteCardModal'
+import { EditCardModal } from 'features/Modals/CardsModals/EditCardModal'
 
 export const MenuEditMyCards = () => {
   const dispatch = useAppDispatch()
@@ -20,7 +20,7 @@ export const MenuEditMyCards = () => {
   const open = Boolean(anchorEl)
   const [openModalDelete, setOpenModalDelete] = useState(false)
   const [openModalEdit, setOpenModalEdit] = useState(false)
-  const _id = useAppSelector(state => state.cards.cardsData.packUserId)
+  const id = useAppSelector(state => state.cards.cardsData.packUserId)
   // const { id } = useParams()
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -35,6 +35,12 @@ export const MenuEditMyCards = () => {
   }
   const onClickEditDataHandler = () => {
     setOpenModalEdit(true)
+  }
+  const deleteCard = (id: string) => {
+    dispatch(deleteCardTC(id))
+  }
+  const onClickDeleteCardHandler = () => {
+    setOpenModalDelete(true)
   }
 
   return (
@@ -87,7 +93,7 @@ export const MenuEditMyCards = () => {
           </IconButton>
           Edit
         </MenuItem>
-        <MenuItem onClick={() => {}}>
+        <MenuItem onClick={onClickDeleteCardHandler}>
           <IconButton>
             <DeleteForeverIcon fontSize={'small'} />
           </IconButton>
@@ -104,14 +110,14 @@ export const MenuEditMyCards = () => {
         setOpen={setOpenModalEdit}
         open={openModalEdit}
         updateCard={updateCard}
-        _id={_id}
+        id={id}
       />
-      {/*<DeleteCardModal*/}
-      {/*  setOpen={setOpenModalDelete}*/}
-      {/*  open={openModalDelete}*/}
-      {/*  removeCard={removeCard}*/}
-      {/*  _id={_id}*/}
-      {/*/>*/}
+      <DeleteCardModal
+        setOpen={setOpenModalDelete}
+        open={openModalDelete}
+        deleteCard={deleteCard}
+        id={id}
+      />
     </Box>
   )
 }

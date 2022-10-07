@@ -2,8 +2,8 @@ import { ChangeEvent, useState } from 'react'
 
 import { Checkbox, FormControlLabel, TextField } from '@mui/material'
 
-import { BasicModal } from 'common/components/Modal/Modal'
 import { useAppSelector } from 'common/hooks/useAppSelector'
+import { BasicModal } from 'features/Modals/BasicModal'
 
 type EditPackModalType = {
   setOpen: (value: boolean) => void
