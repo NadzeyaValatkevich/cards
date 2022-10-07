@@ -4,6 +4,7 @@ import Box from '@mui/material/Box'
 import { useSearchParams } from 'react-router-dom'
 import { Column } from 'react-table'
 
+import { compareObj } from '../../../common/utils/removeEmptyObj'
 import { setPacksInitialParamsAC, setPacksPaginationAC, setPacksSortAC } from '../bll/packsActions'
 import { initialPackParams } from '../bll/packsReducer'
 import {
@@ -23,7 +24,6 @@ import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { dateParser } from 'common/utils/dateParser'
-import { compareObj } from 'common/utils/removeEmptyObj'
 import { HeaderPacksPage } from 'features/packs/ui/HeaderPacksPage/HeaderPacksPage'
 import { ToolbarTable } from 'features/packs/ui/PacksTable/PacksToolbarTable/ToolbarTable'
 
@@ -90,20 +90,26 @@ export const Packs = () => {
 
   //useEffect
   useEffect(() => {
-    dispatch(getPacksTC())
+    // SetURLSearchParams(compareObj(params, initialPackParams))
 
     return () => {
       dispatch(setPacksInitialParamsAC())
     }
   }, [])
   useEffect(() => {
-    const currentParam = compareObj(params, initialPackParams)
-
-    if (currentParam) {
-      dispatch(getPacksTC())
-      SetURLSearchParams(currentParam)
-    }
+    dispatch(getPacksTC())
+    SetURLSearchParams(compareObj(params, initialPackParams))
   }, [params])
+  // useEffect(() => {
+  //   const compareParam = compareObj(Object.fromEntries(URLSearchParams), params)
+  //
+  //   console.log(compareParam)
+  //   if (!Object.keys(compareParam).length) {
+  //     return
+  //   } else {
+  //     dispatch(setPacksInitialParamsAC())
+  //   }
+  // }, [URLSearchParams])
 
   return (
     <ContentWrapper withoutPaper>

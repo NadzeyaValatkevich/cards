@@ -4,17 +4,13 @@ import SearchIcon from '@mui/icons-material/Search'
 import { InputAdornment, TextField, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 
-import { AppThunk } from '../../../app/bll/store'
-import { CardsParamsType } from '../../../features/cards/dal/cardsAPI'
-import { PacksParamsType } from '../../../features/packs/dal/packsAPI'
-
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useDebounce } from 'common/hooks/useDebounce'
 
 type SearchKeyType = 'cardQuestion' | 'cardAnswer' | 'packName'
 
 type PropsType = {
-  setParams: (params: PacksParamsType | CardsParamsType) => AppThunk
+  setParams: (packName: string) => any
   search: SearchKeyType
 }
 
@@ -35,7 +31,7 @@ export const SearchPanel: FC<PropsType> = ({ setParams, search }) => {
 
   useEffect(() => {
     if (flag) {
-      dispatch(setParams({ [search]: debouncedValue }))
+      dispatch(setParams(debouncedValue))
     }
   }, [debouncedValue])
 
