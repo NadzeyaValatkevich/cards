@@ -4,10 +4,10 @@ import { ActionPacksType } from 'features/packs/bll/packsActions'
 import { PacksParamsType, PackType } from 'features/packs/dal/packsAPI'
 
 export const initialPackParams: PacksParamsType = {
+  page: 1,
   pageCount: 5,
   min: 0,
   max: 100,
-  page: 1,
   packName: '',
   sortPacks: '',
 }
@@ -34,21 +34,44 @@ export const packsReducer = (
   action: ActionPacksType
 ): PacksInitialStateType => {
   switch (action.type) {
-    case 'PACKS/GET-PACKS':
+    case 'PACKS/SET-STATUS':
+      return { ...state, entityStatus: action.payload.entityStatus }
+    case 'PACKS/SET-PACKS': {
+      const parsedDate = action.payload.packsData.cardPacks.map((c: PackType) => ({
+        ...c,
+        updated: dateParser(c.updated).toString(),
+      }))
+
       return {
         ...state,
         packsData: {
           ...action.payload.packsData,
-          cardPacks: action.payload.packsData.cardPacks.map((c: PackType) => ({
-            ...c,
-            updated: dateParser(c.updated).toString(),
-          })),
+          cardPacks: parsedDate,
         },
       }
-    case 'PACKS/SET-PARAMS':
+    }
+    case 'PACKS/SET-PAGINATION':
       return { ...state, params: { ...state.params, ...action.payload.params } }
-    case 'PACKS/SET-STATUS':
-      return { ...state, entityStatus: action.payload.entityStatus }
+    case 'PACKS/SET-SEARCH':
+      return { ...state, params: { ...state.params, packName: action.payload.packName } }
+    case 'PACKS/SET-SORT': {
+      const sortRequest =
+        action.payload.dir === 'asc' ? `0${action.payload.name}` : `1${action.payload.name}`
+
+      return { ...state, params: { ...state.params, sortPacks: sortRequest } }
+    }
+    case 'PACKS/SET-USER-ID':
+      return { ...state, params: { ...state.params, user_id: action.payload.user_id } }
+    case 'PACKS/SET-MIN-MAX':
+      return {
+        ...state,
+        params: { ...state.params, min: action.payload.min, max: action.payload.max },
+      }
+    case 'PACKS/SET-INIT-PARAMS':
+      return {
+        ...state,
+        params: initialPackParams,
+      }
     default:
       return state
   }

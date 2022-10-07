@@ -1,33 +1,39 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { SelectCountRow } from '../SelectCountRow/SelectCountRow'
 
 import { PaginationRounded } from 'common/components/Pagination/PaginationRounded'
-import { CardsParamsType } from 'features/cards/dal/cardsAPI'
-import { PacksParamsType } from 'features/packs/dal/packsAPI'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
 
-type ParamsType = PacksParamsType | CardsParamsType
+export type PaginationParamsType = {
+  page?: number
+  pageCount?: number
+}
 
 export type PaginationPropsType = {
   page: number
   totalCount: number
   pageCount: number
-  setParamsPacksOrCardsAC: (params: ParamsType) => any
+  setParamsPacksOrCardsAC: (params: PaginationParamsType) => any
 }
 
-export const Pagination = (props: PaginationPropsType) => {
+export const Pagination: FC<PaginationPropsType> = ({
+  pageCount,
+  page,
+  totalCount,
+  setParamsPacksOrCardsAC,
+}) => {
   const dispatch = useAppDispatch()
 
   const handleChangePage = (page: number) => {
-    dispatch(props.setParamsPacksOrCardsAC({ page }))
+    dispatch(setParamsPacksOrCardsAC({ page }))
   }
 
   const onChangeCountRow = (valuePage: string) => {
-    dispatch(props.setParamsPacksOrCardsAC({ pageCount: +valuePage }))
+    dispatch(setParamsPacksOrCardsAC({ pageCount: +valuePage }))
   }
 
   return (
@@ -42,9 +48,9 @@ export const Pagination = (props: PaginationPropsType) => {
     >
       <Box>
         <PaginationRounded
-          totalCount={props.totalCount}
-          pageCount={props.pageCount}
-          page={props.page}
+          totalCount={totalCount}
+          pageCount={pageCount}
+          page={page}
           onChangePage={handleChangePage}
         />
       </Box>
@@ -53,10 +59,7 @@ export const Pagination = (props: PaginationPropsType) => {
           Show
         </Typography>
 
-        <SelectCountRow
-          callBackChange={onChangeCountRow}
-          pageCount={JSON.stringify(props.pageCount)}
-        />
+        <SelectCountRow callBackChange={onChangeCountRow} pageCount={JSON.stringify(pageCount)} />
 
         <Typography variant="subtitle1" sx={{ marginLeft: '10px' }}>
           Cards per page

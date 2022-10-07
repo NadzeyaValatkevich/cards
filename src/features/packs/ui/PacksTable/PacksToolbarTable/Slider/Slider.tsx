@@ -4,10 +4,9 @@ import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 
-import { getPacksTC } from '../../../../bll/packsThunks'
-
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
+import { setPacksMinMaxAC } from 'features/packs/bll/packsActions'
 
 export const SliderForPacks = () => {
   const dispatch = useAppDispatch()
@@ -24,13 +23,7 @@ export const SliderForPacks = () => {
     event: Event | SyntheticEvent<Element, Event>,
     newValue: number | number[]
   ) => {
-    Array.isArray(newValue) &&
-      dispatch(
-        getPacksTC({
-          min: newValue[0],
-          max: newValue[1],
-        })
-      )
+    Array.isArray(newValue) && dispatch(setPacksMinMaxAC(newValue[0], newValue[1]))
   }
 
   useEffect(() => {

@@ -5,16 +5,13 @@ import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
-import { setPacksParamsAC } from 'features/packs/bll/packsActions'
-import { initialPackParams } from 'features/packs/bll/packsReducer'
-import { getPacksTC } from 'features/packs/bll/packsThunks'
+import { setPacksInitialParamsAC } from 'features/packs/bll/packsActions'
 
 export const EraseFilters = () => {
   const dispatch = useAppDispatch()
 
   const onClickHandler = () => {
-    dispatch(setPacksParamsAC(initialPackParams))
-    dispatch(getPacksTC())
+    dispatch(setPacksInitialParamsAC())
   }
 
   return (
