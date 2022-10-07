@@ -1,60 +1,60 @@
-import { SyntheticEvent, useEffect, useState } from 'react'
+import { ChangeEvent, SyntheticEvent } from 'react'
 
-import { Typography } from '@mui/material'
+import { TextField, Theme, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
-
-import { setPacksMinMaxAC } from '../../../../bll/packsActions'
-import { InputForSlider } from '../InputForSlider/InputForSlider'
+import { SxProps } from '@mui/system'
 
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
+import { setPacksMinMaxAC } from 'features/packs/bll/packsActions'
+
+const inputSx: SxProps<Theme> = {
+  width: '80px',
+}
 
 export const SliderForPacks = () => {
   const dispatch = useAppDispatch()
   const { min, max } = useAppSelector(state => state.packs.params)
-  const [value, setValue] = useState<number[]>([0, 100])
 
-  const onChangeCallback = (
+  const sliderOnChangeHandler = (
     event: Event | SyntheticEvent<Element, Event>,
     newValue: number | number[]
   ) => {
     if (Array.isArray(newValue)) {
-      setValue(newValue)
+      dispatch(setPacksMinMaxAC(newValue[0], newValue[1]))
     }
   }
-
-  const changeMinValue = (newValue: number) => {
-    const newArray = [...value]
-
-    newArray[0] = newValue
-    setValue(newArray)
+  const minValueOnChangeHandler = (
+    newValue: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    dispatch(setPacksMinMaxAC(+newValue.currentTarget.value))
   }
-
-  const changeMaxValue = (newValue: number) => {
-    const newArray = [...value]
-
-    newArray[1] = newValue
-    setValue(newArray)
+  const maxValueOnChangeHandler = (
+    newValue: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    dispatch(setPacksMinMaxAC(undefined, +newValue.currentTarget.value))
   }
-
-  useEffect(() => {
-    if (min !== undefined && max) {
-      setValue([min, max])
-    }
-  }, [min, max])
-
-  useEffect(() => {
-    dispatch(setPacksMinMaxAC(value[0], value[1]))
-  }, [value])
 
   return (
     <Box>
       <Typography sx={{ textAlign: 'center' }}>Number of cards</Typography>
-      <Box sx={{ display: 'flex', width: '300px' }}>
-        <InputForSlider value={value[0]} setValue={changeMinValue} />
-        <Slider value={value} onChangeCommitted={onChangeCallback} />
-        <InputForSlider value={value[1]} setValue={changeMaxValue} />
+      <Box sx={{ display: 'flex', width: '300px', gap: '15px' }}>
+        <TextField
+          type={'number'}
+          value={min}
+          variant={'standard'}
+          onChange={minValueOnChangeHandler}
+          sx={inputSx}
+        />
+        <Slider value={[min!, max!]} onChangeCommitted={sliderOnChangeHandler} />
+        <TextField
+          type={'number'}
+          value={max}
+          variant={'standard'}
+          onChange={maxValueOnChangeHandler}
+          sx={inputSx}
+        />
       </Box>
     </Box>
   )
