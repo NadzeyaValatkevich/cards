@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
-import { getPacksTC } from 'features/packs/bll/packsThunks'
+import { setPacksUserIdAC } from 'features/packs/bll/packsActions'
 
 export const MyAllPacks = () => {
   const dispatch = useAppDispatch()
@@ -12,10 +12,10 @@ export const MyAllPacks = () => {
   const userIdParam = useAppSelector(state => state.packs.params.user_id)
 
   const onClickMyButton = () => {
-    dispatch(getPacksTC({ user_id }))
+    user_id && dispatch(setPacksUserIdAC(user_id))
   }
   const onClickAllButton = () => {
-    dispatch(getPacksTC({ user_id: '' }))
+    dispatch(setPacksUserIdAC(''))
   }
 
   return (

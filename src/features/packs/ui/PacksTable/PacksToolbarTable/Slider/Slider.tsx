@@ -4,7 +4,7 @@ import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
 
-import { setPacksParamsAC } from '../../../../bll/packsActions'
+import { setPacksMinMaxAC } from '../../../../bll/packsActions'
 import { InputForSlider } from '../InputForSlider/InputForSlider'
 
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
@@ -45,12 +45,7 @@ export const SliderForPacks = () => {
   }, [min, max])
 
   useEffect(() => {
-    dispatch(
-      setPacksParamsAC({
-        min: value[0],
-        max: value[1],
-      })
-    )
+    dispatch(setPacksMinMaxAC(value[0], value[1]))
   }, [value])
 
   return (

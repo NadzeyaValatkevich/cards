@@ -10,6 +10,8 @@ import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react-table'
 
+import { deletePackTC } from '../../bll/packsThunks'
+
 import { PacksActionsComponent } from './PacksActionsComponent/PacksActionsComponent'
 
 import { RequestStatusType } from 'app/bll/appReducer'
@@ -17,7 +19,6 @@ import { AppRoutes, sortDir } from 'common/enums/enums'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useStyles } from 'common/styles/PacksTableStyles'
 import { setCardsIdAC } from 'features/cards/bll/cardsActions'
-import { deletePackTC } from 'features/packs/bll/packsThunks'
 
 export interface TableProps<T extends Record<string, unknown>> extends TableOptions<T> {
   name: string
