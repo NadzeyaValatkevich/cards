@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 
 import { useAppSelector } from '../hooks/useAppSelector'
 
-import { AppRoutes } from 'app/ui/RoutesComponent'
+import { AppRoutes } from 'common/enums/enums'
 
 type PrivateRoutesPropsType = {
   loggedIn?: boolean
