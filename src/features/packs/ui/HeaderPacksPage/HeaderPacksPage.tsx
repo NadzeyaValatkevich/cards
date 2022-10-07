@@ -4,7 +4,7 @@ import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 
-import { NewPackModal } from '../Modals/NewPackModal'
+import { NewPackModal } from '../../../Modals/PacksModals/NewPackModal'
 
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { addPackTC } from 'features/packs/bll/packsThunks'
