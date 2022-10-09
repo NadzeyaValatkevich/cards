@@ -17,10 +17,9 @@ export const BackToCardPacks: FC<BackToCardPacksPropType> = ({ Style }) => {
       to={AppRoutes.PACKS}
       style={{
         textDecoration: 'none',
+        alignSelf: 'start',
+        margin: '1.5rem 0',
         color: 'inherit',
-        // position: 'absolute',
-        // top: '5rem',
-        // alignSelf: 'start',
         ...Style,
       }}
     >

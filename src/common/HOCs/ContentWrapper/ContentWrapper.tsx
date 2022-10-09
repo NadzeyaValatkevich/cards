@@ -4,6 +4,10 @@ import { Paper } from '@mui/material'
 import Container from '@mui/material/Container'
 import { Theme } from '@mui/material/styles'
 import { SxProps } from '@mui/system'
+import { useLocation } from 'react-router-dom'
+
+import { BackToCardPacks } from 'common/components/BackToPackList/BackToCardsPack'
+import { AppRoutes } from 'common/enums/enums'
 
 type PropsType = {
   withoutPaper?: boolean
@@ -12,6 +16,10 @@ type PropsType = {
 }
 
 export const ContentWrapper: FC<PropsType> = ({ children, sx, withoutPaper }) => {
+  const location = useLocation()
+
+  const BackToCardPacksLocations = AppRoutes.PROFILE || AppRoutes.CARDS
+
   if (withoutPaper) {
     return (
       <Container
@@ -42,6 +50,7 @@ export const ContentWrapper: FC<PropsType> = ({ children, sx, withoutPaper }) =>
           flex: 1,
         }}
       >
+        {location.pathname === BackToCardPacksLocations && <BackToCardPacks />}
         <Paper
           elevation={4}
           sx={{

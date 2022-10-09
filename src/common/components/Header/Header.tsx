@@ -7,8 +7,6 @@ import Container from '@mui/material/Container'
 import Toolbar from '@mui/material/Toolbar'
 import { useNavigate } from 'react-router-dom'
 
-import { BackToCardPacks } from '../BackToPackList/BackToCardsPack'
-
 import { AvatarHeader } from './AvatarHeader'
 
 import logo from 'common/assets/image/logo.svg'
@@ -17,6 +15,7 @@ import { useAppSelector } from 'common/hooks/useAppSelector'
 
 export const Header = () => {
   const navigate = useNavigate()
+
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const signInOnClickHandler = () => {
     navigate(AppRoutes.SIGN_IN)
@@ -24,7 +23,7 @@ export const Header = () => {
 
   return (
     <AppBar position="static" sx={{ bgcolor: '#FCFCFC' }} elevation={2}>
-      <Container maxWidth="md">
+      <Container maxWidth="md" disableGutters>
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
           <Box component={'img'} src={logo} alt={'It-incubator logo'} />
           {isLoggedIn ? (
@@ -35,7 +34,6 @@ export const Header = () => {
             </Button>
           )}
         </Toolbar>
-        {location.pathname === AppRoutes.PROFILE && <BackToCardPacks />}
       </Container>
     </AppBar>
   )
