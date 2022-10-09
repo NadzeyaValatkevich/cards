@@ -1,8 +1,8 @@
 import { Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
-import { AppRoutes } from 'app/ui/RoutesComponent'
 import back from 'common/assets/image/back.svg'
+import { AppRoutes } from 'common/enums/enums'
 
 export const BackToCardPacks = () => {
   return (

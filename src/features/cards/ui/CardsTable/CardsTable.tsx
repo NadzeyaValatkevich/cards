@@ -1,46 +1,42 @@
 import React, { PropsWithChildren, ReactElement, useMemo } from 'react'
 
-import { Link, Skeleton, TableHead, TableSortLabel, Tooltip } from '@mui/material'
+import { Skeleton, TableHead, TableSortLabel, Tooltip } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
-import { useNavigate } from 'react-router-dom'
 import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react-table'
 
-import { deletePackTC } from '../../bll/packsThunks'
-
-import { PacksActionsComponent } from './PacksActionsComponent/PacksActionsComponent'
-
 import { RequestStatusType } from 'app/bll/appReducer'
-import { AppRoutes, sortDir } from 'common/enums/enums'
+import { sortDir } from 'common/enums/enums'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useStyles } from 'common/styles/PacksTableStyles'
-import { setCardsIdAC } from 'features/cards/bll/cardsActions'
+import { deletePackTC } from 'features/packs/bll/packsThunks'
 
 export interface TableProps<T extends Record<string, unknown>> extends TableOptions<T> {
   name: string
-  columnSortHandler: (name: string, dir: 'asc' | 'desc') => void
+  columnSort: (e: string) => void
   initialState?: Partial<TableState<T>>
   entityStatus: RequestStatusType
+  sortDirection: string | null
   sortParam: string | undefined
   profileId: string | null
 }
 
-export const PacksTable = <T extends Record<string, unknown>>(
+export const CardsTable = <T extends Record<string, unknown>>(
   props: PropsWithChildren<TableProps<T>>
 ): ReactElement => {
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
 
   const { classes } = useStyles()
 
   const {
     columns,
     initialState = {},
-    columnSortHandler,
+    sortDirection,
+    columnSort,
     entityStatus,
     sortParam,
     profileId,
@@ -83,18 +79,18 @@ export const PacksTable = <T extends Record<string, unknown>>(
               <TableRow key={headerGroupKey} {...getHeaderGroupProps}>
                 {headerGroup.headers.map(column => {
                   const { key: headerKey, ...getHeaderProps } = column.getHeaderProps()
-                  const cellSortDir =
-                    sortParam?.includes(column.id) && sortParam?.includes(sortDir.desc)
-                      ? 'desc'
-                      : 'asc'
 
                   return (
                     <TableCell key={headerKey} {...getHeaderProps}>
                       {column.defaultCanSort ? (
                         <Tooltip title={column.render('Header')}>
                           <TableSortLabel
-                            direction={cellSortDir}
-                            onClick={() => columnSortHandler(column.id, cellSortDir)}
+                            direction={
+                              sortParam?.includes(column.id) && sortDirection === sortDir.desc
+                                ? 'desc'
+                                : 'asc'
+                            }
+                            onClick={() => columnSort(column.id)}
                           >
                             {column.render('Header')}
                           </TableSortLabel>
@@ -121,60 +117,12 @@ export const PacksTable = <T extends Record<string, unknown>>(
                     className: classes.tableBodyCell,
                   })
 
-                  const enableEdit = data[cell.row.index]?.user_id === profileId
-                  const disableStudyBtn = !data[cell.row.index]?.cardsCount
-
-                  const startStudyingActionHandler = (packId: string) => {}
-                  const editPackActionHandler = (packId: string) => {}
-                  const deletePackActionHandler = (packId: string) => dispatch(deletePackTC(packId))
-
-                  if (cell.column.render('Header') === 'Actions') {
-                    return (
-                      <TableCell key={cellKey} {...getCellProps}>
-                        {entityStatus === RequestStatusType.loading ? (
-                          <Skeleton className={classes.tableBodyCellSkeleton} />
-                        ) : (
-                          <PacksActionsComponent
-                            packId={data[cell.row.index]?._id as string}
-                            enableEdit={enableEdit}
-                            disableStudyBtn={disableStudyBtn}
-                            startStudyingAction={startStudyingActionHandler}
-                            editPackAction={editPackActionHandler}
-                            deletePackAction={deletePackActionHandler}
-                          />
-                        )}
-                      </TableCell>
-                    )
-                  }
-
-                  const cardsPackId = data[cell.row.index]?._id
-
-                  const nameOnClickHandler = async () => {
-                    dispatch(setCardsIdAC(cardsPackId as string))
-                    navigate(AppRoutes.CARDS)
-                    // navigate(`${AppRoutes.CARDS}?cardsPack_id=${cardsPackId}`)
-                  }
-
-                  if (cell.column.render('Header') === 'Name') {
-                    return (
-                      <TableCell key={cellKey} {...getCellProps}>
-                        {entityStatus === RequestStatusType.loading ? (
-                          <Skeleton className={classes.tableBodyCellSkeleton} />
-                        ) : (
-                          <Link
-                            underline={'none'}
-                            color={'inherit'}
-                            onClick={nameOnClickHandler}
-                            sx={{
-                              cursor: 'pointer',
-                            }}
-                          >
-                            {cell.render('Cell')}
-                          </Link>
-                        )}
-                      </TableCell>
-                    )
-                  }
+                  // const enableEdit = data[cell.row.index]?.user_id === profileId
+                  // const disableStudyBtn = !data[cell.row.index]?.cardsCount
+                  //
+                  // const startStudyingActionHandler = (packId: string) => {}
+                  // const editPackActionHandler = (packId: string) => {}
+                  // const deletePackActionHandler = (packId: string) => dispatch(deletePackTC(packId))
 
                   return (
                     <TableCell key={cellKey} {...getCellProps}>

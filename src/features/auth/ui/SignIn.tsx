@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { loginTC } from '../bll/authThunks'
 
-import { AppRoutes } from 'app/ui/RoutesComponent'
+import { AppRoutes } from 'common/enums/enums'
 import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { LoaderWrapper } from 'common/HOCs/LoaderWrapper/LoaderWrapper'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'

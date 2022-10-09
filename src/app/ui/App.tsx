@@ -1,34 +1,25 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
-import './App.css'
 import { CssBaseline, ThemeProvider } from '@mui/material'
+import { Provider } from 'react-redux'
 
-import { initTC } from '../bll/appThunks'
+import { store } from '../bll/store'
 
-import { RoutesComponent } from './RoutesComponent'
+import { Layout } from './Layout'
 
 import { ErrorSnackbar } from 'common/components/ErrorSnackbar/ErrorSnackbar'
-import { Header } from 'common/components/Header/Header'
 import { SuccessSnackbar } from 'common/components/SucsessSnackbar/SuccessSnackbar'
-import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { theme } from 'common/styles/theme'
 
 export const App = () => {
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(initTC())
-  }, [])
-
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <ErrorSnackbar />
-      <SuccessSnackbar />
-      <div className="App">
-        <Header />
-        <RoutesComponent />
-      </div>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <ErrorSnackbar />
+        <SuccessSnackbar />
+        <Layout />
+      </ThemeProvider>
+    </Provider>
   )
 }
