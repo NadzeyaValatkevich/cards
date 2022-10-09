@@ -4,17 +4,16 @@ import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 
-import { NewPackModal } from '../../../Modals/PacksModals/NewPackModal'
+import { AddPackModal } from '../PacksModals/AddPackModal'
 
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { addPackTC } from 'features/packs/bll/packsThunks'
 
 type ToolbarTablePropsType = {
-  addNewPack: () => void
   disabled: boolean
 }
 
-export const HeaderPacksPage: FC<ToolbarTablePropsType> = ({ addNewPack, disabled }) => {
+export const PacksHeaderPage: FC<ToolbarTablePropsType> = ({ disabled }) => {
   const dispatch = useAppDispatch()
   const [activeModalAdd, setActiveModalAdd] = useState<boolean>(false)
 
@@ -45,7 +44,7 @@ export const HeaderPacksPage: FC<ToolbarTablePropsType> = ({ addNewPack, disable
           Add new pack
         </Button>
       </Box>
-      <NewPackModal
+      <AddPackModal
         addPack={addPack}
         activeModalAdd={activeModalAdd}
         setActiveModalAdd={setActiveModalAdd}
