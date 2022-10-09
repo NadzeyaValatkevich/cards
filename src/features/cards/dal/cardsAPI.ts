@@ -47,6 +47,7 @@ export type CardsResponseType = {
   packCreated: string
   packUpdated: string
 } & TokenType
+
 export type CardDataType = {
   question?: string
   answer?: string
