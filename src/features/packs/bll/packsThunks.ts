@@ -51,7 +51,6 @@ export const deletePackTC = (idPack: string): AppThunk => {
       const res = await packsAPI.deletePack(idPack)
 
       await dispatch(getPacksTC())
-      // dispatch(setAppInfoAC('Pack deleted successfully'))
     } catch (error: any) {
       errorUtils(error, dispatch)
     } finally {
@@ -63,11 +62,11 @@ export const deletePackTC = (idPack: string): AppThunk => {
 export const updatePackTC = (data: UpdatePackDataType): AppThunk => {
   return async dispatch => {
     dispatch(setPacksStatusAC(RequestStatusType.loading))
+
     try {
       const res = await packsAPI.updatePack({ cardsPack: data })
 
       dispatch(getPacksTC())
-      // dispatch(setAppInfoAC('Pack updated successfully'))
     } catch (error: any) {
       errorUtils(error, dispatch)
     } finally {

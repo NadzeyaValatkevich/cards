@@ -1,8 +1,9 @@
+import { deletePackTC, updatePackTC } from '../../packs/bll/packsThunks'
+import { UpdatePackDataType } from '../../packs/dal/packsAPI'
 import { AddCardDataType, cardsAPI, CardsParamsType, UpdateCardsType } from '../dal/cardsAPI'
 
-import { setCardsAC, setCardsStatusAC } from './cardsActions'
+import { setCardsAC, setCardsPackIsDeletedAC, setCardsStatusAC } from './cardsActions'
 
-import { setAppStatusAC } from 'app/bll/appActions'
 import { RequestStatusType } from 'app/bll/appReducer'
 import { AppThunk } from 'app/bll/store'
 import { errorUtils } from 'common/utils/error-utils'
@@ -15,7 +16,6 @@ export const getCardsTC = (): AppThunk => async (dispatch, getState) => {
     const response = await cardsAPI.getCards(params)
 
     dispatch(setCardsAC(response.data))
-    dispatch(setAppStatusAC(RequestStatusType.succeeded))
   } catch (error: any) {
     errorUtils(error, dispatch)
   } finally {
@@ -31,7 +31,6 @@ export const addCardTC =
       const res = await cardsAPI.addCard(newCard)
 
       dispatch(getCardsTC())
-      dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
     } finally {
@@ -47,7 +46,6 @@ export const deleteCardTC =
       const res = await cardsAPI.deleteCards(_id)
 
       dispatch(getCardsTC())
-      dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
     } finally {
@@ -62,10 +60,38 @@ export const updateCardTC =
       const res = await cardsAPI.updateCards(updatedCard)
 
       dispatch(getCardsTC())
-      dispatch(setAppStatusAC(RequestStatusType.succeeded))
     } catch (error: any) {
       errorUtils(error, dispatch)
     } finally {
       dispatch(setCardsStatusAC(RequestStatusType.succeeded))
     }
   }
+
+export const deletePackFromCardsTC = (idPack: string): AppThunk => {
+  return async dispatch => {
+    dispatch(setCardsStatusAC(RequestStatusType.loading))
+    try {
+      await dispatch(deletePackTC(idPack))
+      dispatch(setCardsPackIsDeletedAC(true))
+    } catch (error: any) {
+      errorUtils(error, dispatch)
+    } finally {
+      dispatch(setCardsStatusAC(RequestStatusType.succeeded))
+    }
+  }
+}
+
+export const updatePackFromCardsTC = (data: UpdatePackDataType): AppThunk => {
+  return async dispatch => {
+    dispatch(setCardsStatusAC(RequestStatusType.loading))
+
+    try {
+      await dispatch(updatePackTC(data))
+      dispatch(getCardsTC())
+    } catch (error: any) {
+      errorUtils(error, dispatch)
+    } finally {
+      dispatch(setCardsStatusAC(RequestStatusType.succeeded))
+    }
+  }
+}

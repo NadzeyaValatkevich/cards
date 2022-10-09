@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, ReactElement, useMemo } from 'react'
 
-import { Skeleton, TableHead, TableSortLabel, Tooltip } from '@mui/material'
+import { Rating, Skeleton, TableHead, TableSortLabel, Tooltip } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -8,6 +8,8 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react-table'
+
+import { CardsActionsComponent } from './CardsActionsComponent/CardsActionsComponent'
 
 import { RequestStatusType } from 'app/bll/appReducer'
 import { sortDir } from 'common/enums/enums'
@@ -118,12 +120,35 @@ export const CardsTable = <T extends Record<string, unknown>>(
                     className: classes.tableBodyCell,
                   })
 
-                  // const enableEdit = data[cell.row.index]?.user_id === profileId
-                  // const disableStudyBtn = !data[cell.row.index]?.cardsCount
-                  //
-                  // const startStudyingActionHandler = (packId: string) => {}
-                  // const editPackActionHandler = (packId: string) => {}
-                  // const deletePackActionHandler = (packId: string) => dispatch(deletePackTC(packId))
+                  const editCardActionHandler = () => {}
+                  const deleteCardActionHandler = () => {}
+
+                  if (cell.column.id === 'actions') {
+                    return (
+                      <TableCell key={cellKey} {...getCellProps}>
+                        {entityStatus === RequestStatusType.loading ? (
+                          <Skeleton className={classes.tableBodyCellSkeleton} />
+                        ) : (
+                          <CardsActionsComponent
+                            cardId={data[cell.row.index]?._id as string}
+                            editCardAction={editCardActionHandler}
+                            deleteCardAction={deleteCardActionHandler}
+                          />
+                        )}
+                      </TableCell>
+                    )
+                  }
+                  if (cell.column.render('Header') === 'Grade') {
+                    return (
+                      <TableCell key={cellKey} {...getCellProps}>
+                        {entityStatus === RequestStatusType.loading ? (
+                          <Skeleton className={classes.tableBodyCellSkeleton} />
+                        ) : (
+                          <Rating value={cell.value} readOnly />
+                        )}
+                      </TableCell>
+                    )
+                  }
 
                   return (
                     <TableCell key={cellKey} {...getCellProps}>
