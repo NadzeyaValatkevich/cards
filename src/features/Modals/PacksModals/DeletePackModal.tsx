@@ -2,8 +2,8 @@ import React from 'react'
 
 import Typography from '@mui/material/Typography'
 
-import { BasicModal } from 'common/components/Modal/Modal'
 import { useAppSelector } from 'common/hooks/useAppSelector'
+import { BasicModal } from 'features/Modals/BasicModal'
 
 type DeletePackModalType = {
   setOpen: (value: boolean) => void
