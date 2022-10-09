@@ -1,9 +1,11 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useState, KeyboardEvent } from 'react'
 
 import { Checkbox, FormControlLabel, TextField } from '@mui/material'
 
+import { cardsPackSelector } from '../../bll/packsSelectors'
+
+import { BasicModal } from 'common/components/BasicModal/BasicModal'
 import { useAppSelector } from 'common/hooks/useAppSelector'
-import { BasicModal } from 'features/Modals/BasicModal'
 
 type EditPackModalType = {
   setOpen: (value: boolean) => void
@@ -13,7 +15,7 @@ type EditPackModalType = {
 }
 
 export const EditPackModal = (props: EditPackModalType) => {
-  const packs = useAppSelector(state => state.packs.packsData.cardPacks)
+  const packs = useAppSelector(cardsPackSelector)
   const pack = packs.find(pack => pack._id === props.id)
   const initTitle = pack && pack.name
   const initCheck = pack && pack.private
@@ -35,6 +37,12 @@ export const EditPackModal = (props: EditPackModalType) => {
     props.setOpen(false)
   }
 
+  const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter') {
+      editPackHandler()
+    }
+  }
+
   return (
     <BasicModal
       name={'Edit name pack'}
@@ -45,11 +53,13 @@ export const EditPackModal = (props: EditPackModalType) => {
     >
       <TextField
         onChange={onChangeTextFieldHandler}
+        onKeyUp={onKeyUpHandler}
         defaultValue={initTitle}
         id="standard-basic"
         label="Name Pack"
         variant="standard"
-        sx={{ width: '100%' }}
+        fullWidth
+        autoFocus
       />
       <div>
         <FormControlLabel

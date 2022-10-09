@@ -1,10 +1,10 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, useState } from 'react'
 
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import TextField from '@mui/material/TextField'
 
-import { BasicModal } from 'features/Modals/BasicModal'
+import { BasicModal } from 'common/components/BasicModal/BasicModal'
 
 type NewPackModalType = {
   addPack: (name: string, privatePack: boolean) => void
@@ -12,7 +12,7 @@ type NewPackModalType = {
   setActiveModalAdd: (value: boolean) => void
 }
 
-export const NewPackModal = (props: NewPackModalType) => {
+export const AddPackModal = (props: NewPackModalType) => {
   const [title, setTitle] = useState('')
   // const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false)
@@ -31,6 +31,12 @@ export const NewPackModal = (props: NewPackModalType) => {
     props.setActiveModalAdd(false)
   }
 
+  const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter') {
+      addPackHandler()
+    }
+  }
+
   return (
     <BasicModal
       name={'Add new pack'}
@@ -41,10 +47,12 @@ export const NewPackModal = (props: NewPackModalType) => {
     >
       <TextField
         onChange={onChangeTextFieldHandler}
+        onKeyUp={onKeyUpHandler}
         id="standard-basic"
         label="Name Pack"
         variant="standard"
-        sx={{ width: '100%' }}
+        fullWidth
+        autoFocus
       />
       <div>
         <FormControlLabel

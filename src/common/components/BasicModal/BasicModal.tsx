@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close'
-import { Modal, Typography } from '@mui/material'
+import { ButtonProps, Modal, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
@@ -25,6 +25,7 @@ type ModalPropsType = {
   setOpen: (value: boolean) => void
   onSave: () => void
   nameButton: string
+  buttonProps?: ButtonProps
 }
 
 export const BasicModal = (props: ModalPropsType) => {
@@ -56,7 +57,12 @@ export const BasicModal = (props: ModalPropsType) => {
             <Button variant="outlined" onClick={handleClose}>
               Cancel
             </Button>
-            <Button variant="contained" onClick={onClickSaveHandler} color={color}>
+            <Button
+              variant="contained"
+              onClick={onClickSaveHandler}
+              color={color}
+              {...props.buttonProps}
+            >
               {props.nameButton}
             </Button>
           </div>
