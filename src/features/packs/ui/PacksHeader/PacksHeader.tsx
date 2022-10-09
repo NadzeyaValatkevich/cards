@@ -13,7 +13,7 @@ type ToolbarTablePropsType = {
   disabled: boolean
 }
 
-export const PacksHeaderPage: FC<ToolbarTablePropsType> = ({ disabled }) => {
+export const PacksHeader: FC<ToolbarTablePropsType> = ({ disabled }) => {
   const dispatch = useAppDispatch()
   const [activeModalAdd, setActiveModalAdd] = useState<boolean>(false)
 

@@ -23,7 +23,7 @@ import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { compareObj } from 'common/utils/removeEmptyObj'
-import { PacksHeaderPage } from 'features/packs/ui/PacksHeaderPage/PacksHeaderPage'
+import { PacksHeader } from 'features/packs/ui/PacksHeader/PacksHeader'
 import { ToolbarTable } from 'features/packs/ui/PacksTable/PacksToolbarTable/ToolbarTable'
 
 const columns: Column<PackType>[] = [
@@ -106,7 +106,7 @@ export const Packs = () => {
 
   return (
     <ContentWrapper withoutPaper>
-      <PacksHeaderPage disabled={packsEntityStatus === RequestStatusType.loading} />
+      <PacksHeader disabled={packsEntityStatus === RequestStatusType.loading} />
       <ToolbarTable />
       {cardPacks.length ? (
         <>
