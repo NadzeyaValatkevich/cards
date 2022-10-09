@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
 
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
-import CreateIcon from '@mui/icons-material/Create'
 import { Typography } from '@mui/material'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
@@ -9,6 +8,7 @@ import IconButton from '@mui/material/IconButton'
 import s from './profile.module.css'
 
 import userPhoto from 'common/assets/image/user.png'
+import { BackToCardPacks } from 'common/components/BackToPackList/BackToCardsPack'
 import { EditableSpan } from 'common/components/EditableSpan/EditableSpan'
 import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { LoaderWrapper } from 'common/HOCs/LoaderWrapper/LoaderWrapper'

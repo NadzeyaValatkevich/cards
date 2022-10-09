@@ -4,7 +4,8 @@ import Box from '@mui/material/Box'
 import { useSearchParams } from 'react-router-dom'
 import { Column } from 'react-table'
 
-import { setCardsInitialParamsAC, setCardsPaginationAC } from '../bll/cardsActions'
+import { BackToCardPacks } from '../../../common/components/BackToPackList/BackToCardsPack'
+import { setCardsPaginationAC, setCardsSearchQuestionAC } from '../bll/cardsActions'
 import {
   cardsEntityStatusSelector,
   cardsPackDataSelector,
@@ -17,6 +18,7 @@ import { CardType } from '../dal/cardsAPI'
 import { CardsTable } from './CardsTable/CardsTable'
 
 import { Pagination, PaginationPropsType } from 'common/components/Pagination/Pagination'
+import { SearchPanel } from 'common/components/SearchPanel/SearchPanel'
 import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
@@ -71,7 +73,7 @@ export const Cards = () => {
     SetURLSearchParams({ cardsPack_id: cardsParams.cardsPack_id })
 
     return () => {
-      dispatch(setCardsInitialParamsAC())
+      // dispatch(setCardsInitialParamsAC())
     }
   }, [])
 
@@ -83,6 +85,13 @@ export const Cards = () => {
   return (
     <ContentWrapper withoutPaper>
       <Box>
+        <BackToCardPacks />
+        <SearchPanel
+          setParams={setCardsSearchQuestionAC}
+          sx={{
+            m: '1.5rem 0',
+          }}
+        />
         <CardsTable
           name={'cardsTable'}
           columns={columns}

@@ -7,6 +7,8 @@ import Container from '@mui/material/Container'
 import Toolbar from '@mui/material/Toolbar'
 import { useNavigate } from 'react-router-dom'
 
+import { BackToCardPacks } from '../BackToPackList/BackToCardsPack'
+
 import { AvatarHeader } from './AvatarHeader'
 
 import logo from 'common/assets/image/logo.svg'
@@ -33,6 +35,7 @@ export const Header = () => {
             </Button>
           )}
         </Toolbar>
+        {location.pathname === AppRoutes.PROFILE && <BackToCardPacks />}
       </Container>
     </AppBar>
   )

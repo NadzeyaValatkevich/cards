@@ -1,8 +1,9 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react'
 
 import SearchIcon from '@mui/icons-material/Search'
-import { InputAdornment, TextField, Typography } from '@mui/material'
+import { InputAdornment, TextField, Theme, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
+import { SxProps } from '@mui/system'
 
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useDebounce } from 'common/hooks/useDebounce'
@@ -11,10 +12,10 @@ type SearchKeyType = 'cardQuestion' | 'cardAnswer' | 'packName'
 
 type PropsType = {
   setParams: (packName: string) => any
-  search: SearchKeyType
+  sx?: SxProps<Theme>
 }
 
-export const SearchPanel: FC<PropsType> = ({ setParams, search }) => {
+export const SearchPanel: FC<PropsType> = ({ setParams, sx }) => {
   const dispatch = useAppDispatch()
 
   const [flag, setFlag] = useState(false)
@@ -36,7 +37,7 @@ export const SearchPanel: FC<PropsType> = ({ setParams, search }) => {
   }, [debouncedValue])
 
   return (
-    <Box>
+    <Box sx={sx}>
       <Typography variant={'subtitle2'} fontWeight={600}>
         Search
       </Typography>

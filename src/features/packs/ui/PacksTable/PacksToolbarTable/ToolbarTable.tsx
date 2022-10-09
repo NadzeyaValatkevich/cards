@@ -19,7 +19,7 @@ export const ToolbarTable = () => {
       width={'100%'}
       margin={'1.5rem 0'}
     >
-      <SearchPanel search={'packName'} setParams={setPacksSearchAC} />
+      <SearchPanel setParams={setPacksSearchAC} />
       <MyAllPacks />
       <SliderForPacks />
       <EraseFilters />

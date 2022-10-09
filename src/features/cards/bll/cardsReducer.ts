@@ -3,7 +3,7 @@ import { RequestStatusType } from '../../../app/bll/appReducer'
 import { ActionCardsType } from 'features/cards/bll/cardsActions'
 import { CardsParamsType, CardType } from 'features/cards/dal/cardsAPI'
 
-export const initialCadsParams: CardsParamsType = {
+export const initialCardsParams: CardsParamsType = {
   cardsPack_id: '',
   page: 1,
   pageCount: 5,
@@ -24,7 +24,7 @@ const initialState = {
     pageCount: 5,
     packUserId: '',
   },
-  params: initialCadsParams,
+  params: initialCardsParams,
   entityStatus: RequestStatusType.idle as RequestStatusType,
 }
 
@@ -56,7 +56,7 @@ export const cardsReducer = (
     case 'CARDS/SET-INIT-PARAMS':
       return {
         ...state,
-        params: initialCadsParams,
+        params: initialCardsParams,
       }
     default:
       return state
