@@ -12,8 +12,7 @@ import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react
 import { RequestStatusType } from 'app/bll/appReducer'
 import { sortDir } from 'common/enums/enums'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
-import { useStyles } from 'common/styles/PacksTableStyles'
-import { deletePackTC } from 'features/packs/bll/packsThunks'
+import { useStyles } from 'common/styles/TableStyles'
 
 export interface TableProps<T extends Record<string, unknown>> extends TableOptions<T> {
   name: string
@@ -78,7 +77,9 @@ export const CardsTable = <T extends Record<string, unknown>>(
             return (
               <TableRow key={headerGroupKey} {...getHeaderGroupProps}>
                 {headerGroup.headers.map(column => {
-                  const { key: headerKey, ...getHeaderProps } = column.getHeaderProps()
+                  const { key: headerKey, ...getHeaderProps } = column.getHeaderProps({
+                    className: classes.tableHeadCell,
+                  })
 
                   return (
                     <TableCell key={headerKey} {...getHeaderProps}>
