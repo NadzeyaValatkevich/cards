@@ -91,6 +91,7 @@ export const PacksTable = <T extends Record<string, unknown>>(
                   return (
                     <TableCell key={headerKey} {...getHeaderProps}>
                       {column.defaultCanSort ? (
+                        // @ts-ignore
                         <Tooltip title={column.render('Header')}>
                           <TableSortLabel
                             direction={cellSortDir}

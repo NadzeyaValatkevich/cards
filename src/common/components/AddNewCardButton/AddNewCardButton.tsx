@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 
 import { addCardTC } from 'features/cards/bll/cardsThunk'
-import { NewCardModal } from 'features/Modals/CardsModals/NewCardModal'
+import { AddNewCardModal } from 'features/cards/ui/CardsModals/AddNewCardModal'
 
 export const AddNewCardButton = () => {
   const dispatch = useAppDispatch()
@@ -26,7 +26,7 @@ export const AddNewCardButton = () => {
       <Button variant="contained" onClick={addNewCardModal}>
         Add new card
       </Button>
-      <NewCardModal setOpen={setOpenModalAdd} open={openModalAdd} addCard={addCard} id={id!} />
+      <AddNewCardModal setOpen={setOpenModalAdd} open={openModalAdd} addCard={addCard} id={id!} />
     </div>
   )
 }

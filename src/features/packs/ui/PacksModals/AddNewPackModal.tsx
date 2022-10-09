@@ -4,7 +4,7 @@ import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import TextField from '@mui/material/TextField'
 
-import { BasicModal } from 'features/Modals/BasicModal'
+import { BasicModal } from 'common/components/BasicModal/BasicModal'
 
 type NewPackModalType = {
   addPack: (name: string, privatePack: boolean) => void
@@ -12,7 +12,7 @@ type NewPackModalType = {
   setActiveModalAdd: (value: boolean) => void
 }
 
-export const NewPackModal = (props: NewPackModalType) => {
+export const AddNewPackModal = (props: NewPackModalType) => {
   const [title, setTitle] = useState('')
   // const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false)

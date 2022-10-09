@@ -4,10 +4,9 @@ import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 
-import { NewPackModal } from '../../../Modals/PacksModals/NewPackModal'
-
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { addPackTC } from 'features/packs/bll/packsThunks'
+import { AddNewPackModal } from 'features/packs/ui/PacksModals/AddNewPackModal'
 
 type ToolbarTablePropsType = {
   addNewPack: () => void
@@ -45,7 +44,7 @@ export const HeaderPacksPage: FC<ToolbarTablePropsType> = ({ addNewPack, disable
           Add new pack
         </Button>
       </Box>
-      <NewPackModal
+      <AddNewPackModal
         addPack={addPack}
         activeModalAdd={activeModalAdd}
         setActiveModalAdd={setActiveModalAdd}

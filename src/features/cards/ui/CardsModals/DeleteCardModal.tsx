@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material'
 
-import { BasicModal } from 'features/Modals/BasicModal'
+import { BasicModal } from 'common/components/BasicModal/BasicModal'
 
 type DeleteCardModalType = {
   setOpen: (value: boolean) => void

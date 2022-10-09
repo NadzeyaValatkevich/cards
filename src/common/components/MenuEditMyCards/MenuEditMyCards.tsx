@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react'
+import React, { useState } from 'react'
 
 import BorderColorIcon from '@mui/icons-material/BorderColor'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
@@ -11,8 +11,8 @@ import ellipsis from 'common/assets/image/ellipsis.svg'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { deleteCardTC, updateCardTC } from 'features/cards/bll/cardsThunk'
-import { DeleteCardModal } from 'features/Modals/CardsModals/DeleteCardModal'
-import { EditCardModal } from 'features/Modals/CardsModals/EditCardModal'
+import { DeleteCardModal } from 'features/cards/ui/CardsModals/DeleteCardModal'
+import { EditCardModal } from 'features/cards/ui/CardsModals/EditCardModal'
 
 export const MenuEditMyCards = () => {
   const dispatch = useAppDispatch()
