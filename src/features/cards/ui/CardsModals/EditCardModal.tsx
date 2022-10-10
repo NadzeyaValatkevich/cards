@@ -3,9 +3,8 @@ import { ChangeEvent, useState } from 'react'
 import { InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 
+import { BasicModal } from 'common/components/BasicModal/BasicModal'
 import { useAppSelector } from 'common/hooks/useAppSelector'
-import {BasicModal} from "../../../../common/components/BasicModal/BasicModal";
-
 
 type EditCardModalType = {
   setOpen: (value: boolean) => void

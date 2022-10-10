@@ -1,18 +1,15 @@
 import React, { useEffect } from 'react'
 
 import Box from '@mui/material/Box'
-import { useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { Column } from 'react-table'
 
-import { setCardsInitialParamsAC, setCardsPaginationAC } from '../bll/cardsActions'
 import {
   cardsEntityStatusSelector,
   cardsPackDataSelector,
   cardsPackSelector,
   cardsParamsSelector,
 } from '../bll/cardsSelectors'
-import { getCardsTC } from '../bll/cardsThunk'
-import { CardType } from '../dal/cardsAPI'
 
 import { CardsTable } from './CardsTable/CardsTable'
 
@@ -20,6 +17,10 @@ import { Pagination, PaginationPropsType } from 'common/components/Pagination/Pa
 import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
+import { setCardsInitialParamsAC, setCardsPaginationAC } from 'features/cards/bll/cardsActions'
+import { getCardsTC } from 'features/cards/bll/cardsThunk'
+import { CardType } from 'features/cards/dal/cardsAPI'
+import { HeaderCardsPage } from 'features/cards/ui/HeaderCardsPage/HeaderCardsPage'
 
 const columns: Column<CardType>[] = [
   {
@@ -82,7 +83,13 @@ export const Cards = () => {
 
   return (
     <ContentWrapper withoutPaper>
-      <Box>
+      <Box
+        display={'flex'}
+        flexDirection={'column'}
+        justifyContent={'space-between'}
+        width={'100%'}
+      >
+        <HeaderCardsPage id={URLSearchParams.get('cardsPack_id')} packUserId={packUserId} />
         <CardsTable
           name={'cardsTable'}
           columns={columns}
