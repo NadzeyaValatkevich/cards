@@ -103,6 +103,7 @@ export const Cards = () => {
   const cardsPackIsDeleted = useAppSelector(cardsPackIsDeletedSelector)
   const [URLSearchParams, SetURLSearchParams] = useSearchParams()
 
+  const { cardsPack_id, ...restCardsParams } = cardsParams
   const isMyPack = packUserId === profileId
 
   const columns: Column<CardType>[] = isMyPack ? columnsMyCards : columnsAllCards
@@ -124,7 +125,12 @@ export const Cards = () => {
 
   useEffect(() => {
     dispatch(getCardsTC())
-    SetURLSearchParams({ cardsPack_id: cardsParams.cardsPack_id, page: `${cardsParams.page}` })
+    SetURLSearchParams({
+      cardsPack_id: cardsPack_id,
+      page: `${cardsParams.page}`,
+      pageCount: `${cardsParams.pageCount}`,
+      sortCards: `${cardsParams.sortCards}`,
+    })
   }, [cardsParams])
 
   if (cardsPackIsDeleted) {
@@ -168,16 +174,18 @@ export const Cards = () => {
           width: '100%',
         }}
       />
-      <CardsTable
-        name={'cardsTable'}
-        columns={columns}
-        data={cardsPack}
-        columnSort={() => {}}
-        entityStatus={cardsEntityStatus}
-        sortDirection={''}
-        profileId={''}
-        sortParam={''}
-      />
+      {cardsPack.length ? (
+        <>
+          <CardsTable
+            columns={columns}
+            data={cardsPack}
+            entityStatus={cardsEntityStatus}
+            sortParam={cardsParams.sortCards}
+          />
+        </>
+      ) : (
+        <Box>{'Cards not found. Please change your search parameters'}</Box>
+      )}
       <Pagination {...paginationProps} />
     </ContentWrapper>
   )

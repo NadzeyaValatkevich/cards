@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react-table'
 
+import { sortFunc } from '../../../../common/utils/sortFunc'
 import { deletePackTC, updatePackTC } from '../../bll/packsThunks'
 import { DeletePackModal } from '../PacksModals/DeletePackModal'
 import { EditPackModal } from '../PacksModals/EditPackModal'
@@ -104,14 +105,13 @@ export const PacksTable = <T extends Record<string, unknown>>(
                         ? 'desc'
                         : 'asc'
 
+                    const sortHandler = () => columnSortHandler(column.id, sortFunc(cellSortDir))
+
                     return (
                       <TableCell key={headerKey} {...getHeaderProps}>
                         {column.defaultCanSort ? (
                           <Tooltip title={column.render('Header')}>
-                            <TableSortLabel
-                              direction={cellSortDir}
-                              onClick={() => columnSortHandler(column.id, cellSortDir)}
-                            >
+                            <TableSortLabel direction={cellSortDir} onClick={sortHandler}>
                               {column.render('Header')}
                             </TableSortLabel>
                           </Tooltip>

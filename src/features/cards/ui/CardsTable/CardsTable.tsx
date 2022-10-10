@@ -15,15 +15,13 @@ import { RequestStatusType } from 'app/bll/appReducer'
 import { sortDir } from 'common/enums/enums'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useStyles } from 'common/styles/TableStyles'
+import { sortFunc } from 'common/utils/sortFunc'
+import { setCardsSortAC } from 'features/cards/bll/cardsActions'
 
 export interface TableProps<T extends Record<string, unknown>> extends TableOptions<T> {
-  name: string
-  columnSort: (e: string) => void
   initialState?: Partial<TableState<T>>
   entityStatus: RequestStatusType
-  sortDirection: string | null
   sortParam: string | undefined
-  profileId: string | null
 }
 
 export const CardsTable = <T extends Record<string, unknown>>(
@@ -33,15 +31,7 @@ export const CardsTable = <T extends Record<string, unknown>>(
 
   const { classes } = useStyles()
 
-  const {
-    columns,
-    initialState = {},
-    sortDirection,
-    columnSort,
-    entityStatus,
-    sortParam,
-    profileId,
-  } = props
+  const { columns, initialState = {}, entityStatus, sortParam } = props
 
   const defaultColumn = useMemo<Partial<Column<T>>>(
     () => ({
@@ -83,18 +73,19 @@ export const CardsTable = <T extends Record<string, unknown>>(
                     className: classes.tableHeadCell,
                   })
 
+                  const cellSortDir =
+                    sortParam?.includes(column.id) && sortParam?.includes(sortDir.desc)
+                      ? 'desc'
+                      : 'asc'
+
+                  const sortHandler = () =>
+                    dispatch(setCardsSortAC(column.id, sortFunc(cellSortDir)))
+
                   return (
                     <TableCell key={headerKey} {...getHeaderProps}>
                       {column.defaultCanSort ? (
                         <Tooltip title={column.render('Header')}>
-                          <TableSortLabel
-                            direction={
-                              sortParam?.includes(column.id) && sortDirection === sortDir.desc
-                                ? 'desc'
-                                : 'asc'
-                            }
-                            onClick={() => columnSort(column.id)}
-                          >
+                          <TableSortLabel direction={cellSortDir} onClick={sortHandler}>
                             {column.render('Header')}
                           </TableSortLabel>
                         </Tooltip>

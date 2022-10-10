@@ -1,7 +1,3 @@
-import { sortDir } from '../enums/enums'
+export type sortFuncType = 'desc' | 'asc'
 
-export const sortFunc = (value: string | undefined): string => {
-  if (!value) return sortDir.asc
-
-  return value[0] === sortDir.asc ? sortDir.desc : sortDir.asc
-}
+export const sortFunc = (value: sortFuncType): 'desc' | 'asc' => (value === 'asc' ? 'desc' : 'asc')
