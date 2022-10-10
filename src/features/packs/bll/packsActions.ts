@@ -42,7 +42,7 @@ export const setPacksUserIdAC = (user_id: string) =>
     type: 'PACKS/SET-USER-ID',
     payload: { user_id },
   } as const)
-export const setPacksMinMaxAC = (min?: number, max?: number) =>
+export const setPacksMinMaxAC = (min?: string, max?: string) =>
   ({
     type: 'PACKS/SET-MIN-MAX',
     payload: { min, max },

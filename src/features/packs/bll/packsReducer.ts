@@ -6,8 +6,8 @@ import { PacksParamsType, PackType } from 'features/packs/dal/packsAPI'
 export const initialPackParams: PacksParamsType = {
   page: 1,
   pageCount: 5,
-  min: 0,
-  max: 100,
+  min: '',
+  max: '',
   packName: '',
   sortPacks: '',
   user_id: '',
