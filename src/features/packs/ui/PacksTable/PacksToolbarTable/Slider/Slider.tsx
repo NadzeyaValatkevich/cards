@@ -45,7 +45,13 @@ export const SliderForPacks = () => {
           value={min}
           variant={'standard'}
           onChange={minValueOnChangeHandler}
-          sx={inputSx}
+          sx={inputSXProps}
+          disabled={isDisabled}
+          inputProps={{
+            style: {
+              fontWeight: 600,
+            },
+          }}
         />
         <Slider value={[min!, max!]} onChangeCommitted={sliderOnChangeHandler} />
         <TextField
@@ -53,7 +59,13 @@ export const SliderForPacks = () => {
           value={max}
           variant={'standard'}
           onChange={maxValueOnChangeHandler}
-          sx={inputSx}
+          sx={inputSXProps}
+          disabled={isDisabled}
+          inputProps={{
+            style: {
+              fontWeight: 600,
+            },
+          }}
         />
       </Box>
     </Box>
