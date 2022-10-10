@@ -36,8 +36,11 @@ export const DeletePackModal = (props: DeletePackModalType) => {
       }}
     >
       <Typography id="modal-delete-content" variant="subtitle1" component="h2">
-        {`Do you really want to remove ${initTitle}?
-                All cards will be deleted.`}
+        Do you really want to remove&nbsp;
+        <Typography variant={'subtitle1'} fontWeight={600} display={'inline-block'}>
+          {initTitle}
+        </Typography>
+        ? All cards will be deleted.
       </Typography>
     </BasicModal>
   )
