@@ -17,7 +17,7 @@ import { PacksActionsComponent } from './PacksActionsComponent/PacksActionsCompo
 import { RequestStatusType } from 'app/bll/appReducer'
 import { AppRoutes, sortDir } from 'common/enums/enums'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
-import { useStyles } from 'common/styles/PacksTableStyles'
+import { useStyles } from 'common/styles/TableStyles'
 import { setCardsIdAC } from 'features/cards/bll/cardsActions'
 
 export interface TableProps<T extends Record<string, unknown>> extends TableOptions<T> {

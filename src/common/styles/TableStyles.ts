@@ -1,14 +1,16 @@
 import { Theme } from '@mui/material'
 import { makeStyles } from 'tss-react/mui'
 
-export const useStyles = makeStyles()((theme: Theme, _params, classes) => ({
+export const useStyles = makeStyles()((theme: Theme, _params) => ({
   tableHead: {
     backgroundColor: '#EFEFEF',
   },
+  tableHeadCell: { padding: '.5rem' },
   tableBodyCell: {
     display: 'flex',
     overflowWrap: 'anywhere',
     alignItems: 'center',
+    padding: '.5rem',
   },
   tableBodyCellSkeleton: {
     width: '100%',
@@ -26,6 +28,6 @@ export const useStyles = makeStyles()((theme: Theme, _params, classes) => ({
     alignItems: 'center',
     width: '100%',
     justifyContent: 'flex-start',
-    margin: '36px 0',
+    margin: '2rem 0',
   },
 }))

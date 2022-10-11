@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, ReactElement, useMemo } from 'react'
 
-import { Skeleton, TableHead, TableSortLabel, Tooltip } from '@mui/material'
+import { Rating, Skeleton, TableHead, TableSortLabel, Tooltip } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -12,16 +12,15 @@ import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react
 import { RequestStatusType } from 'app/bll/appReducer'
 import { sortDir } from 'common/enums/enums'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
-import { useStyles } from 'common/styles/PacksTableStyles'
+import { useStyles } from 'common/styles/TableStyles'
+import { sortFunc } from 'common/utils/sortFunc'
+import { setCardsSortAC } from 'features/cards/bll/cardsActions'
+import { CardsActionsComponent } from 'features/cards/ui/CardsTable/CardsActionsComponent/CardsActionsComponent'
 
 export interface TableProps<T extends Record<string, unknown>> extends TableOptions<T> {
-  name: string
-  columnSort: (e: string) => void
   initialState?: Partial<TableState<T>>
   entityStatus: RequestStatusType
-  sortDirection: string | null
   sortParam: string | undefined
-  profileId: string | null
 }
 
 export const CardsTable = <T extends Record<string, unknown>>(
@@ -31,15 +30,7 @@ export const CardsTable = <T extends Record<string, unknown>>(
 
   const { classes } = useStyles()
 
-  const {
-    columns,
-    initialState = {},
-    sortDirection,
-    columnSort,
-    entityStatus,
-    sortParam,
-    profileId,
-  } = props
+  const { columns, initialState = {}, entityStatus, sortParam } = props
 
   const defaultColumn = useMemo<Partial<Column<T>>>(
     () => ({
@@ -77,20 +68,24 @@ export const CardsTable = <T extends Record<string, unknown>>(
             return (
               <TableRow key={headerGroupKey} {...getHeaderGroupProps}>
                 {headerGroup.headers.map(column => {
-                  const { key: headerKey, ...getHeaderProps } = column.getHeaderProps()
+                  const { key: headerKey, ...getHeaderProps } = column.getHeaderProps({
+                    className: classes.tableHeadCell,
+                  })
+
+                  const cellSortDir =
+                    sortParam?.includes(column.id) && sortParam?.includes(sortDir.desc)
+                      ? 'desc'
+                      : 'asc'
+
+                  const sortHandler = () =>
+                    //@ts-ignore
+                    dispatch(setCardsSortAC(column.id, sortFunc(cellSortDir)))
 
                   return (
                     <TableCell key={headerKey} {...getHeaderProps}>
                       {column.defaultCanSort ? (
                         <Tooltip title={column.render('Header')}>
-                          <TableSortLabel
-                            direction={
-                              sortParam?.includes(column.id) && sortDirection === sortDir.desc
-                                ? 'desc'
-                                : 'asc'
-                            }
-                            onClick={() => columnSort(column.id)}
-                          >
+                          <TableSortLabel direction={cellSortDir} onClick={sortHandler}>
                             {column.render('Header')}
                           </TableSortLabel>
                         </Tooltip>
@@ -116,12 +111,35 @@ export const CardsTable = <T extends Record<string, unknown>>(
                     className: classes.tableBodyCell,
                   })
 
-                  // const enableEdit = data[cell.row.index]?.user_id === profileId
-                  // const disableStudyBtn = !data[cell.row.index]?.cardsCount
-                  //
-                  // const startStudyingActionHandler = (packId: string) => {}
-                  // const editPackActionHandler = (packId: string) => {}
-                  // const deletePackActionHandler = (packId: string) => dispatch(deletePackTC(packId))
+                  const editCardActionHandler = () => {}
+                  const deleteCardActionHandler = () => {}
+
+                  if (cell.column.id === 'actions') {
+                    return (
+                      <TableCell key={cellKey} {...getCellProps}>
+                        {entityStatus === RequestStatusType.loading ? (
+                          <Skeleton className={classes.tableBodyCellSkeleton} />
+                        ) : (
+                          <CardsActionsComponent
+                            cardId={data[cell.row.index]?._id as string}
+                            editCardAction={editCardActionHandler}
+                            deleteCardAction={deleteCardActionHandler}
+                          />
+                        )}
+                      </TableCell>
+                    )
+                  }
+                  if (cell.column.render('Header') === 'Grade') {
+                    return (
+                      <TableCell key={cellKey} {...getCellProps}>
+                        {entityStatus === RequestStatusType.loading ? (
+                          <Skeleton className={classes.tableBodyCellSkeleton} />
+                        ) : (
+                          <Rating value={cell.value} readOnly />
+                        )}
+                      </TableCell>
+                    )
+                  }
 
                   return (
                     <TableCell key={cellKey} {...getCellProps}>
