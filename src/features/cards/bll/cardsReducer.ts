@@ -23,9 +23,11 @@ const initialState = {
     page: 1,
     pageCount: 5,
     packUserId: '',
+    packName: '',
   },
   params: initialCadsParams,
   entityStatus: RequestStatusType.idle as RequestStatusType,
+  isDeleted: false,
 }
 
 type CardsInitialStateType = typeof initialState
@@ -57,6 +59,11 @@ export const cardsReducer = (
       return {
         ...state,
         params: initialCadsParams,
+      }
+    case 'CARDS/SET-IS-DELETED':
+      return {
+        ...state,
+        isDeleted: action.payload.status,
       }
     default:
       return state

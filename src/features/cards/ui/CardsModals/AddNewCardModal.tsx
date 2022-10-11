@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 
 import { InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
@@ -12,7 +12,7 @@ type NewCardModalType = {
   id: string
 }
 
-export const AddNewCardModal = (props: NewCardModalType) => {
+export const AddNewCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, id }) => {
   const [questionTitle, setQuestionTitle] = useState<string>('')
   const [answerTitle, setAnswerTitle] = useState<string>('')
 
@@ -28,8 +28,8 @@ export const AddNewCardModal = (props: NewCardModalType) => {
   }
 
   const addCardHandler = () => {
-    props.addCard(props.id, questionTitle, answerTitle)
-    props.setOpen(false)
+    addCard(id, questionTitle, answerTitle)
+    setOpen(false)
     setQuestionTitle('')
     setAnswerTitle('')
   }
@@ -37,8 +37,8 @@ export const AddNewCardModal = (props: NewCardModalType) => {
   return (
     <BasicModal
       name={'Add new card'}
-      open={props.open}
-      setOpen={props.setOpen}
+      open={open}
+      setOpen={setOpen}
       onSave={addCardHandler}
       nameButton={'Save'}
     >

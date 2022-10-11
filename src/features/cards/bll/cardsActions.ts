@@ -12,6 +12,7 @@ export type ActionCardsType =
   | ReturnType<typeof setCardsSortAC>
   | ReturnType<typeof setCardsMinMaxAC>
   | ReturnType<typeof setCardsInitialParamsAC>
+  | ReturnType<typeof setCardsPackIsDeletedAC>
 
 export const setCardsStatusAC = (entityStatus: RequestStatusType) =>
   ({
@@ -56,4 +57,9 @@ export const setCardsMinMaxAC = (min?: number, max?: number) =>
 export const setCardsInitialParamsAC = () =>
   ({
     type: 'CARDS/SET-INIT-PARAMS',
+  } as const)
+export const setCardsPackIsDeletedAC = (status: boolean) =>
+  ({
+    type: 'CARDS/SET-IS-DELETED',
+    payload: { status },
   } as const)

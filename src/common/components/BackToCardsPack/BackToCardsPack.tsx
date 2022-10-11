@@ -7,7 +7,7 @@ import { AppRoutes } from 'common/enums/enums'
 
 export const BackToCardsPacks = () => {
   return (
-    <NavLink to={AppRoutes.PACKS} style={{ textDecoration: 'none' }}>
+    <NavLink to={AppRoutes.PACKS} style={{ textDecoration: 'none', marginBottom: '0,25' }}>
       <Box display={'flex'} width={'180px'} justifyContent={'space-between'}>
         <img src={back} alt="back" />
         <Typography>Back to Packs List</Typography>
