@@ -1,6 +1,8 @@
+import { deletePackTC, updatePackTC } from '../../packs/bll/packsThunks'
+import { UpdatePackDataType } from '../../packs/dal/packsAPI'
 import { AddCardDataType, cardsAPI, CardsParamsType, UpdateCardsType } from '../dal/cardsAPI'
 
-import { setCardsAC, setCardsStatusAC } from './cardsActions'
+import { setCardsAC, setCardsPackIsDeletedAC, setCardsStatusAC } from './cardsActions'
 
 import { setAppStatusAC } from 'app/bll/appActions'
 import { RequestStatusType } from 'app/bll/appReducer'
@@ -69,3 +71,32 @@ export const updateCardTC =
       dispatch(setCardsStatusAC(RequestStatusType.succeeded))
     }
   }
+
+export const deletePackFromCardsTC = (idPack: string): AppThunk => {
+  return async dispatch => {
+    dispatch(setCardsStatusAC(RequestStatusType.loading))
+    try {
+      await dispatch(deletePackTC(idPack))
+      dispatch(setCardsPackIsDeletedAC(true))
+    } catch (error: any) {
+      errorUtils(error, dispatch)
+    } finally {
+      dispatch(setCardsStatusAC(RequestStatusType.succeeded))
+    }
+  }
+}
+
+export const updatePackFromCardsTC = (data: UpdatePackDataType): AppThunk => {
+  return async dispatch => {
+    dispatch(setCardsStatusAC(RequestStatusType.loading))
+
+    try {
+      await dispatch(updatePackTC(data))
+      dispatch(getCardsTC())
+    } catch (error: any) {
+      errorUtils(error, dispatch)
+    } finally {
+      dispatch(setCardsStatusAC(RequestStatusType.succeeded))
+    }
+  }
+}

@@ -10,9 +10,10 @@ import IconButton from '@mui/material/IconButton'
 import ellipsis from 'common/assets/image/ellipsis.svg'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
-import { deleteCardTC, updateCardTC } from 'features/cards/bll/cardsThunk'
-import { DeleteCardModal } from 'features/cards/ui/CardsModals/DeleteCardModal'
-import { EditCardModal } from 'features/cards/ui/CardsModals/EditCardModal'
+import { cardsParamsSelector } from 'features/cards/bll/cardsSelectors'
+import { deletePackFromCardsTC, updatePackFromCardsTC } from 'features/cards/bll/cardsThunk'
+import { DeletePackModal } from 'features/packs/ui/PacksModals/DeletePackModal'
+import { EditPackModal } from 'features/packs/ui/PacksModals/EditPackModal'
 
 export const MenuEditMyCards = () => {
   const dispatch = useAppDispatch()
@@ -20,8 +21,7 @@ export const MenuEditMyCards = () => {
   const open = Boolean(anchorEl)
   const [openModalDelete, setOpenModalDelete] = useState(false)
   const [openModalEdit, setOpenModalEdit] = useState(false)
-  const id = useAppSelector(state => state.cards.cardsData.packUserId)
-  // const { id } = useParams()
+  const { cardsPack_id } = useAppSelector(cardsParamsSelector)
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -30,16 +30,16 @@ export const MenuEditMyCards = () => {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const updateCard = (id: string, question: string, answer: string) => {
-    dispatch(updateCardTC({ _id: id, question, answer }))
+  const updatePack = (id: string, name: string, privatePack: boolean) => {
+    dispatch(updatePackFromCardsTC({ _id: id, name, private: privatePack }))
   }
   const onClickEditDataHandler = () => {
     setOpenModalEdit(true)
   }
-  const deleteCard = (id: string) => {
-    dispatch(deleteCardTC(id))
+  const deletePack = (id: string) => {
+    dispatch(deletePackFromCardsTC(id))
   }
-  const onClickDeleteCardHandler = () => {
+  const onClickDeletePackHandler = () => {
     setOpenModalDelete(true)
   }
 
@@ -93,7 +93,7 @@ export const MenuEditMyCards = () => {
           </IconButton>
           Edit
         </MenuItem>
-        <MenuItem onClick={onClickDeleteCardHandler}>
+        <MenuItem onClick={onClickDeletePackHandler}>
           <IconButton>
             <DeleteForeverIcon fontSize={'small'} />
           </IconButton>
@@ -106,17 +106,17 @@ export const MenuEditMyCards = () => {
           Learn
         </MenuItem>
       </Menu>
-      <EditCardModal
+      <EditPackModal
         setOpen={setOpenModalEdit}
         open={openModalEdit}
-        updateCard={updateCard}
-        id={id}
+        editPack={updatePack}
+        id={cardsPack_id}
       />
-      <DeleteCardModal
+      <DeletePackModal
         setOpen={setOpenModalDelete}
         open={openModalDelete}
-        deleteCard={deleteCard}
-        id={id}
+        removePackCards={deletePack}
+        id={cardsPack_id}
       />
     </Box>
   )
