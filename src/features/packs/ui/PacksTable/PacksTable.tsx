@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactElement, useMemo } from 'react'
+import React, { PropsWithChildren, ReactElement, useMemo, useState } from 'react'
 
 import { Link, Skeleton, TableHead, TableSortLabel, Tooltip } from '@mui/material'
 import Paper from '@mui/material/Paper'
@@ -10,7 +10,11 @@ import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react-table'
 
-import { deletePackTC } from '../../bll/packsThunks'
+import { useAppSelector } from '../../../../common/hooks/useAppSelector'
+import { cardsParamsSelector } from '../../../cards/bll/cardsSelectors'
+import { deletePackTC, updatePackTC } from '../../bll/packsThunks'
+import { DeletePackModal } from '../PacksModals/DeletePackModal'
+import { EditPackModal } from '../PacksModals/EditPackModal'
 
 import { PacksActionsComponent } from './PacksActionsComponent/PacksActionsComponent'
 
@@ -34,6 +38,17 @@ export const PacksTable = <T extends Record<string, unknown>>(
 ): ReactElement => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
+  const [openDelete, setOpenDelete] = React.useState(false)
+  const { cardsPack_id } = useAppSelector(cardsParamsSelector)
+
+  const editPack = (id: string, name: string, privatePack: boolean) => {
+    dispatch(updatePackTC({ _id: id, name: name, private: privatePack }))
+  }
+
+  const removePackCards = (pack_id: string) => {
+    dispatch(deletePackTC(pack_id))
+  }
 
   const { classes } = useStyles()
 
@@ -191,6 +206,13 @@ export const PacksTable = <T extends Record<string, unknown>>(
           })}
         </TableBody>
       </Table>
+      <EditPackModal setOpen={setOpen} open={open} editPack={editPack} id={cardsPack_id} />
+      <DeletePackModal
+        setOpen={setOpenDelete}
+        open={openDelete}
+        removePackCards={removePackCards}
+        id={cardsPack_id}
+      />
     </TableContainer>
   )
 }
