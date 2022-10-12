@@ -54,6 +54,7 @@ export const EditCardModal = (props: EditCardModalType) => {
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
           label="Age"
+          fullWidth={true}
         >
           <MenuItem>Text</MenuItem>
           <MenuItem>Picture</MenuItem>
@@ -65,7 +66,7 @@ export const EditCardModal = (props: EditCardModalType) => {
         id="standard-basic"
         label="Question"
         variant="standard"
-        sx={{ width: '100%' }}
+        fullWidth={true}
       />
       <TextField
         onChange={onChangeTextFieldAnswerHandler}
@@ -73,7 +74,7 @@ export const EditCardModal = (props: EditCardModalType) => {
         id="standard-basic"
         label="Answer"
         variant="standard"
-        sx={{ width: '100%' }}
+        fullWidth={true}
       />
     </BasicModal>
   )

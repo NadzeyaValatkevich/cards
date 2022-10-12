@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react'
 
 import { Checkbox, FormControlLabel, TextField } from '@mui/material'
+import Box from '@mui/material/Box'
 
 import { BasicModal } from 'common/components/BasicModal/BasicModal'
 import { useAppSelector } from 'common/hooks/useAppSelector'
@@ -43,19 +44,21 @@ export const EditPackModal = (props: EditPackModalType) => {
       onSave={editPackHandler}
       nameButton={'Save'}
     >
-      <TextField
-        onChange={onChangeTextFieldHandler}
-        defaultValue={initTitle}
-        id="standard-basic"
-        label="Name Pack"
-        variant="standard"
-        sx={{ width: '100%' }}
-      />
-      <div>
-        <FormControlLabel
-          control={<Checkbox onChange={onChangeCheckboxHandler} defaultChecked={initCheck} />}
-          label="Private Pack"
+      <div style={{ width: '100%' }}>
+        <TextField
+          onChange={onChangeTextFieldHandler}
+          defaultValue={initTitle}
+          id="standard-basic"
+          label="Name Pack"
+          variant="standard"
+          fullWidth={true}
         />
+        <div>
+          <FormControlLabel
+            control={<Checkbox onChange={onChangeCheckboxHandler} defaultChecked={initCheck} />}
+            label="Private Pack"
+          />
+        </div>
       </div>
     </BasicModal>
   )

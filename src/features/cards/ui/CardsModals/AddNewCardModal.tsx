@@ -42,12 +42,13 @@ export const AddNewCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, 
       onSave={addCardHandler}
       nameButton={'Save'}
     >
-      <FormControl variant="standard" sx={{ width: '100%' }}>
+      <FormControl variant="standard">
         <InputLabel id="demo-simple-select-standard-label">Choose a question format</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
           label="Age"
+          fullWidth={true}
         >
           <MenuItem>Text</MenuItem>
           <MenuItem>Picture</MenuItem>
@@ -58,14 +59,14 @@ export const AddNewCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, 
         id="standard-basic"
         label="Question"
         variant="standard"
-        sx={{ width: '100%' }}
+        fullWidth={true}
       />
       <TextField
         onChange={onChangeTextFieldAnswerHandler}
         id="standard-basic"
         label="Answer"
         variant="standard"
-        sx={{ width: '100%' }}
+        fullWidth={true}
       />
     </BasicModal>
   )

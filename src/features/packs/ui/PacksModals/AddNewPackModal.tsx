@@ -14,7 +14,6 @@ type NewPackModalType = {
 
 export const AddNewPackModal = (props: NewPackModalType) => {
   const [title, setTitle] = useState('')
-  // const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false)
 
   const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +26,6 @@ export const AddNewPackModal = (props: NewPackModalType) => {
   const addPackHandler = () => {
     props.addPack(title, checked)
     setChecked(false)
-    // setOpen(false)
     props.setActiveModalAdd(false)
   }
 
@@ -44,7 +42,7 @@ export const AddNewPackModal = (props: NewPackModalType) => {
         id="standard-basic"
         label="Name Pack"
         variant="standard"
-        sx={{ width: '100%' }}
+        fullWidth={true}
       />
       <div>
         <FormControlLabel

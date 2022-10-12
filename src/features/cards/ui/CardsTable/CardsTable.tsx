@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, ReactElement, useMemo } from 'react'
+import React, { PropsWithChildren, ReactElement, useMemo, useState } from 'react'
 
 import { Rating, Skeleton, TableHead, TableSortLabel, Tooltip } from '@mui/material'
 import Paper from '@mui/material/Paper'
@@ -8,6 +8,12 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react-table'
+
+import { DeletePackModal } from '../../../packs/ui/PacksModals/DeletePackModal'
+import { EditPackModal } from '../../../packs/ui/PacksModals/EditPackModal'
+import { deleteCardTC, updateCardTC } from '../../bll/cardsThunk'
+import { DeleteCardModal } from '../CardsModals/DeleteCardModal'
+import { EditCardModal } from '../CardsModals/EditCardModal'
 
 import { RequestStatusType } from 'app/bll/appReducer'
 import { sortDir } from 'common/enums/enums'
@@ -27,6 +33,16 @@ export const CardsTable = <T extends Record<string, unknown>>(
   props: PropsWithChildren<TableProps<T>>
 ): ReactElement => {
   const dispatch = useAppDispatch()
+  const [id, setId] = useState('')
+
+  const [activeModalEdit, setActiveModalEdit] = useState<boolean>(false)
+  const [activeModalDelete, setActiveModalDelete] = useState<boolean>(false)
+  const updateCard = (id: string, question: string, answer: string) => {
+    dispatch(updateCardTC({ _id: id, question, answer }))
+  }
+  const deleteCard = (_id: string) => {
+    dispatch(deleteCardTC(_id))
+  }
 
   const { classes } = useStyles()
 
@@ -111,8 +127,14 @@ export const CardsTable = <T extends Record<string, unknown>>(
                     className: classes.tableBodyCell,
                   })
 
-                  const editCardActionHandler = () => {}
-                  const deleteCardActionHandler = () => {}
+                  const editCardActionHandler = (cardId: string) => {
+                    setId(cardId)
+                    setActiveModalEdit(true)
+                  }
+                  const deleteCardActionHandler = (cardId: string) => {
+                    setId(cardId)
+                    setActiveModalDelete(true)
+                  }
 
                   if (cell.column.id === 'actions') {
                     return (
@@ -156,6 +178,18 @@ export const CardsTable = <T extends Record<string, unknown>>(
           })}
         </TableBody>
       </Table>
+      <EditCardModal
+        setOpen={setActiveModalEdit}
+        open={activeModalEdit}
+        updateCard={updateCard}
+        id={id}
+      />
+      <DeleteCardModal
+        setOpen={setActiveModalDelete}
+        open={activeModalDelete}
+        deleteCard={deleteCard}
+        id={id}
+      />
     </TableContainer>
   )
 }

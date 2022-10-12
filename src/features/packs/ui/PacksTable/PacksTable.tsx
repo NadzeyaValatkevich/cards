@@ -10,8 +10,6 @@ import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react-table'
 
-import { useAppSelector } from '../../../../common/hooks/useAppSelector'
-import { cardsParamsSelector } from '../../../cards/bll/cardsSelectors'
 import { deletePackTC, updatePackTC } from '../../bll/packsThunks'
 import { DeletePackModal } from '../PacksModals/DeletePackModal'
 import { EditPackModal } from '../PacksModals/EditPackModal'
@@ -38,9 +36,9 @@ export const PacksTable = <T extends Record<string, unknown>>(
 ): ReactElement => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const [open, setOpen] = useState(false)
-  const [openDelete, setOpenDelete] = React.useState(false)
-  const { cardsPack_id } = useAppSelector(cardsParamsSelector)
+  const [activeModalEdit, setActiveModalEdit] = useState<boolean>(false)
+  const [activeModalDelete, setActiveModalDelete] = useState<boolean>(false)
+  const [id, setId] = useState('')
 
   const editPack = (id: string, name: string, privatePack: boolean) => {
     dispatch(updatePackTC({ _id: id, name: name, private: privatePack }))
@@ -140,8 +138,14 @@ export const PacksTable = <T extends Record<string, unknown>>(
                   const disableStudyBtn = !data[cell.row.index]?.cardsCount
 
                   const startStudyingActionHandler = (packId: string) => {}
-                  const editPackActionHandler = (packId: string) => {}
-                  const deletePackActionHandler = (packId: string) => dispatch(deletePackTC(packId))
+                  const editPackActionHandler = (packId: string) => {
+                    setId(packId)
+                    setActiveModalEdit(true)
+                  }
+                  const deletePackActionHandler = (packId: string) => {
+                    setId(packId)
+                    setActiveModalDelete(true)
+                  }
 
                   if (cell.column.render('Header') === 'Actions') {
                     return (
@@ -206,12 +210,17 @@ export const PacksTable = <T extends Record<string, unknown>>(
           })}
         </TableBody>
       </Table>
-      <EditPackModal setOpen={setOpen} open={open} editPack={editPack} id={cardsPack_id} />
+      <EditPackModal
+        setOpen={setActiveModalEdit}
+        open={activeModalEdit}
+        editPack={editPack}
+        id={id}
+      />
       <DeletePackModal
-        setOpen={setOpenDelete}
-        open={openDelete}
+        setOpen={setActiveModalDelete}
+        open={activeModalDelete}
         removePackCards={removePackCards}
-        id={cardsPack_id}
+        id={id}
       />
     </TableContainer>
   )

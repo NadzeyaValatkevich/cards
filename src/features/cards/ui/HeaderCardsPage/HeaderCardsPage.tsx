@@ -24,14 +24,14 @@ export const HeaderCardsPage: FC<ToolbarCardsTablePropsType> = ({
   isMyPack,
 }) => {
   const dispatch = useAppDispatch()
-  const [openModalAdd, setOpenModalAdd] = useState(false)
+  const [activeModalAdd, setActiveModalAdd] = useState(false)
 
   const addCard = (id: string, question: string, answer: string) => {
     dispatch(addCardTC({ cardsPack_id: id, question, answer }))
   }
 
   const addNewCardModal = () => {
-    setOpenModalAdd(true)
+    setActiveModalAdd(true)
   }
 
   return (
@@ -57,8 +57,8 @@ export const HeaderCardsPage: FC<ToolbarCardsTablePropsType> = ({
               Add new card
             </Button>
             <AddNewCardModal
-              setOpen={setOpenModalAdd}
-              open={openModalAdd}
+              setOpen={setActiveModalAdd}
+              open={activeModalAdd}
               addCard={addCard}
               id={cardsPack_id!}
             />

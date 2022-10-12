@@ -19,8 +19,8 @@ export const MenuEditMyCards = () => {
   const dispatch = useAppDispatch()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
-  const [openModalDelete, setOpenModalDelete] = useState(false)
-  const [openModalEdit, setOpenModalEdit] = useState(false)
+  const [activeModalDelete, setActiveModalDelete] = useState(false)
+  const [activeModalEdit, setActiveModalEdit] = useState(false)
   const { cardsPack_id } = useAppSelector(cardsParamsSelector)
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -34,13 +34,13 @@ export const MenuEditMyCards = () => {
     dispatch(updatePackFromCardsTC({ _id: id, name, private: privatePack }))
   }
   const onClickEditDataHandler = () => {
-    setOpenModalEdit(true)
+    setActiveModalEdit(true)
   }
   const deletePack = (id: string) => {
     dispatch(deletePackFromCardsTC(id))
   }
   const onClickDeletePackHandler = () => {
-    setOpenModalDelete(true)
+    setActiveModalDelete(true)
   }
 
   return (
@@ -107,14 +107,14 @@ export const MenuEditMyCards = () => {
         </MenuItem>
       </Menu>
       <EditPackModal
-        setOpen={setOpenModalEdit}
-        open={openModalEdit}
+        setOpen={setActiveModalEdit}
+        open={activeModalEdit}
         editPack={updatePack}
         id={cardsPack_id}
       />
       <DeletePackModal
-        setOpen={setOpenModalDelete}
-        open={openModalDelete}
+        setOpen={setActiveModalDelete}
+        open={activeModalDelete}
         removePackCards={deletePack}
         id={cardsPack_id}
       />
