@@ -5,4 +5,4 @@ export const packsEntityStatusSelector = (state: AppRootStateType) => state.pack
 export const packsDataSelector = (state: AppRootStateType) => state.packs.packsData
 export const cardsPackSelector = (state: AppRootStateType) => state.packs.packsData.cardPacks
 export const profileSelector = (state: AppRootStateType) => state.profile
-export const cardsPackIsDeletedSelector = (state: AppRootStateType) => state.cards.isDeleted
+export const packsSearchParamSelector = (state: AppRootStateType) => state.packs.params.packName

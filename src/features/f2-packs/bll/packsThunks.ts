@@ -1,9 +1,6 @@
-import { initialPackParams } from './packsReducer'
-
 import { RequestStatusType } from 'app/bll/appReducer'
 import { AppThunk } from 'app/bll/store'
 import { errorUtils } from 'common/utils/error-utils'
-import { compareObj } from 'common/utils/removeEmptyObj'
 import { setPacksAC, setPacksStatusAC } from 'features/f2-packs/bll/packsActions'
 import {
   AddPackDataType,
@@ -13,11 +10,9 @@ import {
 } from 'features/f2-packs/dal/packsAPI'
 
 export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
-  //compareObj - сравнивает 2 объекта, если свойства первого отличаются от 2-го, то возвращается объект с измененными свойствами
-  const params: PacksParamsType = compareObj(getState().packs.params, initialPackParams)
+  const params: PacksParamsType = getState().packs.params
 
   dispatch(setPacksStatusAC(RequestStatusType.loading))
-
   try {
     const res = await packsAPI.getPacks(params)
 

@@ -4,7 +4,6 @@ import Box from '@mui/material/Box'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Column } from 'react-table'
 
-import { RequestStatusType } from '../../../app/bll/appReducer'
 import {
   setCardsInitialParamsAC,
   setCardsPackIsDeletedAC,
@@ -23,6 +22,7 @@ import { CardType } from '../dal/cardsAPI'
 import { CardsTable } from './CardsTable/CardsTable'
 import { HeaderCardsPage } from './HeaderCardsPage/HeaderCardsPage'
 
+import { RequestStatusType } from 'app/bll/appReducer'
 import { BackToCardPacks } from 'common/components/BackToPackList/BackToCardsPack'
 import { Pagination, PaginationPropsType } from 'common/components/Pagination/Pagination'
 import { AppRoutes } from 'common/enums/enums'

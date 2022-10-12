@@ -8,14 +8,13 @@ import { SxProps } from '@mui/system'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useDebounce } from 'common/hooks/useDebounce'
 
-type SearchKeyType = 'cardQuestion' | 'cardAnswer' | 'packName'
-
 type PropsType = {
   setParams: (packName: string) => any
+  searchParam?: string
   sx?: SxProps<Theme>
 }
 
-export const SearchPanel: FC<PropsType> = ({ setParams, sx }) => {
+export const SearchPanel: FC<PropsType> = ({ setParams, sx, searchParam }) => {
   const dispatch = useAppDispatch()
 
   const [flag, setFlag] = useState(false)
@@ -31,7 +30,13 @@ export const SearchPanel: FC<PropsType> = ({ setParams, sx }) => {
   }, [])
 
   useEffect(() => {
-    if (flag) {
+    if (flag && !searchParam) {
+      setValue('')
+    }
+  }, [searchParam])
+
+  useEffect(() => {
+    if (flag && debouncedValue) {
       dispatch(setParams(debouncedValue))
     }
   }, [debouncedValue])
