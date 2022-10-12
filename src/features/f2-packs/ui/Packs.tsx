@@ -122,7 +122,7 @@ export const Packs = () => {
           <Pagination {...paginationProps} />
         </>
       ) : (
-        <Box>{'Card f2-packs not found. Please change the filter settings'}</Box>
+        <Box>{'Card packs not found. Please change the filter settings'}</Box>
       )}
     </ContentWrapper>
   )
