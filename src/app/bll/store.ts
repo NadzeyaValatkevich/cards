@@ -3,18 +3,17 @@ import { throttle } from 'lodash'
 import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux'
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
-import { loadState, saveState } from '../../common/utils/localStorage'
-import { ActionCardsType } from '../../features/cards/bll/cardsActions'
-
 import { AppActionsType } from 'app/bll/appActions'
 import { appReducer } from 'app/bll/appReducer'
-import { AuthActionsType } from 'features/auth/bll/authActions'
-import { authReducer } from 'features/auth/bll/authReducer'
-import { cardsReducer } from 'features/cards/bll/cardsReducer'
-import { ActionPacksType } from 'features/packs/bll/packsActions'
-import { packsReducer } from 'features/packs/bll/packsReducer'
-import { ProfileActionsType } from 'features/profile/bll/profileActions'
-import { profileReducer } from 'features/profile/bll/profileReducer'
+import { loadState, saveState } from 'common/utils/localStorage'
+import { AuthActionsType } from 'features/f0-auth/bll/authActions'
+import { authReducer } from 'features/f0-auth/bll/authReducer'
+import { ProfileActionsType } from 'features/f1-profile/bll/profileActions'
+import { profileReducer } from 'features/f1-profile/bll/profileReducer'
+import { ActionPacksType } from 'features/f2-packs/bll/packsActions'
+import { packsReducer } from 'features/f2-packs/bll/packsReducer'
+import { ActionCardsType } from 'features/f3-cards/bll/cardsActions'
+import { cardsReducer } from 'features/f3-cards/bll/cardsReducer'
 
 const rootReducer = combineReducers({
   app: appReducer,

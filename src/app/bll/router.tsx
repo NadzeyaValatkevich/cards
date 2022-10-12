@@ -8,14 +8,14 @@ import { ErrorPage } from '../ui/ErrorPage'
 import { PageNotFound } from 'common/components/PageNotFound/PageNotFound'
 import { AppRoutes } from 'common/enums/enums'
 import { PrivateRoutes } from 'common/utils/PrivateRoutes'
-import { CheckEmail } from 'features/auth/ui/CheckEmail'
-import { Recovery } from 'features/auth/ui/Recovery'
-import { SetNewPassword } from 'features/auth/ui/SetNewPassword'
-import { SignIn } from 'features/auth/ui/SignIn'
-import { SignUp } from 'features/auth/ui/SignUp'
-import { Cards } from 'features/cards/ui/Cards'
-import { Packs } from 'features/packs/ui/Packs'
-import { Profile } from 'features/profile/ui/Profile'
+import { CheckEmail } from 'features/f0-auth/ui/CheckEmail'
+import { Recovery } from 'features/f0-auth/ui/Recovery'
+import { SetNewPassword } from 'features/f0-auth/ui/SetNewPassword'
+import { SignIn } from 'features/f0-auth/ui/SignIn'
+import { SignUp } from 'features/f0-auth/ui/SignUp'
+import { Profile } from 'features/f1-profile/ui/Profile'
+import { Packs } from 'features/f2-packs/ui/Packs'
+import { Cards } from 'features/f3-cards/ui/Cards'
 
 const loggedRoutes = {
   element: <PrivateRoutes loggedIn />,
@@ -87,6 +87,6 @@ export const router = createHashRouter(
     },
   ],
   {
-    // basename: 'cards',
+    // basename: 'f3-cards',
   }
 )

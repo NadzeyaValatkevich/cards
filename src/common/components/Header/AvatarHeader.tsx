@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { AppRoutes } from 'common/enums/enums'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
-import { logoutTC } from 'features/auth/bll/authThunks'
+import { logoutTC } from 'features/f0-auth/bll/authThunks'
 
 export const AvatarHeader = () => {
   const navigate = useNavigate()

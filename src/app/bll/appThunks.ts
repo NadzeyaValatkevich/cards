@@ -3,10 +3,10 @@ import { RequestStatusType } from './appReducer'
 import { AppThunk } from './store'
 
 import { errorUtils } from 'common/utils/error-utils'
-import { setIsLoggedInAC } from 'features/auth/bll/authActions'
-import { authAPI } from 'features/auth/dal/authAPI'
-import { setProfileAC } from 'features/profile/bll/profileActions'
-import { ProfileStateType } from 'features/profile/bll/profileReducer'
+import { setIsLoggedInAC } from 'features/f0-auth/bll/authActions'
+import { authAPI } from 'features/f0-auth/dal/authAPI'
+import { setProfileAC } from 'features/f1-profile/bll/profileActions'
+import { ProfileStateType } from 'features/f1-profile/bll/profileReducer'
 
 export const initTC = (): AppThunk => async (dispatch, getState) => {
   const token = getState().profile.token
