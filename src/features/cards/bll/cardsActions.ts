@@ -13,6 +13,7 @@ export type ActionCardsType =
   | ReturnType<typeof setCardsMinMaxAC>
   | ReturnType<typeof setCardsInitialParamsAC>
   | ReturnType<typeof setCardsPackIsDeletedAC>
+  | ReturnType<typeof setCardGradeAC>
 
 export const setCardsStatusAC = (entityStatus: RequestStatusType) =>
   ({
@@ -62,4 +63,10 @@ export const setCardsPackIsDeletedAC = (status: boolean) =>
   ({
     type: 'CARDS/SET-IS-DELETED',
     payload: { status },
+  } as const)
+export const setCardGradeAC = (data: { grade: number; card_id: string }, shots: number) =>
+  ({
+    type: 'CARDS/SET-CARDS-GRADE',
+    data,
+    shots,
   } as const)

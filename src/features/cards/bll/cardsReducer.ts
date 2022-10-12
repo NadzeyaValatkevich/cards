@@ -12,13 +12,15 @@ export const initialCadsParams: CardsParamsType = {
   cardQuestion: '',
   cardAnswer: '',
   sortCards: '',
+  maxGrade: 0,
+  minGrade: 0,
 }
 
 const initialState = {
   cardsData: {
     cards: [] as CardType[],
     cardsTotalCount: 0,
-    maxGrade: 10,
+    maxGrade: 0,
     minGrade: 0,
     page: 1,
     pageCount: 5,
@@ -64,6 +66,18 @@ export const cardsReducer = (
       return {
         ...state,
         isDeleted: action.payload.status,
+      }
+    case 'CARDS/SET-CARDS-GRADE':
+      return {
+        ...state,
+        cardsData: {
+          ...state.cardsData,
+          cards: state.cardsData.cards.map(card =>
+            card._id === action.data.card_id
+              ? { ...card, grade: action.data.grade, shots: action.shots }
+              : card
+          ),
+        },
       }
     default:
       return state

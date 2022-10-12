@@ -10,6 +10,8 @@ export type CardsParamsType = {
   pageCount?: number
   min?: number
   max?: number
+  minGrade?: number
+  maxGrade?: number
 }
 export type CardType = {
   _id: string
