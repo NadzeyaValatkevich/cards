@@ -4,6 +4,8 @@ import Box from '@mui/material/Box'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Column } from 'react-table'
 
+import { RequestStatusType } from '../../../app/bll/appReducer'
+
 import { BackToCardsPacks } from 'common/components/BackToCardsPack/BackToCardsPack'
 import { Pagination, PaginationPropsType } from 'common/components/Pagination/Pagination'
 import { AppRoutes } from 'common/enums/enums'
@@ -136,7 +138,12 @@ export const Cards = () => {
         width={'100%'}
       >
         <BackToCardsPacks />
-        <HeaderCardsPage packName={packName} cardsPack_id={cardsPack_id} isMyPack={isMyPack} />
+        <HeaderCardsPage
+          packName={packName}
+          cardsPack_id={cardsPack_id}
+          isMyPack={isMyPack}
+          disabled={cardsEntityStatus === RequestStatusType.loading}
+        />
         {cardsPack.length ? (
           <>
             <CardsTable

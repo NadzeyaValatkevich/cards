@@ -17,11 +17,13 @@ type ToolbarCardsTablePropsType = {
   packName: string
   cardsPack_id: string
   isMyPack: boolean
+  disabled: boolean
 }
 export const HeaderCardsPage: FC<ToolbarCardsTablePropsType> = ({
   packName,
   cardsPack_id,
   isMyPack,
+  disabled,
 }) => {
   const dispatch = useAppDispatch()
   const [activeModalAdd, setActiveModalAdd] = useState(false)
@@ -53,7 +55,7 @@ export const HeaderCardsPage: FC<ToolbarCardsTablePropsType> = ({
             <MenuEditMyCards />
           </Box>
           <Box>
-            <Button variant="contained" onClick={addNewCardModal}>
+            <Button variant="contained" onClick={addNewCardModal} disabled={disabled}>
               Add new card
             </Button>
             <AddNewCardModal
@@ -77,7 +79,7 @@ export const HeaderCardsPage: FC<ToolbarCardsTablePropsType> = ({
           >
             {packName}
           </Typography>
-          <Button variant="contained" onClick={() => {}}>
+          <Button variant="contained" onClick={() => {}} disabled={disabled}>
             Learn to pack
           </Button>
         </Box>
