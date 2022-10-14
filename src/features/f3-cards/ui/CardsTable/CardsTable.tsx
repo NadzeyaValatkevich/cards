@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, ReactElement, useMemo, useState } from 'react'
 
-import { Rating, Skeleton, TableHead, TableSortLabel, Tooltip } from '@mui/material'
+import { Rating, TableHead, TableSortLabel, Tooltip } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -16,6 +16,7 @@ import { EditCardModal } from '../CardsModals/EditCardModal'
 import { CardsActionsComponent } from './CardsActionsComponent/CardsActionsComponent'
 
 import { RequestStatusType } from 'app/bll/appReducer'
+import { SkeletonComponent } from 'common/components/SkeletonComponent/SkeletonComponent'
 import { sortDir } from 'common/enums/enums'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useStyles } from 'common/styles/TableStyles'
@@ -32,10 +33,11 @@ export const CardsTable = <T extends Record<string, unknown>>(
   props: PropsWithChildren<TableProps<T>>
 ): ReactElement => {
   const dispatch = useAppDispatch()
-  const [id, setId] = useState('')
 
+  const [id, setId] = useState('')
   const [activeModalEdit, setActiveModalEdit] = useState<boolean>(false)
   const [activeModalDelete, setActiveModalDelete] = useState<boolean>(false)
+
   const updateCard = (id: string, question: string, answer: string) => {
     dispatch(updateCardTC({ _id: id, question, answer }))
   }
@@ -46,7 +48,7 @@ export const CardsTable = <T extends Record<string, unknown>>(
   const { classes } = useStyles()
 
   const { columns, initialState = {}, entityStatus, sortParam } = props
-
+  const isLoading = entityStatus === RequestStatusType.loading
   const defaultColumn = useMemo<Partial<Column<T>>>(
     () => ({
       minWidth: 30,
@@ -137,37 +139,31 @@ export const CardsTable = <T extends Record<string, unknown>>(
                   if (cell.column.id === 'actions') {
                     return (
                       <TableCell key={cellKey} {...getCellProps}>
-                        {entityStatus === RequestStatusType.loading ? (
-                          <Skeleton className={classes.tableBodyCellSkeleton} />
-                        ) : (
+                        <SkeletonComponent status={isLoading}>
                           <CardsActionsComponent
                             cardId={data[cell.row.index]?._id as string}
                             editCardAction={editCardActionHandler}
                             deleteCardAction={deleteCardActionHandler}
                           />
-                        )}
+                        </SkeletonComponent>
                       </TableCell>
                     )
                   }
                   if (cell.column.render('Header') === 'Grade') {
                     return (
                       <TableCell key={cellKey} {...getCellProps}>
-                        {entityStatus === RequestStatusType.loading ? (
-                          <Skeleton className={classes.tableBodyCellSkeleton} />
-                        ) : (
+                        <SkeletonComponent status={isLoading}>
                           <Rating value={cell.value} readOnly />
-                        )}
+                        </SkeletonComponent>
                       </TableCell>
                     )
                   }
 
                   return (
                     <TableCell key={cellKey} {...getCellProps}>
-                      {entityStatus === RequestStatusType.loading ? (
-                        <Skeleton className={classes.tableBodyCellSkeleton} />
-                      ) : (
-                        cell.render('Cell')
-                      )}
+                      <SkeletonComponent status={isLoading}>
+                        {cell.render('Cell')}
+                      </SkeletonComponent>
                     </TableCell>
                   )
                 })}
