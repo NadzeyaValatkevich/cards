@@ -21,11 +21,23 @@ export const Header = () => {
     navigate(AppRoutes.SIGN_IN)
   }
 
+  const imgOnClickHandler = () => {
+    navigate(AppRoutes.PROFILE)
+  }
+
   return (
     <AppBar position="static" sx={{ bgcolor: '#FCFCFC' }} elevation={2}>
       <Container maxWidth="md">
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
-          <Box component={'img'} src={logo} alt={'It-incubator logo'} />
+          <Box
+            component={'img'}
+            src={logo}
+            alt={'It-incubator logo'}
+            onClick={imgOnClickHandler}
+            sx={{
+              cursor: 'pointer',
+            }}
+          />
           {isLoggedIn ? (
             <AvatarHeader />
           ) : (
