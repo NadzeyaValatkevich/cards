@@ -16,6 +16,7 @@ import { SignUp } from 'features/f0-auth/ui/SignUp'
 import { Profile } from 'features/f1-profile/ui/Profile'
 import { Packs } from 'features/f2-packs/ui/Packs'
 import { Cards } from 'features/f3-cards/ui/Cards'
+import { LearnPage } from 'features/f3-cards/ui/LearnPage/LearnPage'
 
 const loggedRoutes = {
   element: <PrivateRoutes loggedIn />,
@@ -31,12 +32,10 @@ const loggedRoutes = {
     {
       path: `${AppRoutes.CARDS}`,
       element: <Cards />,
-      // children: [
-      //   {
-      //     path: AppRoutes.CARDS_PACK_ID,
-      //     element: <Cards />,
-      //   },
-      // ],
+    },
+    {
+      path: `${AppRoutes.LEARN}`,
+      element: <LearnPage />,
     },
   ],
 }

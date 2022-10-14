@@ -47,7 +47,6 @@ export type CardsResponseType = {
   packCreated: string
   packUpdated: string
 } & TokenType
-
 export type CardDataType = {
   question?: string
   answer?: string
@@ -69,9 +68,16 @@ export type UpdateCardsType = {
   question?: string
   answer?: string
 }
+export type UpdateCardGradeType = {
+  card_id: string
+  grade: number
+}
 export type UpdateCardResponseType = {
   updatedCard: CardType
 } & TokenType
+export type UpdateCardGradeResponseType = {
+  updatedGrade: Partial<CardType>
+}
 export type DeleteCardResponseType = {
   deletedCard: CardType
 } & TokenType
@@ -88,5 +94,8 @@ export const cardsAPI = {
   },
   updateCards(updateCard: UpdateCardsType) {
     return instance.put<UpdateCardResponseType>('cards/card', { card: updateCard })
+  },
+  updateCardGrade(data: UpdateCardGradeType) {
+    return instance.put<UpdateCardGradeResponseType>('cards/grade', data)
   },
 }

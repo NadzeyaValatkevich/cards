@@ -16,12 +16,14 @@ type ToolbarCardsTablePropsType = {
   cardsPack_id: string
   isMyPack: boolean
   disabled: boolean
+  learnCallback: () => void
 }
 export const HeaderCardsPage: FC<ToolbarCardsTablePropsType> = ({
   packName,
   cardsPack_id,
   isMyPack,
   disabled,
+  learnCallback,
 }) => {
   const dispatch = useAppDispatch()
   const [activeModalAdd, setActiveModalAdd] = useState(false)
@@ -77,7 +79,7 @@ export const HeaderCardsPage: FC<ToolbarCardsTablePropsType> = ({
           >
             {packName}
           </Typography>
-          <Button variant="contained" onClick={() => {}} disabled={disabled}>
+          <Button variant="contained" onClick={learnCallback} disabled={disabled}>
             Learn to pack
           </Button>
         </Box>

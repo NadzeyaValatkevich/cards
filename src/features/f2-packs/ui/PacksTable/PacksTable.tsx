@@ -142,7 +142,10 @@ export const PacksTable = <T extends Record<string, unknown>>(
                     const cardsPackId = data[cell.row.index]?._id as string
                     const cardsPackCount = data[cell.row.index]?.cardsCount as number
 
-                    const startStudyingActionHandler = (packId: string) => {}
+                    const startStudyingActionHandler = (packId: string) => {
+                      dispatch(setCardsIdAC(packId))
+                      navigate(AppRoutes.LEARN)
+                    }
                     const editPackActionHandler = (packId: string) => {
                       setId(packId)
                       setActiveModalEdit(true)
@@ -157,9 +160,9 @@ export const PacksTable = <T extends Record<string, unknown>>(
                         <TableCell key={cellKey} {...getCellProps}>
                           <SkeletonComponent status={isLoading}>
                             <PacksActionsComponent
-                              packId={data[cell.row.index]?._id as string}
+                              packId={cardsPackId}
                               enableEdit={enableEdit}
-                              disableStudyBtn={disableStudyBtn}
+                              disableStudyBtn={!cardsPackCount}
                               startStudyingAction={startStudyingActionHandler}
                               editPackAction={editPackActionHandler}
                               deletePackAction={deletePackActionHandler}
@@ -172,7 +175,6 @@ export const PacksTable = <T extends Record<string, unknown>>(
                     const nameOnClickHandler = () => {
                       dispatch(setCardsIdAC(cardsPackId))
                       navigate(AppRoutes.CARDS)
-                      // navigate(`${AppRoutes.CARDS}?cardsPack_id=${cardsPackId}`)
                     }
 
                     if (cell.column.render('Header') === 'Name') {

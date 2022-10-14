@@ -13,6 +13,6 @@ export enum AppRoutes {
   SET_NEW_PASSWORD = '/set-new-password/:resetPasswordToken',
   PACKS = '/packs',
   CARDS = '/cards/card',
-  CARDS_PACK_ID = ':cardsPack_id',
+  LEARN = '/learn',
   Page_Not_Found = '*',
 }

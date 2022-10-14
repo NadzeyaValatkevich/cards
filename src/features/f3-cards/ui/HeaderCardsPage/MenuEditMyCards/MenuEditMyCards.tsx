@@ -6,8 +6,10 @@ import SchoolIcon from '@mui/icons-material/School'
 import { Menu, MenuItem } from '@mui/material'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
+import { useNavigate } from 'react-router-dom'
 
 import ellipsis from 'common/assets/image/ellipsis.svg'
+import { AppRoutes } from 'common/enums/enums'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { DeletePackModal } from 'features/f2-packs/ui/PacksModals/DeletePackModal'
@@ -17,6 +19,7 @@ import { deletePackFromCardsTC, updatePackFromCardsTC } from 'features/f3-cards/
 
 export const MenuEditMyCards = () => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const [activeModalDelete, setActiveModalDelete] = useState(false)
@@ -40,6 +43,10 @@ export const MenuEditMyCards = () => {
   }
   const onClickDeletePackHandler = () => {
     setActiveModalDelete(true)
+  }
+
+  const onClickLearnPackHandler = () => {
+    navigate(AppRoutes.LEARN)
   }
 
   return (
@@ -98,8 +105,8 @@ export const MenuEditMyCards = () => {
           </IconButton>
           Delete
         </MenuItem>
-        <MenuItem>
-          <IconButton onClick={() => {}}>
+        <MenuItem onClick={onClickLearnPackHandler}>
+          <IconButton>
             <SchoolIcon fontSize={'small'} />
           </IconButton>
           Learn

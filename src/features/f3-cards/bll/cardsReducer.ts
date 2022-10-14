@@ -73,14 +73,14 @@ export const cardsReducer = (
         ...state,
         isDeleted: action.payload.status,
       }
-    case 'CARDS/SET-CARDS-GRADE':
+    case 'CARDS/SET-GRADE':
       return {
         ...state,
         cardsData: {
           ...state.cardsData,
           cards: state.cardsData.cards.map(card =>
-            card._id === action.data.card_id
-              ? { ...card, grade: action.data.grade, shots: action.shots }
+            card._id === action.payload.data.card_id
+              ? { ...card, grade: action.payload.data.grade, shots: action.payload.shots }
               : card
           ),
         },
