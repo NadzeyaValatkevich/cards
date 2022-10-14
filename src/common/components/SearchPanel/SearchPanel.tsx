@@ -36,7 +36,7 @@ export const SearchPanel: FC<PropsType> = ({ setParams, sx, searchParam }) => {
   }, [searchParam])
 
   useEffect(() => {
-    if (flag) {
+    if (flag && (searchParam || debouncedValue)) {
       dispatch(setParams(debouncedValue))
     }
   }, [debouncedValue])
