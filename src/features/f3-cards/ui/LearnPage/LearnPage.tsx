@@ -90,7 +90,7 @@ export const LearnPage = () => {
 
   useEffect(() => {
     console.log(cardsTotalCount)
-    dispatch(setCardsPaginationAC({ pageCount: cardsTotalCount }))
+    dispatch(setCardsPaginationAC({ pageCount: cardsTotalCount.toString() }))
     dispatch(getCardsTC())
 
     return () => {

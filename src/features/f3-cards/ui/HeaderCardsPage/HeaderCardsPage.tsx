@@ -16,6 +16,7 @@ type ToolbarCardsTablePropsType = {
   cardsPack_id: string
   isMyPack: boolean
   disabled: boolean
+  searchParam: string | undefined
   learnCallback: () => void
 }
 export const HeaderCardsPage: FC<ToolbarCardsTablePropsType> = ({
@@ -24,6 +25,7 @@ export const HeaderCardsPage: FC<ToolbarCardsTablePropsType> = ({
   isMyPack,
   disabled,
   learnCallback,
+  searchParam,
 }) => {
   const dispatch = useAppDispatch()
   const [activeModalAdd, setActiveModalAdd] = useState(false)
@@ -84,7 +86,11 @@ export const HeaderCardsPage: FC<ToolbarCardsTablePropsType> = ({
           </Button>
         </Box>
       )}
-      <SearchPanel setParams={setCardsSearchQuestionAC} sx={{ m: '1.5rem 0', width: '100%' }} />
+      <SearchPanel
+        setParams={setCardsSearchQuestionAC}
+        searchParam={searchParam}
+        sx={{ m: '1.5rem 0', width: '100%' }}
+      />
     </Box>
   )
 }

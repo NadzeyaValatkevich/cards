@@ -4,7 +4,12 @@ import Box from '@mui/material/Box'
 import { useSearchParams } from 'react-router-dom'
 import { Column } from 'react-table'
 
-import { setPacksInitialParamsAC, setPacksPaginationAC, setPacksSortAC } from '../bll/packsActions'
+import {
+  setPacksInitialParamsAC,
+  setPacksPaginationAC,
+  setPacksParamsAC,
+  setPacksSortAC,
+} from '../bll/packsActions'
 import { initialPackParams } from '../bll/packsReducer'
 import {
   packsDataSelector,
@@ -67,8 +72,8 @@ export const Packs = () => {
   const [URLSearchParams, SetURLSearchParams] = useSearchParams()
 
   const paginationProps: PaginationPropsType = {
-    page,
-    pageCount,
+    page: page.toString(),
+    pageCount: pageCount.toString(),
     totalCount: cardPacksTotalCount,
     setParamsPacksOrCardsAC: setPacksPaginationAC,
   }
@@ -79,8 +84,6 @@ export const Packs = () => {
 
   //useEffect
   useEffect(() => {
-    // SetURLSearchParams(compareObj(params, initialPackParams))
-
     return () => {
       dispatch(setPacksInitialParamsAC())
     }
@@ -93,16 +96,14 @@ export const Packs = () => {
       SetURLSearchParams(currentParam)
     }
   }, [params])
-  // useEffect(() => {
-  //   const compareParam = compareObj(Object.fromEntries(URLSearchParams), params)
-  //
-  //   console.log(compareParam)
-  //   if (!Object.keys(compareParam).length) {
-  //     return
-  //   } else {
-  //     dispatch(setPacksInitialParamsAC())
-  //   }
-  // }, [URLSearchParams])
+  useEffect(() => {
+    const urlParams = Object.fromEntries(URLSearchParams)
+    const compareParam = compareObj(urlParams, params)
+
+    if (Object.keys(compareParam).length) {
+      dispatch(setPacksParamsAC(compareParam))
+    }
+  }, [URLSearchParams])
 
   return (
     <ContentWrapper withoutPaper>

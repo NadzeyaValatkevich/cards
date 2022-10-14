@@ -1,6 +1,6 @@
 import { RequestStatusType } from 'app/bll/appReducer'
 import { PaginationParamsType } from 'common/components/Pagination/Pagination'
-import { PacksResponseType } from 'features/f2-packs/dal/packsAPI'
+import { PacksParamsType, PacksResponseType } from 'features/f2-packs/dal/packsAPI'
 
 export type ActionPacksType =
   | ReturnType<typeof setPacksAC>
@@ -11,6 +11,7 @@ export type ActionPacksType =
   | ReturnType<typeof setPacksUserIdAC>
   | ReturnType<typeof setPacksMinMaxAC>
   | ReturnType<typeof setPacksInitialParamsAC>
+  | ReturnType<typeof setPacksParamsAC>
 
 export const setPacksStatusAC = (entityStatus: RequestStatusType) =>
   ({
@@ -50,4 +51,9 @@ export const setPacksMinMaxAC = (min?: string, max?: string) =>
 export const setPacksInitialParamsAC = () =>
   ({
     type: 'PACKS/SET-INIT-PARAMS',
+  } as const)
+export const setPacksParamsAC = (params: PacksParamsType) =>
+  ({
+    type: 'PACKS/SET-PARAMS',
+    payload: { params },
   } as const)

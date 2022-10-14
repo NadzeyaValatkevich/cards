@@ -6,8 +6,8 @@ export type CardsParamsType = {
   cardQuestion?: string
   cardAnswer?: string
   sortCards?: string
-  page?: number
-  pageCount?: number
+  page?: string
+  pageCount?: string
   min?: number
   max?: number
   minGrade?: number

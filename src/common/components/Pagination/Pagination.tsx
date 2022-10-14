@@ -9,14 +9,14 @@ import { PaginationRounded } from 'common/components/Pagination/PaginationRounde
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 
 export type PaginationParamsType = {
-  page?: number
-  pageCount?: number
+  page?: string
+  pageCount?: string
 }
 
 export type PaginationPropsType = {
-  page: number
+  page: string
   totalCount: number
-  pageCount: number
+  pageCount: string
   setParamsPacksOrCardsAC: (params: PaginationParamsType) => any
 }
 
@@ -28,12 +28,12 @@ export const Pagination: FC<PaginationPropsType> = ({
 }) => {
   const dispatch = useAppDispatch()
 
-  const handleChangePage = (page: number) => {
+  const handleChangePage = (page: string) => {
     dispatch(setParamsPacksOrCardsAC({ page }))
   }
 
   const onChangeCountRow = (valuePage: string) => {
-    dispatch(setParamsPacksOrCardsAC({ pageCount: +valuePage }))
+    dispatch(setParamsPacksOrCardsAC({ pageCount: valuePage }))
   }
 
   return (
@@ -59,7 +59,7 @@ export const Pagination: FC<PaginationPropsType> = ({
           Show
         </Typography>
 
-        <SelectCountRow callBackChange={onChangeCountRow} pageCount={JSON.stringify(pageCount)} />
+        <SelectCountRow callBackChange={onChangeCountRow} pageCount={pageCount} />
 
         <Typography variant="subtitle1" sx={{ marginLeft: '10px' }}>
           Cards per page

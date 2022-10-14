@@ -4,8 +4,8 @@ import { ActionPacksType } from 'features/f2-packs/bll/packsActions'
 import { PacksParamsType, PackType } from 'features/f2-packs/dal/packsAPI'
 
 export const initialPackParams: PacksParamsType = {
-  page: 1,
-  pageCount: 5,
+  page: '1',
+  pageCount: '5',
   min: '',
   max: '',
   packName: '',
@@ -72,6 +72,11 @@ export const packsReducer = (
       return {
         ...state,
         params: initialPackParams,
+      }
+    case 'PACKS/SET-PARAMS':
+      return {
+        ...state,
+        params: { ...state.params, ...action.payload.params },
       }
     default:
       return state

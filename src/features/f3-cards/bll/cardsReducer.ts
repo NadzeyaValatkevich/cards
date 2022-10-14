@@ -4,8 +4,8 @@ import { ActionCardsType } from 'features/f3-cards/bll/cardsActions'
 import { CardsParamsType, CardType } from 'features/f3-cards/dal/cardsAPI'
 
 export const initialCardsParams: Partial<CardsParamsType> = {
-  page: 1,
-  pageCount: 5,
+  page: '1',
+  pageCount: '5',
   min: 0,
   max: 100,
   cardQuestion: '',
@@ -89,6 +89,11 @@ export const cardsReducer = (
       return {
         ...state,
         initCards: action.payload.value,
+      }
+    case 'CARDS/SET-PARAMS':
+      return {
+        ...state,
+        params: { ...state.params, ...action.payload.params },
       }
     default:
       return state

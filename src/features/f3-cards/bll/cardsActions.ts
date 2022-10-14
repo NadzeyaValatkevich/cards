@@ -1,6 +1,6 @@
 import { RequestStatusType } from 'app/bll/appReducer'
 import { PaginationParamsType } from 'common/components/Pagination/Pagination'
-import { CardsResponseType } from 'features/f3-cards/dal/cardsAPI'
+import { CardsParamsType, CardsResponseType } from 'features/f3-cards/dal/cardsAPI'
 
 export type ActionCardsType =
   | ReturnType<typeof setCardsStatusAC>
@@ -15,6 +15,7 @@ export type ActionCardsType =
   | ReturnType<typeof setCardsPackIsDeletedAC>
   | ReturnType<typeof setCardGradeAC>
   | ReturnType<typeof setCardPageIsInitAC>
+  | ReturnType<typeof setCardParamsAC>
 
 export const setCardsStatusAC = (entityStatus: RequestStatusType) =>
   ({
@@ -78,5 +79,12 @@ export const setCardPageIsInitAC = (value: boolean) =>
     type: 'CARDS/SET-PAGE-INIT',
     payload: {
       value,
+    },
+  } as const)
+export const setCardParamsAC = (params: Partial<CardsParamsType>) =>
+  ({
+    type: 'CARDS/SET-PARAMS',
+    payload: {
+      params,
     },
   } as const)

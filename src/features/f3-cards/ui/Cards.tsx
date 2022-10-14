@@ -5,10 +5,13 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Column } from 'react-table'
 
 import {
+  setCardPageIsInitAC,
+  setCardParamsAC,
   setCardsInitialParamsAC,
   setCardsPackIsDeletedAC,
   setCardsPaginationAC,
 } from '../bll/cardsActions'
+import { initialCardsParams } from '../bll/cardsReducer'
 import {
   cardsEntityStatusSelector,
   cardsPackDataSelector,
@@ -23,12 +26,12 @@ import { CardsTable } from './CardsTable/CardsTable'
 import { HeaderCardsPage } from './HeaderCardsPage/HeaderCardsPage'
 
 import { RequestStatusType } from 'app/bll/appReducer'
-import { BackToCardPacks } from 'common/components/BackToPackList/BackToCardsPack'
 import { Pagination, PaginationPropsType } from 'common/components/Pagination/Pagination'
 import { AppRoutes } from 'common/enums/enums'
 import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
+import { compareObj } from 'common/utils/removeEmptyObj'
 import { profileSelector } from 'features/f2-packs/bll/packsSelectors'
 
 const columnsAllCards: Column<CardType>[] = [
@@ -92,7 +95,7 @@ export const Cards = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const cardsPack = useAppSelector(cardsPackSelector)
-  const { page, pageCount, cardsTotalCount, cards, packUserId, packName } =
+  const { page, pageCount, cardsTotalCount, packUserId, packName } =
     useAppSelector(cardsPackDataSelector)
   const { _id: profileId } = useAppSelector(profileSelector)
   const cardsParams = useAppSelector(cardsParamsSelector)
@@ -100,15 +103,15 @@ export const Cards = () => {
   const cardsPackIsDeleted = useAppSelector(cardsPackIsDeletedSelector)
   const [URLSearchParams, SetURLSearchParams] = useSearchParams()
 
-  const { cardsPack_id, ...restCardsParams } = cardsParams
+  const { cardsPack_id } = cardsParams
   const isMyPack = packUserId === profileId
   const isDisabled = cardsEntityStatus === RequestStatusType.loading
 
   const columns: Column<CardType>[] = isMyPack ? columnsMyCards : columnsAllCards
 
   const paginationProps: PaginationPropsType = {
-    page,
-    pageCount,
+    page: page.toString(),
+    pageCount: pageCount.toString(),
     totalCount: cardsTotalCount,
     setParamsPacksOrCardsAC: setCardsPaginationAC,
   }
@@ -124,28 +127,38 @@ export const Cards = () => {
   }, [])
 
   useEffect(() => {
+    const currentParam = compareObj(cardsParams, initialCardsParams)
+
     dispatch(getCardsTC())
-    SetURLSearchParams({
-      cardsPack_id: cardsPack_id,
-      page: `${cardsParams.page}`,
-      pageCount: `${cardsParams.pageCount}`,
-      sortCards: `${cardsParams.sortCards}`,
-    })
+    SetURLSearchParams(currentParam)
   }, [cardsParams])
+  useEffect(() => {
+    const urlParams = Object.fromEntries(URLSearchParams)
+    const compareParam = compareObj(urlParams, cardsParams)
+
+    if (Object.keys(compareParam).length) {
+      dispatch(setCardParamsAC(compareParam))
+    }
+  }, [URLSearchParams])
 
   if (cardsPackIsDeleted) {
     navigate(AppRoutes.PACKS)
     dispatch(setCardsPackIsDeletedAC(false))
   }
 
+  const learnOnClickHandler = async () => {
+    navigate(AppRoutes.LEARN)
+  }
+
   return (
     <ContentWrapper withoutPaper>
-      <BackToCardPacks />
       <HeaderCardsPage
         packName={packName}
         cardsPack_id={cardsPack_id}
         isMyPack={isMyPack}
         disabled={isDisabled}
+        searchParam={cardsParams.cardQuestion}
+        learnCallback={learnOnClickHandler}
       />
       {cardsPack.length ? (
         <>
