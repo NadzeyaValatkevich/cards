@@ -18,22 +18,22 @@ type PropsType = {
 export const ContentWrapper: FC<PropsType> = ({ children, sx, withoutPaper }) => {
   const location = useLocation()
 
-  const BackToCardPacksLocations = AppRoutes.PROFILE || AppRoutes.CARDS
+  const BackToCardPacksLocations =
+    location.pathname === AppRoutes.PROFILE ||
+    location.pathname === AppRoutes.CARDS ||
+    location.pathname === AppRoutes.LEARN
 
   if (withoutPaper) {
     return (
       <Container
         maxWidth="md"
-        disableGutters
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
           alignItems: 'center',
-          height: '100%',
-          flex: 1,
         }}
       >
+        {BackToCardPacksLocations && <BackToCardPacks />}
         {children}
       </Container>
     )
@@ -50,20 +50,39 @@ export const ContentWrapper: FC<PropsType> = ({ children, sx, withoutPaper }) =>
           flex: 1,
         }}
       >
-        {location.pathname === BackToCardPacksLocations && <BackToCardPacks />}
-        <Paper
-          elevation={4}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '2rem',
-            ...sx,
-          }}
-        >
-          {children}
-        </Paper>
+        {BackToCardPacksLocations ? (
+          <>
+            <BackToCardPacks />
+            <Paper
+              elevation={4}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'start',
+                alignItems: 'center',
+                padding: '2rem',
+                ...sx,
+              }}
+            >
+              {children}
+            </Paper>
+          </>
+        ) : (
+          <Paper
+            elevation={4}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'start',
+              alignItems: 'center',
+              padding: '2rem',
+              mt: '4.5rem',
+              ...sx,
+            }}
+          >
+            {children}
+          </Paper>
+        )}
       </Container>
     )
   }

@@ -37,7 +37,7 @@ const columns: Column<PackType>[] = [
     Header: 'Cards',
     accessor: 'cardsCount',
     defaultCanSort: true,
-    width: 200,
+    minWidth: 150,
   },
   {
     Header: 'Last Updated',

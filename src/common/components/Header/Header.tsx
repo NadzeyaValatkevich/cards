@@ -23,7 +23,7 @@ export const Header = () => {
 
   return (
     <AppBar position="static" sx={{ bgcolor: '#FCFCFC' }} elevation={2}>
-      <Container maxWidth="md" disableGutters>
+      <Container maxWidth="md">
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
           <Box component={'img'} src={logo} alt={'It-incubator logo'} />
           {isLoggedIn ? (

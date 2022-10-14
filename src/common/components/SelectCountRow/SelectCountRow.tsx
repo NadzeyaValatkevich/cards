@@ -12,6 +12,7 @@ export const SelectCountRow = (props: SelectCountRowType) => {
   const handleChange = (event: SelectChangeEvent) => {
     props.callBackChange(event.target.value)
   }
+  const pageValue = +props.pageCount < 5 ? '5' : props.pageCount
 
   return (
     <Box sx={{ minWidth: 50 }}>
@@ -19,7 +20,7 @@ export const SelectCountRow = (props: SelectCountRowType) => {
         <Select
           labelId="Count-row-labelId"
           id="Count-row-id"
-          value={props.pageCount}
+          value={pageValue}
           label="Count row"
           variant={'standard'}
           onChange={handleChange}
