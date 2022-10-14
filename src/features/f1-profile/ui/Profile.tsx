@@ -1,7 +1,8 @@
-import React, { FC } from 'react'
+import React, { ChangeEvent, FC } from 'react'
 
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
-import { Typography } from '@mui/material'
+import { Input, Typography } from '@mui/material'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 
@@ -13,54 +14,69 @@ import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { LoaderWrapper } from 'common/HOCs/LoaderWrapper/LoaderWrapper'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
+import { convertFileToBase64 } from 'common/utils/convertFileToBase64'
 import { logoutTC } from 'features/f0-auth/bll/authThunks'
-import { updateProfileTC, updateProfileType } from 'features/f1-profile/bll/profileThunks'
+import { updateProfileTC } from 'features/f1-profile/bll/profileThunks'
 
 type PropsType = {}
 
 export const Profile: FC<PropsType> = () => {
   const dispatch = useAppDispatch()
-  const profile = useAppSelector(state => state.profile)
+
+  const { name, avatar, email } = useAppSelector(state => state.profile)
 
   const onClickHandler = () => {
     dispatch(logoutTC())
   }
 
-  const user: updateProfileType = {
-    name: null,
-  }
   const onTitleChangeHandler = (value: string) => {
-    user.name = value
-    dispatch(updateProfileTC(user))
+    dispatch(updateProfileTC({ name: value }))
+  }
+
+  const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
+
+      if (file.size < 4000000) {
+        convertFileToBase64(file, (avatar: string) => {
+          dispatch(updateProfileTC({ avatar }))
+        })
+      } else {
+        console.error('Error: ', 'Файл слишком большого размера')
+      }
+    }
   }
 
   return (
     <LoaderWrapper>
       <ContentWrapper>
-        <Typography variant="h4" style={{ marginBottom: '30px' }}>
+        <Typography
+          variant="h4"
+          sx={{
+            fontWeight: '600',
+            mb: '2rem',
+          }}
+        >
           Profile
         </Typography>
-        <div style={{ position: 'relative' }}>
-          <img src={profile.avatar || userPhoto} alt={'user'} className={s.photo} />
+        <Box position={'relative'}>
+          <img src={avatar || userPhoto} alt={'user'} className={s.photo} />
           <div className={s.iconPhoto}>
-            <IconButton>
+            <IconButton component={'label'}>
               <AddAPhotoIcon />
+              <Input type={'file'} onChange={uploadHandler} sx={{ display: 'none' }} />
             </IconButton>
           </div>
-        </div>
-        <div style={{ paddingTop: '30px', paddingBottom: '30px' }}>
+        </Box>
+        <Box p={'2rem 0'}>
           <Typography variant={'h5'}>
-            <EditableSpan value={profile.name || 'Some Name'} onChange={onTitleChangeHandler} />
+            <EditableSpan value={name || 'Some Name'} onChange={onTitleChangeHandler} />
           </Typography>
-        </div>
-        <Typography variant="h6" style={{ marginBottom: '30px' }}>
-          {profile.email}
+        </Box>
+        <Typography variant={'h6'} mb={'2rem'}>
+          {email}
         </Typography>
-        <Button
-          style={{ width: '100%', marginBottom: '31px', borderRadius: '20px' }}
-          variant="contained"
-          onClick={onClickHandler}
-        >
+        <Button variant="contained" fullWidth onClick={onClickHandler}>
           Log out
         </Button>
       </ContentWrapper>

@@ -13,6 +13,44 @@ import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { logoutTC } from 'features/f0-auth/bll/authThunks'
 
+const stringToColor = (string: string) => {
+  let hash = 0
+  let i
+
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash)
+  }
+
+  let color = '#'
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff
+
+    color += `00${value.toString(16)}`.slice(-2)
+  }
+
+  return color
+}
+const stringAvatar = (name: string) => {
+  const avatarName = name.split(' ')
+
+  if (avatarName.length === 1) {
+    return {
+      sx: {
+        bgColor: stringToColor(name),
+      },
+      children: `${avatarName[0][0]}`,
+    }
+  }
+
+  return {
+    sx: {
+      bgColor: stringToColor(name),
+    },
+    children: `${avatarName[0][0]}${avatarName[1][0]}`,
+  }
+}
+
 export const AvatarHeader = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -22,47 +60,9 @@ export const AvatarHeader = () => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
+
   const handleClose = () => {
     setAnchorEl(null)
-  }
-
-  function stringToColor(string: string) {
-    let hash = 0
-    let i
-
-    for (i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash)
-    }
-
-    let color = '#'
-
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff
-
-      color += `00${value.toString(16)}`.slice(-2)
-    }
-
-    return color
-  }
-
-  function stringAvatar(name: string) {
-    const avatarName = name.split(' ')
-
-    if (avatarName.length === 1) {
-      return {
-        sx: {
-          bgColor: stringToColor(name),
-        },
-        children: `${avatarName[0][0]}`,
-      }
-    }
-
-    return {
-      sx: {
-        bgColor: stringToColor(name),
-      },
-      children: `${avatarName[0][0]}${avatarName[1][0]}`,
-    }
   }
 
   const menuLogoutHandler = () => {

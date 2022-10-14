@@ -1,4 +1,4 @@
-export type ProfileActionsType = SetProfileActionType
+export type ProfileActionsType = ReturnType<typeof setProfileAC>
 
 export type ResponseProfileType = {
   _id: string | null
@@ -19,5 +19,3 @@ export type ResponseProfileType = {
 
 export const setProfileAC = (profile: ResponseProfileType) =>
   ({ type: 'PROFILE/SET-PROFILE', payload: { profile } } as const)
-
-export type SetProfileActionType = ReturnType<typeof setProfileAC>
