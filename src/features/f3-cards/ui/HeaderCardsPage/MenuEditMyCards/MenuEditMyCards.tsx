@@ -14,7 +14,7 @@ import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { DeletePackModal } from 'features/f2-packs/ui/PacksModals/DeletePackModal'
 import { EditPackModal } from 'features/f2-packs/ui/PacksModals/EditPackModal'
-import { cardsParamsSelector } from 'features/f3-cards/bll/cardsSelectors'
+import { cardsPackNameSelector, cardsParamsSelector } from 'features/f3-cards/bll/cardsSelectors'
 import { deletePackFromCardsTC, updatePackFromCardsTC } from 'features/f3-cards/bll/cardsThunk'
 
 export const MenuEditMyCards = () => {
@@ -25,6 +25,7 @@ export const MenuEditMyCards = () => {
   const [activeModalDelete, setActiveModalDelete] = useState(false)
   const [activeModalEdit, setActiveModalEdit] = useState(false)
   const { cardsPack_id } = useAppSelector(cardsParamsSelector)
+  const cardsPackName = useAppSelector(cardsPackNameSelector)
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -123,6 +124,7 @@ export const MenuEditMyCards = () => {
         open={activeModalDelete}
         removePackCards={deletePack}
         id={cardsPack_id}
+        packName={cardsPackName}
       />
     </Box>
   )

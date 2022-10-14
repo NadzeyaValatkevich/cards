@@ -41,6 +41,7 @@ export const PacksTable = <T extends Record<string, unknown>>(
   const [activeModalEdit, setActiveModalEdit] = useState<boolean>(false)
   const [activeModalDelete, setActiveModalDelete] = useState<boolean>(false)
   const [id, setId] = useState('')
+  const [packName, setPackName] = useState('')
 
   const editPack = (id: string, name: string, privatePack: boolean) => {
     dispatch(updatePackTC({ _id: id, name: name, private: privatePack }))
@@ -141,6 +142,7 @@ export const PacksTable = <T extends Record<string, unknown>>(
                     const enableEdit = data[cell.row.index]?.user_id === profileId
                     const cardsPackId = data[cell.row.index]?._id as string
                     const cardsPackCount = data[cell.row.index]?.cardsCount as number
+                    const cardsPackName = data[cell.row.index]?.name as string
 
                     const startStudyingActionHandler = (packId: string) => {
                       dispatch(setCardsIdAC(packId))
@@ -152,6 +154,7 @@ export const PacksTable = <T extends Record<string, unknown>>(
                     }
                     const deletePackActionHandler = (packId: string) => {
                       setId(packId)
+                      setPackName(cardsPackName)
                       setActiveModalDelete(true)
                     }
 
@@ -225,6 +228,7 @@ export const PacksTable = <T extends Record<string, unknown>>(
         open={activeModalDelete}
         removePackCards={removePackCards}
         id={id}
+        packName={packName}
       />
     </>
   )
