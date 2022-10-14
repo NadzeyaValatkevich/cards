@@ -3,8 +3,7 @@ import { dateParser } from 'common/utils/dateParser'
 import { ActionCardsType } from 'features/f3-cards/bll/cardsActions'
 import { CardsParamsType, CardType } from 'features/f3-cards/dal/cardsAPI'
 
-export const initialCardsParams: CardsParamsType = {
-  cardsPack_id: '',
+export const initialCardsParams: Partial<CardsParamsType> = {
   page: 1,
   pageCount: 5,
   min: 0,
@@ -27,9 +26,10 @@ const initialState = {
     packUserId: '',
     packName: '',
   },
-  params: initialCardsParams,
+  params: { cardsPack_id: '', ...initialCardsParams } as CardsParamsType,
   entityStatus: RequestStatusType.idle as RequestStatusType,
   isDeleted: false,
+  initCards: false,
 }
 
 type CardsInitialStateType = typeof initialState
@@ -66,7 +66,7 @@ export const cardsReducer = (
     case 'CARDS/SET-INIT-PARAMS':
       return {
         ...state,
-        params: initialCardsParams,
+        params: { ...state.params, ...initialCardsParams },
       }
     case 'CARDS/SET-IS-DELETED':
       return {
@@ -84,6 +84,11 @@ export const cardsReducer = (
               : card
           ),
         },
+      }
+    case 'CARDS/SET-PAGE-INIT':
+      return {
+        ...state,
+        initCards: action.payload.value,
       }
     default:
       return state

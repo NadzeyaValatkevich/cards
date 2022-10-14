@@ -114,9 +114,11 @@ export const Cards = () => {
   }
 
   useEffect(() => {
+    dispatch(setCardPageIsInitAC(true))
     SetURLSearchParams({ cardsPack_id: cardsParams.cardsPack_id })
 
     return () => {
+      dispatch(setCardPageIsInitAC(false))
       dispatch(setCardsInitialParamsAC())
     }
   }, [])

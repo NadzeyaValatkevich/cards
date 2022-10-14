@@ -42,12 +42,12 @@ export const addPackTC = (data: AddPackDataType): AppThunk => {
 export const deletePackTC = (idPack: string): AppThunk => {
   return async (dispatch, getState) => {
     dispatch(setPacksStatusAC(RequestStatusType.loading))
-    const fromCards = getState().cards.params.cardsPack_id
+    const initCards = getState().cards.initCards
 
     try {
       const res = await packsAPI.deletePack(idPack)
 
-      !fromCards && dispatch(getPacksTC())
+      !initCards && dispatch(getPacksTC())
     } catch (error: any) {
       errorUtils(error, dispatch)
     } finally {
@@ -59,12 +59,12 @@ export const deletePackTC = (idPack: string): AppThunk => {
 export const updatePackTC = (data: UpdatePackDataType): AppThunk => {
   return async (dispatch, getState) => {
     dispatch(setPacksStatusAC(RequestStatusType.loading))
-    const fromCards = getState().cards.params.cardsPack_id
+    const initCards = getState().cards.initCards
 
     try {
       const res = await packsAPI.updatePack({ cardsPack: data })
 
-      !fromCards && dispatch(getPacksTC())
+      !initCards && dispatch(getPacksTC())
     } catch (error: any) {
       errorUtils(error, dispatch)
     } finally {
