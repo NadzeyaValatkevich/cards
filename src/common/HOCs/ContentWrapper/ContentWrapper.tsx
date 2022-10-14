@@ -23,67 +23,34 @@ export const ContentWrapper: FC<PropsType> = ({ children, sx, withoutPaper }) =>
     location.pathname === AppRoutes.CARDS ||
     location.pathname === AppRoutes.LEARN
 
-  if (withoutPaper) {
-    return (
-      <Container
-        maxWidth="md"
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        {BackToCardPacksLocations && <BackToCardPacks />}
-        {children}
-      </Container>
-    )
-  } else {
-    return (
-      <Container
-        maxWidth="md"
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100%',
-          flex: 1,
-        }}
-      >
-        {BackToCardPacksLocations ? (
-          <>
-            <BackToCardPacks />
-            <Paper
-              elevation={4}
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'start',
-                alignItems: 'center',
-                padding: '2rem',
-                ...sx,
-              }}
-            >
-              {children}
-            </Paper>
-          </>
-        ) : (
-          <Paper
-            elevation={4}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'start',
-              alignItems: 'center',
-              padding: '2rem',
-              mt: '4.5rem',
-              ...sx,
-            }}
-          >
-            {children}
-          </Paper>
-        )}
-      </Container>
-    )
-  }
+  return (
+    <Container
+      maxWidth="md"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      {BackToCardPacksLocations && <BackToCardPacks />}
+      {withoutPaper ? (
+        children
+      ) : (
+        <Paper
+          elevation={4}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'start',
+            alignItems: 'center',
+            padding: '2rem',
+            mt: !BackToCardPacksLocations ? '4.5rem' : '',
+            ...sx,
+          }}
+        >
+          {children}
+        </Paper>
+      )}
+    </Container>
+  )
 }
