@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import { SxProps } from '@mui/system'
 import { FormContainer, RadioButtonGroup } from 'react-hook-form-mui'
+import { useSearchParams } from 'react-router-dom'
 
 import { setCardsIdAC, setCardsPaginationAC } from '../../bll/cardsActions'
 import { getCardsTC, updateCardGradeTC } from '../../bll/cardsThunk'
@@ -20,6 +21,7 @@ import {
   cardsPackDataSelector,
   cardsPackNameSelector,
   cardsPackSelector,
+  cardsParamsSelector,
 } from 'features/f3-cards/bll/cardsSelectors'
 import { CardType } from 'features/f3-cards/dal/cardsAPI'
 
@@ -71,11 +73,13 @@ export const LearnPage = () => {
   const [show, setShow] = useState(false)
   const [first, setFirst] = useState(true)
   const [card, setCard] = useState<CardType>({} as CardType)
+  const [URLSearchParams, SetURLSearchParams] = useSearchParams()
 
   const cards = useAppSelector(cardsPackSelector)
   const { cardsTotalCount } = useAppSelector(cardsPackDataSelector)
   const packName = useAppSelector(cardsPackNameSelector)
   const cardsEntityStatus = useAppSelector(cardsEntityStatusSelector)
+  const cardsParams = useAppSelector(cardsParamsSelector)
 
   const isLoading = cardsEntityStatus === RequestStatusType.loading
 
@@ -89,9 +93,9 @@ export const LearnPage = () => {
   }
 
   useEffect(() => {
-    console.log(cardsTotalCount)
     dispatch(setCardsPaginationAC({ pageCount: cardsTotalCount.toString() }))
     dispatch(getCardsTC())
+    SetURLSearchParams({ cardsPack_id: cardsParams.cardsPack_id })
 
     return () => {
       dispatch(setCardsIdAC(''))
