@@ -1,5 +1,6 @@
 import { RequestStatusType } from 'app/bll/appReducer'
 import { dateParser } from 'common/utils/dateParser'
+import { compareObj } from 'common/utils/removeEmptyObj'
 import { ActionPacksType } from 'features/f2-packs/bll/packsActions'
 import { PacksParamsType, PackType } from 'features/f2-packs/dal/packsAPI'
 
@@ -56,8 +57,7 @@ export const packsReducer = (
     case 'PACKS/SET-SEARCH':
       return { ...state, params: { ...state.params, packName: action.payload.packName } }
     case 'PACKS/SET-SORT': {
-      const sortRequest =
-        action.payload.dir === 'asc' ? `0${action.payload.name}` : `1${action.payload.name}`
+      const sortRequest = `${action.payload.dir === 'asc' ? 0 : 1}${action.payload.name}`
 
       return { ...state, params: { ...state.params, sortPacks: sortRequest } }
     }
@@ -68,11 +68,16 @@ export const packsReducer = (
         ...state,
         params: { ...state.params, min: action.payload.min, max: action.payload.max },
       }
-    case 'PACKS/SET-INIT-PARAMS':
-      return {
-        ...state,
-        params: initialPackParams,
-      }
+    case 'PACKS/SET-INIT-PARAMS': {
+      const enableChanges = compareObj(state.params, initialPackParams)
+
+      return Object.keys(enableChanges).length
+        ? {
+            ...state,
+            params: initialPackParams,
+          }
+        : state
+    }
     case 'PACKS/SET-PARAMS':
       return {
         ...state,
