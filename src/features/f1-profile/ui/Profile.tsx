@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC } from 'react'
+import React, { ChangeEvent, FC, useState } from 'react'
 
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto'
 import { Input, Typography } from '@mui/material'
@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton'
 
 import s from './profile.module.css'
 
+import { setAppErrorAC } from 'app/bll/appActions'
 import userPhoto from 'common/assets/image/user.png'
 import { EditableSpan } from 'common/components/EditableSpan/EditableSpan'
 import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
@@ -22,6 +23,7 @@ type PropsType = {}
 
 export const Profile: FC<PropsType> = () => {
   const dispatch = useAppDispatch()
+  const [isAvatarBroken, setIsAvatarBroken] = useState(false)
 
   const { name, avatar, email } = useAppSelector(state => state.profile)
 
@@ -38,13 +40,19 @@ export const Profile: FC<PropsType> = () => {
       const file = e.target.files[0]
 
       if (file.size < 4000000) {
+        setIsAvatarBroken(false)
         convertFileToBase64(file, (avatar: string) => {
           dispatch(updateProfileTC({ avatar }))
         })
       } else {
-        console.error('Error: ', 'Файл слишком большого размера')
+        dispatch(setAppErrorAC('Error: File size more then 4 mb'))
       }
     }
+  }
+
+  const errorHandler = () => {
+    setIsAvatarBroken(true)
+    dispatch(setAppErrorAC('Picture upload failed'))
   }
 
   return (
@@ -60,7 +68,15 @@ export const Profile: FC<PropsType> = () => {
           Profile
         </Typography>
         <Box position={'relative'}>
-          <img src={avatar || userPhoto} alt={'user'} className={s.photo} />
+          <img
+            src={isAvatarBroken ? userPhoto : avatar || userPhoto}
+            alt={'user'}
+            className={s.photo}
+            onError={errorHandler}
+            style={{
+              borderRadius: '50%',
+            }}
+          />
           <div className={s.iconPhoto}>
             <IconButton component={'label'}>
               <AddAPhotoIcon />

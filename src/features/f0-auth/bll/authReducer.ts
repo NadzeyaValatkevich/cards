@@ -11,7 +11,7 @@ export const authReducer = (
   action: AuthActionsType
 ): AuthStateType => {
   switch (action.type) {
-    case 'f0-auth/SET-IS-LOGGED-IN':
+    case 'AUTH/SET-IS-LOGGED-IN':
       return { ...state, isLoggedIn: action.payload.value }
     default:
       return state
