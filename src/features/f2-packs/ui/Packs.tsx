@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
 import { useSearchParams } from 'react-router-dom'
@@ -65,6 +65,7 @@ const columns: Column<PackType>[] = [
 export const Packs = () => {
   //Hooks
   const dispatch = useAppDispatch()
+  const [first, setFirst] = useState(true)
   const params = useAppSelector(packsParamsSelector)
   const packsEntityStatus = useAppSelector(packsEntityStatusSelector)
   const { page, pageCount, cardPacksTotalCount, cardPacks } = useAppSelector(packsDataSelector)
@@ -84,6 +85,9 @@ export const Packs = () => {
 
   //useEffect
   useEffect(() => {
+    setFirst(false)
+    dispatch(getPacksTC())
+
     return () => {
       dispatch(setPacksInitialParamsAC())
     }
@@ -91,8 +95,10 @@ export const Packs = () => {
   useEffect(() => {
     const currentParam = compareObj(params, initialPackParams)
 
-    dispatch(getPacksTC())
-    SetURLSearchParams(currentParam)
+    if (!first) {
+      dispatch(getPacksTC())
+      SetURLSearchParams(currentParam)
+    }
   }, [params])
   useEffect(() => {
     const urlParams = Object.fromEntries(URLSearchParams)

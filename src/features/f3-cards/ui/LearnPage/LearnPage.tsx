@@ -8,7 +8,7 @@ import { SxProps } from '@mui/system'
 import { FormContainer, RadioButtonGroup } from 'react-hook-form-mui'
 import { useSearchParams } from 'react-router-dom'
 
-import { setCardsIdAC, setCardsPaginationAC } from '../../bll/cardsActions'
+import { setCardsIdAC, setCardsInitialParamsAC, setCardsPaginationAC } from '../../bll/cardsActions'
 import { getCardsTC, updateCardGradeTC } from '../../bll/cardsThunk'
 
 import { RequestStatusType } from 'app/bll/appReducer'
@@ -95,10 +95,11 @@ export const LearnPage = () => {
   useEffect(() => {
     dispatch(setCardsPaginationAC({ pageCount: cardsTotalCount.toString() }))
     dispatch(getCardsTC())
-    SetURLSearchParams({ cardsPack_id: cardsParams.cardsPack_id })
+    SetURLSearchParams({ cardsPack_id: cardsParams.cardsPack_id }, { replace: true })
 
     return () => {
       dispatch(setCardsIdAC(''))
+      dispatch(setCardsInitialParamsAC())
     }
   }, [])
   useEffect(() => {

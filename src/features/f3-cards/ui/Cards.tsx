@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
 import { useNavigate, useSearchParams } from 'react-router-dom'
@@ -94,6 +94,7 @@ const columnsMyCards: Column<CardType>[] = [
 export const Cards = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const [first, setFirst] = useState(true)
   const cardsPack = useAppSelector(cardsPackSelector)
   const { page, pageCount, cardsTotalCount, packUserId, packName } =
     useAppSelector(cardsPackDataSelector)
@@ -117,8 +118,12 @@ export const Cards = () => {
   }
 
   useEffect(() => {
+    const currentParam = compareObj(cardsParams, initialCardsParams)
+
     dispatch(setCardPageIsInitAC(true))
-    SetURLSearchParams({ cardsPack_id: cardsParams.cardsPack_id })
+    dispatch(getCardsTC())
+    SetURLSearchParams(currentParam, { replace: true })
+    setFirst(false)
 
     return () => {
       dispatch(setCardPageIsInitAC(false))
@@ -129,8 +134,10 @@ export const Cards = () => {
   useEffect(() => {
     const currentParam = compareObj(cardsParams, initialCardsParams)
 
-    dispatch(getCardsTC())
-    SetURLSearchParams(currentParam)
+    if (!first) {
+      dispatch(getCardsTC())
+      SetURLSearchParams(currentParam)
+    }
   }, [cardsParams])
   useEffect(() => {
     const urlParams = Object.fromEntries(URLSearchParams)
