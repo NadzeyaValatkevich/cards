@@ -15,7 +15,6 @@ import {
   packsDataSelector,
   packsEntityStatusSelector,
   packsParamsSelector,
-  profileSelector,
 } from '../bll/packsSelectors'
 import { getPacksTC } from '../bll/packsThunks'
 import { PackType } from '../dal/packsAPI'
@@ -28,6 +27,7 @@ import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { compareObj } from 'common/utils/removeEmptyObj'
+import { profileIdSelector } from 'features/f1-profile/bll/profileSelectors'
 import { PacksHeader } from 'features/f2-packs/ui/PacksHeader/PacksHeader'
 import { ToolbarTable } from 'features/f2-packs/ui/PacksTable/PacksToolbarTable/ToolbarTable'
 
@@ -68,7 +68,7 @@ export const Packs = () => {
   const params = useAppSelector(packsParamsSelector)
   const packsEntityStatus = useAppSelector(packsEntityStatusSelector)
   const { page, pageCount, cardPacksTotalCount, cardPacks } = useAppSelector(packsDataSelector)
-  const { _id: profileId } = useAppSelector(profileSelector)
+  const profileId = useAppSelector(profileIdSelector)
   const [URLSearchParams, SetURLSearchParams] = useSearchParams()
 
   const paginationProps: PaginationPropsType = {

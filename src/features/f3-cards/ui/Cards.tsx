@@ -32,7 +32,7 @@ import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { compareObj } from 'common/utils/removeEmptyObj'
-import { profileSelector } from 'features/f2-packs/bll/packsSelectors'
+import { profileIdSelector } from 'features/f1-profile/bll/profileSelectors'
 
 const columnsAllCards: Column<CardType>[] = [
   {
@@ -97,7 +97,7 @@ export const Cards = () => {
   const cardsPack = useAppSelector(cardsPackSelector)
   const { page, pageCount, cardsTotalCount, packUserId, packName } =
     useAppSelector(cardsPackDataSelector)
-  const { _id: profileId } = useAppSelector(profileSelector)
+  const profileId = useAppSelector(profileIdSelector)
   const cardsParams = useAppSelector(cardsParamsSelector)
   const cardsEntityStatus = useAppSelector(cardsEntityStatusSelector)
   const cardsPackIsDeleted = useAppSelector(cardsPackIsDeletedSelector)
