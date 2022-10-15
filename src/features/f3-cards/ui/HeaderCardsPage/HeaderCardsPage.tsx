@@ -79,28 +79,34 @@ export const HeaderCardsPage: FC<ToolbarCardsTablePropsType> = ({
         </Box>
       ) : (
         <Box display={'flex'} justifyContent={'space-between'} width={'100%'}>
-          <Typography
-            variant={'h5'}
-            fontWeight={'600'}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-            }}
-          >
-            {packName}
-          </Typography>
-          {cardsPack.length ? (
+          <Box display={'flex'} justifyContent={'space-between'}>
             <Box>
-              <Button variant="contained" onClick={() => {}} disabled={disabled}>
-                Learn to pack
-              </Button>
-              <SearchPanel
-                setParams={setCardsSearchQuestionAC}
-                sx={{ m: '1.5rem 0', width: '100%' }}
-              />
+              <Typography
+                variant={'h5'}
+                fontWeight={'600'}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                }}
+              >
+                {packName}
+              </Typography>
             </Box>
-          ) : null}
+            {cardsPack.length ? (
+              <Box>
+                <Button variant="contained" onClick={() => {}} disabled={disabled}>
+                  Learn to pack
+                </Button>
+                <Box display={'flex'} width={'100%'}>
+                  <SearchPanel
+                    setParams={setCardsSearchQuestionAC}
+                    sx={{ m: '1.5rem 0', width: '100%' }}
+                  />
+                </Box>
+              </Box>
+            ) : null}
+          </Box>
         </Box>
       )}
     </Box>
