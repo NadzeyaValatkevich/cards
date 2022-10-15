@@ -5,12 +5,12 @@ export const useStyles = makeStyles()((theme: Theme, _params) => ({
   tableHead: {
     backgroundColor: '#EFEFEF',
   },
-  tableHeadCell: { padding: '.5rem' },
+  tableHeadCell: { padding: '.5rem 1rem', whiteSpace: 'nowrap' },
   tableBodyCell: {
     display: 'flex',
     overflowWrap: 'anywhere',
     alignItems: 'center',
-    padding: '.5rem',
+    padding: '.5rem 1rem',
   },
   tableBodyCellSkeleton: {
     width: '100%',

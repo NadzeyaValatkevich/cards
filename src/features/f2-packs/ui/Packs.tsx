@@ -36,19 +36,19 @@ const columns: Column<PackType>[] = [
     Header: 'Name',
     accessor: 'name',
     defaultCanSort: true,
-    width: 250,
+    width: 300,
   },
   {
     Header: 'Cards',
     accessor: 'cardsCount',
     defaultCanSort: true,
-    minWidth: 150,
+    width: 150,
   },
   {
     Header: 'Last Updated',
     accessor: 'updated',
     defaultCanSort: true,
-    width: 200,
+    width: 150,
   },
   {
     Header: 'Created by',

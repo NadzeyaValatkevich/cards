@@ -1,4 +1,5 @@
 import { RequestStatusType } from 'app/bll/appReducer'
+import deckCover from 'common/assets/image/deckCover.svg'
 import { dateParser } from 'common/utils/dateParser'
 import { compareObj } from 'common/utils/removeEmptyObj'
 import { ActionPacksType } from 'features/f2-packs/bll/packsActions'
@@ -39,16 +40,17 @@ export const packsReducer = (
     case 'PACKS/SET-STATUS':
       return { ...state, entityStatus: action.payload.entityStatus }
     case 'PACKS/SET-PACKS': {
-      const parsedDate = action.payload.packsData.cardPacks.map((c: PackType) => ({
+      const formattedData = action.payload.packsData.cardPacks.map((c: PackType) => ({
         ...c,
         updated: dateParser(c.updated).toString(),
+        deckCover: c.deckCover?.includes('data:image/jpeg;base64') ? c.deckCover : deckCover,
       }))
 
       return {
         ...state,
         packsData: {
           ...action.payload.packsData,
-          cardPacks: parsedDate,
+          cardPacks: formattedData,
         },
       }
     }

@@ -1,6 +1,7 @@
 import React, { PropsWithChildren, ReactElement, useMemo, useState } from 'react'
 
 import { Link, TableHead, TableSortLabel, Tooltip } from '@mui/material'
+import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -67,7 +68,7 @@ export const PacksTable = <T extends Record<string, unknown>>(
     () => ({
       minWidth: 30,
       width: 150,
-      maxWidth: 250,
+      maxWidth: 300,
     }),
     []
   )
@@ -143,6 +144,7 @@ export const PacksTable = <T extends Record<string, unknown>>(
                     const cardsPackId = data[cell.row.index]?._id as string
                     const cardsPackCount = data[cell.row.index]?.cardsCount as number
                     const cardsPackName = data[cell.row.index]?.name as string
+                    const cardsCover = data[cell.row.index]?.deckCover as string
 
                     const startStudyingActionHandler = (packId: string) => {
                       dispatch(setCardsIdAC(packId))
@@ -184,20 +186,31 @@ export const PacksTable = <T extends Record<string, unknown>>(
                       return (
                         <TableCell key={cellKey} {...getCellProps}>
                           <SkeletonComponent status={isLoading}>
-                            {cardsPackCount || enableEdit ? (
-                              <Link
-                                underline={'none'}
-                                color={'inherit'}
-                                onClick={nameOnClickHandler}
+                            <Box display={'flex'} alignItems={'center'}>
+                              <Box
+                                component={'img'}
+                                src={cardsCover}
                                 sx={{
-                                  cursor: 'pointer',
+                                  width: '3.3rem',
+                                  height: '2rem',
+                                  mr: '.5rem',
                                 }}
-                              >
-                                {cell.render('Cell')}
-                              </Link>
-                            ) : (
-                              cell.render('Cell')
-                            )}
+                              />
+                              {cardsPackCount || enableEdit ? (
+                                <Link
+                                  underline={'none'}
+                                  color={'inherit'}
+                                  onClick={nameOnClickHandler}
+                                  sx={{
+                                    cursor: 'pointer',
+                                  }}
+                                >
+                                  {cell.render('Cell')}
+                                </Link>
+                              ) : (
+                                cell.render('Cell')
+                              )}
+                            </Box>
                           </SkeletonComponent>
                         </TableCell>
                       )
