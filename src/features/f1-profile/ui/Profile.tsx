@@ -69,6 +69,7 @@ export const Profile: FC<PropsType> = () => {
         </Typography>
         <Box position={'relative'}>
           <img
+            //TODO переделать. сделать проверку в редюсере
             src={isAvatarBroken ? userPhoto : avatar || userPhoto}
             alt={'user'}
             className={s.photo}
