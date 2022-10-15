@@ -5,6 +5,7 @@ import FormControl from '@mui/material/FormControl'
 
 import { BasicModal } from 'common/components/BasicModal/BasicModal'
 import { useAppSelector } from 'common/hooks/useAppSelector'
+import { cardsPackSelector } from 'features/f3-cards/bll/cardsSelectors'
 
 type EditCardModalType = {
   setOpen: (value: boolean) => void
@@ -14,13 +15,14 @@ type EditCardModalType = {
 }
 
 export const EditCardModal = (props: EditCardModalType) => {
-  const cards = useAppSelector(state => state.cards.cardsData.cards)
+  // const cards = useAppSelector(state => state.cards.cardsData.cards)
+  const cards = useAppSelector(cardsPackSelector)
   const card = cards.find(card => card._id === props.id)
   const initQuestion = card && card.question
   const initAnswer = card && card.answer
 
-  const [questionTitle, setQuestionTitle] = useState<string>('')
-  const [answerTitle, setAnswerTitle] = useState<string>('')
+  const [questionTitle, setQuestionTitle] = useState('')
+  const [answerTitle, setAnswerTitle] = useState('')
 
   const onChangeTextFieldQuestionHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

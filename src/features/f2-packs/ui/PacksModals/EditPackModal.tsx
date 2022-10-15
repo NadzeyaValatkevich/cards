@@ -20,7 +20,7 @@ export const EditPackModal = (props: EditPackModalType) => {
   const initTitle = pack && pack.name
   const initCheck = pack && pack.private
 
-  const [title, setTitle] = useState<string>('')
+  const [title, setTitle] = useState('')
   const [checked, setChecked] = useState(false)
 
   const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
