@@ -14,7 +14,11 @@ import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { DeletePackModal } from 'features/f2-packs/ui/PacksModals/DeletePackModal'
 import { EditPackModal } from 'features/f2-packs/ui/PacksModals/EditPackModal'
-import { cardsPackNameSelector, cardsParamsSelector } from 'features/f3-cards/bll/cardsSelectors'
+import {
+  cardsPackNameSelector,
+  cardsPackSelector,
+  cardsParamsSelector,
+} from 'features/f3-cards/bll/cardsSelectors'
 import { deletePackFromCardsTC, updatePackFromCardsTC } from 'features/f3-cards/bll/cardsThunk'
 
 export const MenuEditMyCards = () => {
@@ -26,6 +30,7 @@ export const MenuEditMyCards = () => {
   const [activeModalEdit, setActiveModalEdit] = useState(false)
   const { cardsPack_id } = useAppSelector(cardsParamsSelector)
   const cardsPackName = useAppSelector(cardsPackNameSelector)
+  const cardsPackData = useAppSelector(cardsPackSelector)
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -106,7 +111,7 @@ export const MenuEditMyCards = () => {
           </IconButton>
           Delete
         </MenuItem>
-        <MenuItem onClick={onClickLearnPackHandler}>
+        <MenuItem onClick={onClickLearnPackHandler} disabled={!cardsPackData.length}>
           <IconButton>
             <SchoolIcon fontSize={'small'} />
           </IconButton>
