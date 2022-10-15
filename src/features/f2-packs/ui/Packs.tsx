@@ -91,10 +91,8 @@ export const Packs = () => {
   useEffect(() => {
     const currentParam = compareObj(params, initialPackParams)
 
-    if (Object.keys(currentParam).length) {
-      dispatch(getPacksTC())
-      SetURLSearchParams(currentParam)
-    }
+    dispatch(getPacksTC())
+    SetURLSearchParams(currentParam)
   }, [params])
   useEffect(() => {
     const urlParams = Object.fromEntries(URLSearchParams)
