@@ -37,6 +37,7 @@ export type PacksParamsType = {
   pageCount?: string
   user_id?: string | null
   block?: boolean
+  deckCover?: string
 }
 export type AddPackDataType = {
   name?: string

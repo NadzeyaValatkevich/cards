@@ -11,7 +11,7 @@ import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { compareObj } from 'common/utils/removeEmptyObj'
-import { profileSelector } from 'features/f2-packs/bll/packsSelectors'
+import { packSelector, profileSelector } from 'features/f2-packs/bll/packsSelectors'
 import {
   setCardPageIsInitAC,
   setCardParamsAC,
@@ -92,6 +92,7 @@ const columnsMyCards: Column<CardType>[] = [
 export const Cards = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const packs = useAppSelector(packSelector)
   const cardsPack = useAppSelector(cardsPackSelector)
   const { page, pageCount, cardsTotalCount, packUserId, packName } =
     useAppSelector(cardsPackDataSelector)
@@ -100,10 +101,11 @@ export const Cards = () => {
   const cardsEntityStatus = useAppSelector(cardsEntityStatusSelector)
   const cardsPackIsDeleted = useAppSelector(cardsPackIsDeletedSelector)
   const [URLSearchParams, SetURLSearchParams] = useSearchParams()
-
   const { cardsPack_id } = cardsParams
   const isMyPack = packUserId === profileId
   const isDisabled = cardsEntityStatus === RequestStatusType.loading
+
+  const pack = packs.find(pack => pack._id === cardsPack_id)
 
   const columns: Column<CardType>[] = isMyPack ? columnsMyCards : columnsAllCards
 
@@ -152,9 +154,9 @@ export const Cards = () => {
     <ContentWrapper withoutPaper>
       <CardsHeader
         packName={packName}
-        // cardsPack_id={cardsPack_id}
         isMyPack={isMyPack}
         disabled={isDisabled}
+        pack={pack}
         cardsPack={cardsPack}
         searchParam={cardsParams.cardQuestion}
         learnCallback={learnOnClickHandler}

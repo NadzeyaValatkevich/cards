@@ -2,10 +2,9 @@ import { ChangeEvent, KeyboardEvent, useState } from 'react'
 
 import { Checkbox, FormControlLabel, TextField } from '@mui/material'
 
-import { cardsPackSelector } from '../../bll/packsSelectors'
-
 import { BasicModal } from 'common/components/BasicModal/BasicModal'
 import { useAppSelector } from 'common/hooks/useAppSelector'
+import { packSelector } from 'features/f2-packs/bll/packsSelectors'
 
 type EditPackModalType = {
   setOpen: (value: boolean) => void
@@ -15,7 +14,7 @@ type EditPackModalType = {
 }
 
 export const EditPackModal = (props: EditPackModalType) => {
-  const packs = useAppSelector(cardsPackSelector)
+  const packs = useAppSelector(packSelector)
   const pack = packs.find(pack => pack._id === props.id)
   const initTitle = pack && pack.name
   const initCheck = pack && pack.private

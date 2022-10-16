@@ -12,6 +12,7 @@ export type CardsParamsType = {
   max?: number
   minGrade?: number
   maxGrade?: number
+  deckCover?: string
 }
 export type CardType = {
   _id: string

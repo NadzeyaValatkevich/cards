@@ -144,6 +144,7 @@ export const PacksTable = <T extends Record<string, unknown>>(
                     const cardsPackId = data[cell.row.index]?._id as string
                     const cardsPackCount = data[cell.row.index]?.cardsCount as number
                     const cardsPackName = data[cell.row.index]?.name as string
+
                     const cardsCover = data[cell.row.index]?.deckCover as string
 
                     const startStudyingActionHandler = (packId: string) => {

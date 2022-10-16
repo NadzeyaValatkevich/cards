@@ -74,104 +74,105 @@ export const CardsTable = <T extends Record<string, unknown>>(
   const { role: tableBodyRole, ...tableBodyProps } = getTableBodyProps()
 
   return (
-    <TableContainer component={Paper}>
-      <Table role={tableRole} {...tableProps}>
-        <TableHead>
-          {headerGroups.map(headerGroup => {
-            const { key: headerGroupKey, ...getHeaderGroupProps } = headerGroup.getHeaderGroupProps(
-              { className: classes.tableHead }
-            )
+    <>
+      <TableContainer component={Paper}>
+        <Table role={tableRole} {...tableProps}>
+          <TableHead>
+            {headerGroups.map(headerGroup => {
+              const { key: headerGroupKey, ...getHeaderGroupProps } =
+                headerGroup.getHeaderGroupProps({ className: classes.tableHead })
 
-            return (
-              <TableRow key={headerGroupKey} {...getHeaderGroupProps}>
-                {headerGroup.headers.map(column => {
-                  const { key: headerKey, ...getHeaderProps } = column.getHeaderProps({
-                    className: classes.tableHeadCell,
-                  })
+              return (
+                <TableRow key={headerGroupKey} {...getHeaderGroupProps}>
+                  {headerGroup.headers.map(column => {
+                    const { key: headerKey, ...getHeaderProps } = column.getHeaderProps({
+                      className: classes.tableHeadCell,
+                    })
 
-                  const cellSortDir =
-                    sortParam?.includes(column.id) && sortParam?.includes(sortDir.desc)
-                      ? 'desc'
-                      : 'asc'
+                    const cellSortDir =
+                      sortParam?.includes(column.id) && sortParam?.includes(sortDir.desc)
+                        ? 'desc'
+                        : 'asc'
 
-                  const sortHandler = () =>
-                    dispatch(setCardsSortAC(column.id, sortFunc(cellSortDir)))
+                    const sortHandler = () =>
+                      dispatch(setCardsSortAC(column.id, sortFunc(cellSortDir)))
 
-                  return (
-                    <TableCell key={headerKey} {...getHeaderProps}>
-                      {column.defaultCanSort ? (
-                        <Tooltip title={column.render('Header')}>
-                          <TableSortLabel direction={cellSortDir} onClick={sortHandler}>
-                            {column.render('Header')}
-                          </TableSortLabel>
-                        </Tooltip>
-                      ) : (
-                        column.render('Header')
-                      )}
-                    </TableCell>
-                  )
-                })}
-              </TableRow>
-            )
-          })}
-        </TableHead>
-        <TableBody {...tableBodyProps}>
-          {rows.map(row => {
-            prepareRow(row)
-            const { key: rowKey, ...getRowProps } = row.getRowProps()
+                    return (
+                      <TableCell key={headerKey} {...getHeaderProps}>
+                        {column.defaultCanSort ? (
+                          <Tooltip title={column.render('Header')}>
+                            <TableSortLabel direction={cellSortDir} onClick={sortHandler}>
+                              {column.render('Header')}
+                            </TableSortLabel>
+                          </Tooltip>
+                        ) : (
+                          column.render('Header')
+                        )}
+                      </TableCell>
+                    )
+                  })}
+                </TableRow>
+              )
+            })}
+          </TableHead>
+          <TableBody {...tableBodyProps}>
+            {rows.map(row => {
+              prepareRow(row)
+              const { key: rowKey, ...getRowProps } = row.getRowProps()
 
-            return (
-              <TableRow key={rowKey} {...getRowProps}>
-                {row.cells.map(cell => {
-                  const { key: cellKey, ...getCellProps } = cell.getCellProps({
-                    className: classes.tableBodyCell,
-                  })
+              return (
+                <TableRow key={rowKey} {...getRowProps}>
+                  {row.cells.map(cell => {
+                    const { key: cellKey, ...getCellProps } = cell.getCellProps({
+                      className: classes.tableBodyCell,
+                    })
 
-                  const editCardActionHandler = (cardId: string) => {
-                    setId(cardId)
-                    setActiveModalEdit(true)
-                  }
-                  const deleteCardActionHandler = (cardId: string) => {
-                    setId(cardId)
-                    setActiveModalDelete(true)
-                  }
+                    const editCardActionHandler = (cardId: string) => {
+                      setId(cardId)
+                      setActiveModalEdit(true)
+                    }
+                    const deleteCardActionHandler = (cardId: string) => {
+                      setId(cardId)
+                      setActiveModalDelete(true)
+                    }
 
-                  if (cell.column.id === 'actions') {
+                    if (cell.column.id === 'actions') {
+                      return (
+                        <TableCell key={cellKey} {...getCellProps}>
+                          <SkeletonComponent status={isLoading}>
+                            <CardsActionsComponent
+                              cardId={data[cell.row.index]?._id as string}
+                              editCardAction={editCardActionHandler}
+                              deleteCardAction={deleteCardActionHandler}
+                            />
+                          </SkeletonComponent>
+                        </TableCell>
+                      )
+                    }
+                    if (cell.column.render('Header') === 'Grade') {
+                      return (
+                        <TableCell key={cellKey} {...getCellProps}>
+                          <SkeletonComponent status={isLoading}>
+                            <Rating value={cell.value} readOnly />
+                          </SkeletonComponent>
+                        </TableCell>
+                      )
+                    }
+
                     return (
                       <TableCell key={cellKey} {...getCellProps}>
                         <SkeletonComponent status={isLoading}>
-                          <CardsActionsComponent
-                            cardId={data[cell.row.index]?._id as string}
-                            editCardAction={editCardActionHandler}
-                            deleteCardAction={deleteCardActionHandler}
-                          />
+                          {cell.render('Cell')}
                         </SkeletonComponent>
                       </TableCell>
                     )
-                  }
-                  if (cell.column.render('Header') === 'Grade') {
-                    return (
-                      <TableCell key={cellKey} {...getCellProps}>
-                        <SkeletonComponent status={isLoading}>
-                          <Rating value={cell.value} readOnly />
-                        </SkeletonComponent>
-                      </TableCell>
-                    )
-                  }
-
-                  return (
-                    <TableCell key={cellKey} {...getCellProps}>
-                      <SkeletonComponent status={isLoading}>
-                        {cell.render('Cell')}
-                      </SkeletonComponent>
-                    </TableCell>
-                  )
-                })}
-              </TableRow>
-            )
-          })}
-        </TableBody>
-      </Table>
+                  })}
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <EditCardModal
         setOpen={setActiveModalEdit}
         open={activeModalEdit}
@@ -184,6 +185,6 @@ export const CardsTable = <T extends Record<string, unknown>>(
         deleteCard={deleteCard}
         id={id}
       />
-    </TableContainer>
+    </>
   )
 }

@@ -2,13 +2,13 @@ import React, { FC, useState } from 'react'
 
 import Box from '@mui/material/Box'
 
-import { useAppDispatch } from '../../../../common/hooks/useAppDispatch'
-import { CardType } from '../../dal/cardsAPI'
-
 import { MenuEditMyCards } from './MenuEditMyCards/MenuEditMyCards'
 
+import deckCover from 'common/assets/image/deckCover.svg'
 import { SearchPanel } from 'common/components/SearchPanel/SearchPanel'
+import { PackType } from 'features/f2-packs/dal/packsAPI'
 import { setCardsSearchQuestionAC } from 'features/f3-cards/bll/cardsActions'
+import { CardType } from 'features/f3-cards/dal/cardsAPI'
 import { CardButton } from 'features/f3-cards/ui/CardsHeader/CardButton/CardButton'
 import { CardName } from 'features/f3-cards/ui/CardsHeader/CardName/CardName'
 
@@ -19,6 +19,7 @@ type CardsHeaderPropsType = {
   searchParam: string | undefined
   learnCallback: () => void
   cardsPack: CardType[]
+  pack: PackType | undefined
 }
 
 export const CardsHeader: FC<CardsHeaderPropsType> = ({
@@ -28,8 +29,10 @@ export const CardsHeader: FC<CardsHeaderPropsType> = ({
   searchParam,
   cardsPack,
   learnCallback,
+  pack,
 }) => {
   const [activeModalAdd, setActiveModalAdd] = useState(false)
+
   const addCardModal = () => {
     setActiveModalAdd(true)
   }
@@ -42,6 +45,8 @@ export const CardsHeader: FC<CardsHeaderPropsType> = ({
   {
     isMyPack ? (onClickCardCallback = addCardModal) : (onClickCardCallback = learnCallback)
   }
+
+  const packDeckCover = pack && pack.deckCover
 
   return (
     <Box display={'flex'} flexDirection={'column'} alignSelf={'space-between'} width={'100%'}>
@@ -59,6 +64,27 @@ export const CardsHeader: FC<CardsHeaderPropsType> = ({
           disabled={disabled}
         />
       </Box>
+      {packDeckCover ? (
+        <Box
+          component={'img'}
+          src={packDeckCover}
+          sx={{
+            width: '3.3rem',
+            height: '2rem',
+            mr: '.5rem',
+          }}
+        />
+      ) : (
+        <Box
+          component={'img'}
+          src={deckCover}
+          sx={{
+            width: '3.3rem',
+            height: '2rem',
+            mr: '.5rem',
+          }}
+        />
+      )}
       {cardsPack.length ? (
         <SearchPanel
           setParams={setCardsSearchQuestionAC}
