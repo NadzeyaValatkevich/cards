@@ -1,3 +1,6 @@
+import deckCover from '../../../common/assets/image/deckCover.svg'
+import { PackType } from '../../f2-packs/dal/packsAPI'
+
 import { RequestStatusType } from 'app/bll/appReducer'
 import { dateParser } from 'common/utils/dateParser'
 import { ActionCardsType } from 'features/f3-cards/bll/cardsActions'
@@ -25,6 +28,7 @@ const initialState = {
     pageCount: 5,
     packUserId: '',
     packName: '',
+    packDeckCover: '',
   },
   params: { cardsPack_id: '', ...initialCardsParams } as CardsParamsType,
   entityStatus: RequestStatusType.idle as RequestStatusType,
@@ -47,7 +51,16 @@ export const cardsReducer = (
         updated: dateParser(c.updated).toString(),
       }))
 
-      return { ...state, cardsData: { ...action.payload.cardsData, cards: parsedDate } }
+      return {
+        ...state,
+        cardsData: {
+          ...action.payload.cardsData,
+          cards: parsedDate,
+          packDeckCover: action.payload.cardsData.packDeckCover?.includes('data:image/jpeg;base64')
+            ? action.payload.cardsData.packDeckCover
+            : deckCover,
+        },
+      }
     }
     case 'CARDS/SET-ID':
       return { ...state, params: { ...state.params, cardsPack_id: action.payload.cardsPack_id } }

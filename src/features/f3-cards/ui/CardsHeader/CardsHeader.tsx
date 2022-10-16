@@ -19,7 +19,7 @@ type CardsHeaderPropsType = {
   searchParam: string | undefined
   learnCallback: () => void
   cardsPack: CardType[]
-  pack: PackType | undefined
+  packDeckCover: string | undefined
 }
 
 export const CardsHeader: FC<CardsHeaderPropsType> = ({
@@ -29,7 +29,7 @@ export const CardsHeader: FC<CardsHeaderPropsType> = ({
   searchParam,
   cardsPack,
   learnCallback,
-  pack,
+  packDeckCover,
 }) => {
   const [activeModalAdd, setActiveModalAdd] = useState(false)
 
@@ -45,8 +45,6 @@ export const CardsHeader: FC<CardsHeaderPropsType> = ({
   {
     isMyPack ? (onClickCardCallback = addCardModal) : (onClickCardCallback = learnCallback)
   }
-
-  const packDeckCover = pack && pack.deckCover
 
   return (
     <Box display={'flex'} flexDirection={'column'} alignSelf={'space-between'} width={'100%'}>
@@ -64,27 +62,15 @@ export const CardsHeader: FC<CardsHeaderPropsType> = ({
           disabled={disabled}
         />
       </Box>
-      {packDeckCover ? (
-        <Box
-          component={'img'}
-          src={packDeckCover}
-          sx={{
-            width: '3.3rem',
-            height: '2rem',
-            mr: '.5rem',
-          }}
-        />
-      ) : (
-        <Box
-          component={'img'}
-          src={deckCover}
-          sx={{
-            width: '3.3rem',
-            height: '2rem',
-            mr: '.5rem',
-          }}
-        />
-      )}
+      <Box
+        component={'img'}
+        src={packDeckCover}
+        sx={{
+          width: '3.3rem',
+          height: '2rem',
+          mr: '.5rem',
+        }}
+      />
       {cardsPack.length ? (
         <SearchPanel
           setParams={setCardsSearchQuestionAC}

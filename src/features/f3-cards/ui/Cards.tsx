@@ -92,9 +92,8 @@ const columnsMyCards: Column<CardType>[] = [
 export const Cards = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const packs = useAppSelector(packSelector)
   const cardsPack = useAppSelector(cardsPackSelector)
-  const { page, pageCount, cardsTotalCount, packUserId, packName } =
+  const { page, pageCount, cardsTotalCount, packUserId, packName, packDeckCover } =
     useAppSelector(cardsPackDataSelector)
   const { _id: profileId } = useAppSelector(profileSelector)
   const cardsParams = useAppSelector(cardsParamsSelector)
@@ -104,8 +103,6 @@ export const Cards = () => {
   const { cardsPack_id } = cardsParams
   const isMyPack = packUserId === profileId
   const isDisabled = cardsEntityStatus === RequestStatusType.loading
-
-  const pack = packs.find(pack => pack._id === cardsPack_id)
 
   const columns: Column<CardType>[] = isMyPack ? columnsMyCards : columnsAllCards
 
@@ -156,7 +153,7 @@ export const Cards = () => {
         packName={packName}
         isMyPack={isMyPack}
         disabled={isDisabled}
-        pack={pack}
+        packDeckCover={packDeckCover}
         cardsPack={cardsPack}
         searchParam={cardsParams.cardQuestion}
         learnCallback={learnOnClickHandler}
