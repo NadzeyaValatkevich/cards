@@ -12,7 +12,7 @@ type NewCardModalType = {
   id: string
 }
 
-export const AddNewCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, id }) => {
+export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, id }) => {
   const [questionTitle, setQuestionTitle] = useState<string>('')
   const [answerTitle, setAnswerTitle] = useState<string>('')
 

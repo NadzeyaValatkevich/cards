@@ -4,27 +4,6 @@ import Box from '@mui/material/Box'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Column } from 'react-table'
 
-import {
-  setCardPageIsInitAC,
-  setCardParamsAC,
-  setCardsInitialParamsAC,
-  setCardsPackIsDeletedAC,
-  setCardsPaginationAC,
-} from '../bll/cardsActions'
-import { initialCardsParams } from '../bll/cardsReducer'
-import {
-  cardsEntityStatusSelector,
-  cardsPackDataSelector,
-  cardsPackIsDeletedSelector,
-  cardsPackSelector,
-  cardsParamsSelector,
-} from '../bll/cardsSelectors'
-import { getCardsTC } from '../bll/cardsThunk'
-import { CardType } from '../dal/cardsAPI'
-
-import { CardsTable } from './CardsTable/CardsTable'
-import { HeaderCardsPage } from './HeaderCardsPage/HeaderCardsPage'
-
 import { RequestStatusType } from 'app/bll/appReducer'
 import { Pagination, PaginationPropsType } from 'common/components/Pagination/Pagination'
 import { AppRoutes } from 'common/enums/enums'
@@ -33,6 +12,25 @@ import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { compareObj } from 'common/utils/removeEmptyObj'
 import { profileSelector } from 'features/f2-packs/bll/packsSelectors'
+import {
+  setCardPageIsInitAC,
+  setCardParamsAC,
+  setCardsInitialParamsAC,
+  setCardsPackIsDeletedAC,
+  setCardsPaginationAC,
+} from 'features/f3-cards/bll/cardsActions'
+import { initialCardsParams } from 'features/f3-cards/bll/cardsReducer'
+import {
+  cardsEntityStatusSelector,
+  cardsPackDataSelector,
+  cardsPackIsDeletedSelector,
+  cardsPackSelector,
+  cardsParamsSelector,
+} from 'features/f3-cards/bll/cardsSelectors'
+import { getCardsTC } from 'features/f3-cards/bll/cardsThunk'
+import { CardType } from 'features/f3-cards/dal/cardsAPI'
+import { CardsHeader } from 'features/f3-cards/ui/CardsHeader/CardsHeader'
+import { CardsTable } from 'features/f3-cards/ui/CardsTable/CardsTable'
 
 const columnsAllCards: Column<CardType>[] = [
   {
@@ -152,11 +150,12 @@ export const Cards = () => {
 
   return (
     <ContentWrapper withoutPaper>
-      <HeaderCardsPage
+      <CardsHeader
         packName={packName}
-        cardsPack_id={cardsPack_id}
+        // cardsPack_id={cardsPack_id}
         isMyPack={isMyPack}
         disabled={isDisabled}
+        cardsPack={cardsPack}
         searchParam={cardsParams.cardQuestion}
         learnCallback={learnOnClickHandler}
       />
@@ -168,11 +167,11 @@ export const Cards = () => {
             entityStatus={cardsEntityStatus}
             sortParam={cardsParams.sortCards}
           />
+          <Pagination {...paginationProps} />
         </>
       ) : (
-        <Box>{'Cards not found. Please change your search parameters'}</Box>
+        <Box>{'Cards not found'}</Box>
       )}
-      <Pagination {...paginationProps} />
     </ContentWrapper>
   )
 }
