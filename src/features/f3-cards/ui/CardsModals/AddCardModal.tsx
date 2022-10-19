@@ -1,37 +1,104 @@
-import { ChangeEvent, FC, useState } from 'react'
+import React, { ChangeEvent, FC, useState } from 'react'
 
-import { InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { Input, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
+import { SelectChangeEvent } from '@mui/material/Select'
 
+import { modalObjectType } from '../CardsHeader/CardButton/CardButton'
+
+import { setAppErrorAC } from 'app/bll/appActions'
+import userPhoto from 'common/assets/image/user.png'
 import { BasicModal } from 'common/components/BasicModal/BasicModal'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { convertFileToBase64 } from 'common/utils/convertFileToBase64'
 
 type NewCardModalType = {
   setOpen: (value: boolean) => void
   open: boolean
-  addCard: (id: string, question: string, answer: string) => void
-  id: string
+  cardsPack_id: string
+  addCard: (modalObject: modalObjectType) => void
 }
 
-export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, id }) => {
-  const [questionTitle, setQuestionTitle] = useState<string>('')
-  const [answerTitle, setAnswerTitle] = useState<string>('')
+export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, cardsPack_id }) => {
+  const dispatch = useAppDispatch()
+  const [isQuestionImgBroken, setIsQuestionImgBroken] = useState(false)
+  const [isAnswerImgBroken, setIsAnswerImgBroken] = useState(false)
+  const [question, setQuestion] = useState('')
+  const [answer, setAnswer] = useState('')
+  const [questionImg, setQuestionImg] = useState('')
+  const [answerImg, setAnswerImg] = useState('')
+  const [age, setAge] = useState('Text')
 
   const onChangeTextFieldQuestionHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setQuestionTitle(e.currentTarget.value)
+    setQuestion(e.currentTarget.value)
   }
   const onChangeTextFieldAnswerHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setAnswerTitle(e.currentTarget.value)
+    setAnswer(e.currentTarget.value)
   }
 
   const addCardHandler = () => {
-    addCard(id, questionTitle, answerTitle)
+    addCard(
+      questionImg && answerImg
+        ? { cardsPack_id, questionImg, answerImg }
+        : {
+            cardsPack_id,
+            question,
+            answer,
+          }
+    )
     setOpen(false)
-    setQuestionTitle('')
-    setAnswerTitle('')
+    setQuestion('')
+    setAnswer('')
+    setQuestionImg('')
+  }
+
+  const onChangeFormatHandler = (event: SelectChangeEvent) => {
+    setAge(event.target.value)
+  }
+
+  const uploadQuestionHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
+
+      if (file.size < 4000000) {
+        setIsQuestionImgBroken(false)
+        convertFileToBase64(file, (questionImg: string) => {
+          setQuestionImg(questionImg)
+        })
+      } else {
+        dispatch(setAppErrorAC('Error: File size more then 4 mb'))
+      }
+    }
+  }
+
+  const uploadAnswerHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
+
+      if (file.size < 4000000) {
+        setIsQuestionImgBroken(false)
+        convertFileToBase64(file, (answerImg: string) => {
+          setAnswerImg(answerImg)
+        })
+      } else {
+        dispatch(setAppErrorAC('Error: File size more then 4 mb'))
+      }
+    }
+  }
+
+  const errorQuestionHandler = () => {
+    setIsQuestionImgBroken(true)
+    dispatch(setAppErrorAC('Picture upload failed'))
+  }
+  const errorAnswerHandler = () => {
+    setIsAnswerImgBroken(true)
+    dispatch(setAppErrorAC('Picture upload failed'))
   }
 
   return (
@@ -45,29 +112,65 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, id 
       <FormControl variant="standard">
         <InputLabel id="demo-simple-select-standard-label">Choose a question format</InputLabel>
         <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
+          value={age}
+          onChange={onChangeFormatHandler}
+          defaultValue={age}
           label="Age"
-          fullWidth={true}
+          fullWidth
         >
-          <MenuItem>Text</MenuItem>
-          <MenuItem>Picture</MenuItem>
+          <MenuItem value={'Text'}>Text</MenuItem>
+          <MenuItem value={'Picture'}>Picture</MenuItem>
         </Select>
       </FormControl>
-      <TextField
-        onChange={onChangeTextFieldQuestionHandler}
-        id="standard-basic"
-        label="Question"
-        variant="standard"
-        fullWidth={true}
-      />
-      <TextField
-        onChange={onChangeTextFieldAnswerHandler}
-        id="standard-basic"
-        label="Answer"
-        variant="standard"
-        fullWidth={true}
-      />
+      {age === 'Text' ? (
+        <>
+          <TextField
+            onChange={onChangeTextFieldQuestionHandler}
+            id="standard-basic"
+            label="Question"
+            variant="standard"
+            fullWidth
+          />
+          <TextField
+            onChange={onChangeTextFieldAnswerHandler}
+            id="standard-basic"
+            label="Answer"
+            variant="standard"
+            fullWidth
+          />
+        </>
+      ) : (
+        <>
+          <Box>
+            {questionImg ? (
+              <img
+                src={isQuestionImgBroken ? userPhoto : questionImg || userPhoto}
+                style={{ width: '50px', height: '50px' }}
+                onError={errorQuestionHandler}
+              />
+            ) : (
+              <Button variant="contained" fullWidth sx={{ marginTop: '1rem' }} component={'label'}>
+                <Input type={'file'} onChange={uploadQuestionHandler} sx={{ display: 'none' }} />
+                {'upload the question as an image'}
+              </Button>
+            )}
+          </Box>
+          <Box>
+            {answerImg ? (
+              <img
+                src={isAnswerImgBroken ? userPhoto : answerImg || userPhoto}
+                style={{ width: '50px', height: '50px' }}
+                onError={errorAnswerHandler}
+              />
+            ) : (
+              <Button variant="contained" fullWidth sx={{ marginTop: '1rem' }} component={'label'}>
+                <Input type={'file'} onChange={uploadAnswerHandler} sx={{ display: 'none' }} />
+                {'upload the answer as an image'}
+              </Button>
+            )}
+          </Box>
+        </>
+      )}
     </BasicModal>
   )
 }

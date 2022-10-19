@@ -17,6 +17,15 @@ type CardButtonPropsType = {
   setActiveModalAdd: (value: boolean) => void
   disabled: boolean
 }
+
+export type modalObjectType = {
+  cardsPack_id: string
+  question?: string
+  questionImg?: string
+  answer?: string
+  answerImg?: string
+}
+
 export const CardButton: FC<CardButtonPropsType> = ({
   buttonName,
   onClick,
@@ -28,8 +37,8 @@ export const CardButton: FC<CardButtonPropsType> = ({
   const dispatch = useAppDispatch()
   const { cardsPack_id } = useAppSelector(cardsParamsSelector)
 
-  const addCard = (id: string, question: string, answer: string) => {
-    dispatch(addCardTC({ cardsPack_id: id, question, answer }))
+  const addCard = (modalObject: modalObjectType) => {
+    dispatch(addCardTC(modalObject))
   }
 
   return (
@@ -42,7 +51,7 @@ export const CardButton: FC<CardButtonPropsType> = ({
           setOpen={setActiveModalAdd}
           open={activeModalAdd}
           addCard={addCard}
-          id={cardsPack_id}
+          cardsPack_id={cardsPack_id}
         />
       ) : null}
     </Box>

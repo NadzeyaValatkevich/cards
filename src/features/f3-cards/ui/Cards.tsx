@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 
 import Box from '@mui/material/Box'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom'
 import { Column } from 'react-table'
+
+import { SearchPanel } from '../../../common/components/SearchPanel/SearchPanel'
 
 import { RequestStatusType } from 'app/bll/appReducer'
 import { Pagination, PaginationPropsType } from 'common/components/Pagination/Pagination'
@@ -18,6 +20,7 @@ import {
   setCardsInitialParamsAC,
   setCardsPackIsDeletedAC,
   setCardsPaginationAC,
+  setCardsSearchQuestionAC,
 } from 'features/f3-cards/bll/cardsActions'
 import { initialCardsParams } from 'features/f3-cards/bll/cardsReducer'
 import {
@@ -154,11 +157,19 @@ export const Cards = () => {
         isMyPack={isMyPack}
         disabled={isDisabled}
         packDeckCover={packDeckCover}
+        entityStatus={cardsEntityStatus}
         cardsPack={cardsPack}
         searchParam={cardsParams.cardQuestion}
         learnCallback={learnOnClickHandler}
       />
-      {cardsPack.length ? (
+      {isMyPack && !cardsPack.length ? null : (
+        <SearchPanel
+          setParams={setCardsSearchQuestionAC}
+          searchParam={cardsParams.cardQuestion}
+          sx={{ m: '1.5rem 0', width: '100%' }}
+        />
+      )}
+      {cardsPack.length && cardsEntityStatus !== RequestStatusType.loading ? (
         <>
           <CardsTable
             columns={columns}
@@ -169,7 +180,11 @@ export const Cards = () => {
           <Pagination {...paginationProps} />
         </>
       ) : (
-        <Box>{'Cards not found'}</Box>
+        <Box>
+          {isMyPack
+            ? 'Cards not found. Click add new card to fill this pack'
+            : 'Cards not found. Please change the filter settings'}
+        </Box>
       )}
     </ContentWrapper>
   )

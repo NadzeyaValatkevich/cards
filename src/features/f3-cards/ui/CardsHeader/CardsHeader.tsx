@@ -2,11 +2,11 @@ import React, { FC, useState } from 'react'
 
 import Box from '@mui/material/Box'
 
+import { RequestStatusType } from '../../../../app/bll/appReducer'
+
 import { MenuEditMyCards } from './MenuEditMyCards/MenuEditMyCards'
 
-import deckCover from 'common/assets/image/deckCover.svg'
 import { SearchPanel } from 'common/components/SearchPanel/SearchPanel'
-import { PackType } from 'features/f2-packs/dal/packsAPI'
 import { setCardsSearchQuestionAC } from 'features/f3-cards/bll/cardsActions'
 import { CardType } from 'features/f3-cards/dal/cardsAPI'
 import { CardButton } from 'features/f3-cards/ui/CardsHeader/CardButton/CardButton'
@@ -20,6 +20,7 @@ type CardsHeaderPropsType = {
   learnCallback: () => void
   cardsPack: CardType[]
   packDeckCover: string | undefined
+  entityStatus: RequestStatusType
 }
 
 export const CardsHeader: FC<CardsHeaderPropsType> = ({
@@ -30,21 +31,16 @@ export const CardsHeader: FC<CardsHeaderPropsType> = ({
   cardsPack,
   learnCallback,
   packDeckCover,
+  entityStatus,
 }) => {
   const [activeModalAdd, setActiveModalAdd] = useState(false)
 
   const addCardModal = () => {
     setActiveModalAdd(true)
   }
-  let buttonName
-  let onClickCardCallback
 
-  {
-    isMyPack ? (buttonName = 'Add new card') : (buttonName = 'Learn to pack')
-  }
-  {
-    isMyPack ? (onClickCardCallback = addCardModal) : (onClickCardCallback = learnCallback)
-  }
+  const buttonName = isMyPack ? 'Add new card' : 'Learn to pack'
+  const onClickCardCallback = isMyPack ? addCardModal : learnCallback
 
   return (
     <Box display={'flex'} flexDirection={'column'} alignSelf={'space-between'} width={'100%'}>
@@ -71,13 +67,13 @@ export const CardsHeader: FC<CardsHeaderPropsType> = ({
           mr: '.5rem',
         }}
       />
-      {cardsPack.length ? (
-        <SearchPanel
-          setParams={setCardsSearchQuestionAC}
-          searchParam={searchParam}
-          sx={{ m: '1.5rem 0', width: '100%' }}
-        />
-      ) : null}
+      {/*{cardsPack.length ? (*/}
+      {/*  <SearchPanel*/}
+      {/*    setParams={setCardsSearchQuestionAC}*/}
+      {/*    searchParam={searchParam}*/}
+      {/*    sx={{ m: '1.5rem 0', width: '100%' }}*/}
+      {/*  />*/}
+      {/*) : null}*/}
     </Box>
   )
 }
