@@ -159,13 +159,13 @@ export const Cards = () => {
         packDeckCover={packDeckCover}
         entityStatus={cardsEntityStatus}
         cardsPack={cardsPack}
-        searchParam={cardsParams.cardQuestion}
+        searchParam={cardsParams.question}
         learnCallback={learnOnClickHandler}
       />
       {isMyPack && !cardsPack.length ? null : (
         <SearchPanel
           setParams={setCardsSearchQuestionAC}
-          searchParam={cardsParams.cardQuestion}
+          searchParam={cardsParams.question}
           sx={{ m: '1.5rem 0', width: '100%' }}
         />
       )}

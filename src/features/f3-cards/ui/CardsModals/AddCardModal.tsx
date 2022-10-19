@@ -6,13 +6,13 @@ import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import { SelectChangeEvent } from '@mui/material/Select'
 
-import { modalObjectType } from '../CardsHeader/CardButton/CardButton'
-
 import { setAppErrorAC } from 'app/bll/appActions'
 import userPhoto from 'common/assets/image/user.png'
 import { BasicModal } from 'common/components/BasicModal/BasicModal'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { convertFileToBase64 } from 'common/utils/convertFileToBase64'
+import { setCardParamsAC } from 'features/f3-cards/bll/cardsActions'
+import { modalObjectType } from 'features/f3-cards/ui/CardsHeader/CardButton/CardButton'
 
 type NewCardModalType = {
   setOpen: (value: boolean) => void
@@ -34,12 +34,18 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
   const onChangeTextFieldQuestionHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setQuestion(e.currentTarget.value)
+    const question = e.currentTarget.value
+
+    setQuestion(question)
+    setCardParamsAC({ question })
   }
   const onChangeTextFieldAnswerHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setAnswer(e.currentTarget.value)
+    const answer = e.currentTarget.value
+
+    setAnswer(answer)
+    setCardParamsAC({ answer })
   }
 
   const addCardHandler = () => {
@@ -56,6 +62,7 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
     setQuestion('')
     setAnswer('')
     setQuestionImg('')
+    setAnswerImg('')
   }
 
   const onChangeFormatHandler = (event: SelectChangeEvent) => {
@@ -68,8 +75,9 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
 
       if (file.size < 4000000) {
         setIsQuestionImgBroken(false)
-        convertFileToBase64(file, (questionImg: string) => {
+        convertFileToBase64(file, (questionImg: any) => {
           setQuestionImg(questionImg)
+          setCardParamsAC(questionImg)
         })
       } else {
         dispatch(setAppErrorAC('Error: File size more then 4 mb'))
@@ -82,9 +90,10 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
       const file = e.target.files[0]
 
       if (file.size < 4000000) {
-        setIsQuestionImgBroken(false)
-        convertFileToBase64(file, (answerImg: string) => {
+        setIsAnswerImgBroken(false)
+        convertFileToBase64(file, (answerImg: any) => {
           setAnswerImg(answerImg)
+          setCardParamsAC(answerImg)
         })
       } else {
         dispatch(setAppErrorAC('Error: File size more then 4 mb'))
@@ -146,6 +155,7 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
               <img
                 src={isQuestionImgBroken ? userPhoto : questionImg || userPhoto}
                 style={{ width: '50px', height: '50px' }}
+                alt={'question'}
                 onError={errorQuestionHandler}
               />
             ) : (
@@ -160,6 +170,7 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
               <img
                 src={isAnswerImgBroken ? userPhoto : answerImg || userPhoto}
                 style={{ width: '50px', height: '50px' }}
+                alt={'answer'}
                 onError={errorAnswerHandler}
               />
             ) : (
