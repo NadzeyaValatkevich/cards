@@ -67,6 +67,10 @@ export type UpdateCardsType = {
   _id: string
   question?: string
   answer?: string
+  answerImg?: string
+  answerVideo?: string
+  questionImg?: string
+  questionVideo?: string
 }
 export type UpdateCardGradeType = {
   card_id: string

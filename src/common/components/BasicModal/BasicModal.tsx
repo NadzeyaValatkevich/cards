@@ -26,10 +26,14 @@ type ModalPropsType = {
   onSave: () => void
   nameButton: string
   buttonProps?: ButtonProps
+  onClose?: () => void
 }
 
 export const BasicModal = (props: ModalPropsType) => {
-  const handleClose = () => props.setOpen(false)
+  const handleClose = () => {
+    props.setOpen(false)
+    props.onClose && props.onClose()
+  }
   const onClickSaveHandler = () => {
     props.onSave()
   }
@@ -53,7 +57,7 @@ export const BasicModal = (props: ModalPropsType) => {
             </IconButton>
           </div>
           {props.children}
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
             <Button variant="outlined" onClick={handleClose}>
               Cancel
             </Button>

@@ -1,6 +1,7 @@
 import React, { PropsWithChildren, ReactElement, useMemo, useState } from 'react'
 
 import { Rating, TableHead, TableSortLabel, Tooltip } from '@mui/material'
+import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -10,6 +11,7 @@ import TableRow from '@mui/material/TableRow'
 import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react-table'
 
 import { deleteCardTC, updateCardTC } from '../../bll/cardsThunk'
+import { CardType, UpdateCardsType } from '../../dal/cardsAPI'
 import { DeleteCardModal } from '../CardsModals/DeleteCardModal'
 import { EditCardModal } from '../CardsModals/EditCardModal'
 
@@ -34,12 +36,12 @@ export const CardsTable = <T extends Record<string, unknown>>(
 ): ReactElement => {
   const dispatch = useAppDispatch()
 
-  const [id, setId] = useState('')
+  const [card, setCard] = useState<CardType>({} as CardType)
   const [activeModalEdit, setActiveModalEdit] = useState<boolean>(false)
   const [activeModalDelete, setActiveModalDelete] = useState<boolean>(false)
 
-  const updateCard = (id: string, question: string, answer: string) => {
-    dispatch(updateCardTC({ _id: id, question, answer }))
+  const updateCard = (updatedCard: UpdateCardsType) => {
+    dispatch(updateCardTC(updatedCard))
   }
   const deleteCard = (_id: string) => {
     dispatch(deleteCardTC(_id))
@@ -126,14 +128,60 @@ export const CardsTable = <T extends Record<string, unknown>>(
                   const { key: cellKey, ...getCellProps } = cell.getCellProps({
                     className: classes.tableBodyCell,
                   })
+                  const currentCard = data[cell.row.index] as unknown as CardType
+                  const questionImg = data[cell.row.index]?.questionImg as string
+                  const answerImg = data[cell.row.index]?.answerImg as string
 
-                  const editCardActionHandler = (cardId: string) => {
-                    setId(cardId)
+                  const editCardActionHandler = () => {
+                    setCard(currentCard)
                     setActiveModalEdit(true)
                   }
-                  const deleteCardActionHandler = (cardId: string) => {
-                    setId(cardId)
+                  const deleteCardActionHandler = () => {
+                    setCard(currentCard)
                     setActiveModalDelete(true)
+                  }
+
+                  if (cell.column.render('Header') === 'Question') {
+                    return (
+                      <TableCell key={cellKey} {...getCellProps}>
+                        <SkeletonComponent status={isLoading}>
+                          {questionImg ? (
+                            <Box
+                              component={'img'}
+                              src={questionImg}
+                              sx={{
+                                width: '3.3rem',
+                                height: '2rem',
+                                mr: '.5rem',
+                              }}
+                            ></Box>
+                          ) : (
+                            cell.render('Cell')
+                          )}
+                        </SkeletonComponent>
+                      </TableCell>
+                    )
+                  }
+                  if (cell.column.render('Header') === 'Answer') {
+                    return (
+                      <TableCell key={cellKey} {...getCellProps}>
+                        <SkeletonComponent status={isLoading}>
+                          {answerImg ? (
+                            <Box
+                              component={'img'}
+                              src={answerImg}
+                              sx={{
+                                width: '3.3rem',
+                                height: '100%',
+                                mr: '.5rem',
+                              }}
+                            ></Box>
+                          ) : (
+                            cell.render('Cell')
+                          )}
+                        </SkeletonComponent>
+                      </TableCell>
+                    )
                   }
 
                   if (cell.column.id === 'actions') {
@@ -172,17 +220,19 @@ export const CardsTable = <T extends Record<string, unknown>>(
           })}
         </TableBody>
       </Table>
-      <EditCardModal
-        setOpen={setActiveModalEdit}
-        open={activeModalEdit}
-        updateCard={updateCard}
-        id={id}
-      />
+      {activeModalEdit && (
+        <EditCardModal
+          setOpen={setActiveModalEdit}
+          open={activeModalEdit}
+          updateCard={updateCard}
+          card={card}
+        />
+      )}
       <DeleteCardModal
         setOpen={setActiveModalDelete}
         open={activeModalDelete}
         deleteCard={deleteCard}
-        id={id}
+        card={card}
       />
     </TableContainer>
   )

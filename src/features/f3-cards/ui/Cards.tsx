@@ -169,7 +169,7 @@ export const Cards = () => {
       />
       {cardsPack.length ? (
         <>
-          <CardsTable
+          <CardsTable<CardType>
             columns={columns}
             data={cardsPack}
             entityStatus={cardsEntityStatus}
