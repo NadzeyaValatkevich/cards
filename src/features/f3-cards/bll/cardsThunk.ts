@@ -18,16 +18,19 @@ import { UpdatePackDataType } from 'features/f2-packs/dal/packsAPI'
 
 export const getCardsTC = (): AppThunk => async (dispatch, getState) => {
   const params: CardsParamsType = getState().cards.params
+  const isLoading = getState().cards.entityStatus !== RequestStatusType.loading
 
-  dispatch(setCardsStatusAC(RequestStatusType.loading))
+  isLoading && dispatch(setCardsStatusAC(RequestStatusType.loading))
   try {
     const response = await cardsAPI.getCards(params)
 
-    dispatch(setCardsAC(response.data))
+    await dispatch(setCardsAC(response.data))
   } catch (error: any) {
     errorUtils(error, dispatch)
   } finally {
-    dispatch(setCardsStatusAC(RequestStatusType.succeeded))
+    const isSucceeded = getState().cards.entityStatus !== RequestStatusType.succeeded
+
+    isSucceeded && dispatch(setCardsStatusAC(RequestStatusType.succeeded))
   }
 }
 export const addCardTC =
@@ -46,8 +49,10 @@ export const addCardTC =
   }
 export const deleteCardTC =
   (_id: string): AppThunk =>
-  async dispatch => {
-    dispatch(setCardsStatusAC(RequestStatusType.loading))
+  async (dispatch, getState) => {
+    const isLoading = getState().cards.entityStatus !== RequestStatusType.loading
+
+    isLoading && dispatch(setCardsStatusAC(RequestStatusType.loading))
     try {
       const res = await cardsAPI.deleteCards(_id)
 
@@ -55,27 +60,35 @@ export const deleteCardTC =
     } catch (error: any) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setCardsStatusAC(RequestStatusType.succeeded))
+      const isSucceeded = getState().cards.entityStatus !== RequestStatusType.succeeded
+
+      isSucceeded && dispatch(setCardsStatusAC(RequestStatusType.succeeded))
     }
   }
 export const updateCardTC =
   (updatedCard: UpdateCardsType): AppThunk =>
-  async dispatch => {
-    dispatch(setCardsStatusAC(RequestStatusType.loading))
+  async (dispatch, getState) => {
+    const isLoading = getState().cards.entityStatus !== RequestStatusType.loading
+
+    isLoading && dispatch(setCardsStatusAC(RequestStatusType.loading))
     try {
       const res = await cardsAPI.updateCards(updatedCard)
 
-      dispatch(getCardsTC())
+      await dispatch(getCardsTC())
     } catch (error: any) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setCardsStatusAC(RequestStatusType.succeeded))
+      const isSucceeded = getState().cards.entityStatus !== RequestStatusType.succeeded
+
+      isSucceeded && dispatch(setCardsStatusAC(RequestStatusType.succeeded))
     }
   }
 export const updateCardGradeTC =
   (data: UpdateCardGradeType): AppThunk =>
   async (dispatch, getState) => {
-    dispatch(setCardsStatusAC(RequestStatusType.loading))
+    const isLoading = getState().cards.entityStatus !== RequestStatusType.loading
+
+    isLoading && dispatch(setCardsStatusAC(RequestStatusType.loading))
     try {
       const res = await cardsAPI.updateCardGrade(data)
       const oldData = getState().cards.cardsData
@@ -89,7 +102,9 @@ export const updateCardGradeTC =
     } catch (error: any) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setCardsStatusAC(RequestStatusType.succeeded))
+      const isSucceeded = getState().cards.entityStatus !== RequestStatusType.succeeded
+
+      isSucceeded && dispatch(setCardsStatusAC(RequestStatusType.succeeded))
     }
   }
 export const deletePackFromCardsTC = (idPack: string): AppThunk => {
