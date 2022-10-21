@@ -28,6 +28,7 @@ export const EditCardModal: FC<EditCardModalType> = ({ setOpen, open, updateCard
   const [questionImg, setQuestionImg] = useState(questionImgCard)
   const [answer, setAnswer] = useState(answerCard)
   const [answerImg, setAnswerImg] = useState(answerImgCard)
+  const [isDisabled, setIsDisabled] = useState(true)
 
   const updateCardHandler = () => {
     updateCard(
@@ -49,48 +50,29 @@ export const EditCardModal: FC<EditCardModalType> = ({ setOpen, open, updateCard
       setOpen={setOpen}
       onSave={updateCardHandler}
       nameButton={'Save'}
+      disabled={isDisabled}
+      setIsDisabled={setIsDisabled}
     >
       <Box>
         <Question
+          question={question}
+          questionImg={questionImg}
           questionCard={questionCard}
           questionImgCard={questionImgCard}
           setQuestion={setQuestion}
           setQuestionImg={setQuestionImg}
+          setIsDisabled={setIsDisabled}
         />
         <Answer
+          answer={answer}
+          answerImg={answerImg}
           answerCard={answerCard}
           answerImgCard={answerImgCard}
           setAnswer={setAnswer}
           setAnswerImg={setAnswerImg}
+          setIsDisabled={setIsDisabled}
         />
       </Box>
-      {/*  <InputLabel id="demo-simple-select-standard-label">Choose a question format</InputLabel>*/}
-      {/*  <Select*/}
-      {/*    labelId="demo-simple-select-standard-label"*/}
-      {/*    id="demo-simple-select-standard"*/}
-      {/*    label="Age"*/}
-      {/*    fullWidth*/}
-      {/*  >*/}
-      {/*    <MenuItem>Text</MenuItem>*/}
-      {/*    <MenuItem>Picture</MenuItem>*/}
-      {/*  </Select>*/}
-      {/*</FormControl>*/}
-      {/*<TextField*/}
-      {/*  onChange={onChangeTextFieldQuestionHandler}*/}
-      {/*  defaultValue={initQuestion}*/}
-      {/*  id="standard-basic"*/}
-      {/*  label="Question"*/}
-      {/*  variant="standard"*/}
-      {/*  fullWidth*/}
-      {/*/>*/}
-      {/*<TextField*/}
-      {/*  onChange={onChangeTextFieldAnswerHandler}*/}
-      {/*  defaultValue={initAnswer}*/}
-      {/*  id="standard-basic"*/}
-      {/*  label="Answer"*/}
-      {/*  variant="standard"*/}
-      {/*  fullWidth*/}
-      {/*/>*/}
     </BasicModal>
   )
 }

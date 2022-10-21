@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -7,7 +7,7 @@ import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { cardsParamsSelector } from 'features/f3-cards/bll/cardsSelectors'
 import { addCardTC } from 'features/f3-cards/bll/cardsThunk'
-import { AddCardModal } from 'features/f3-cards/ui/CardsModals/AddCardModal'
+import { AddCardModal } from 'features/f3-cards/ui/CardsModals/AddCardModal/AddCardModal'
 
 type CardButtonPropsType = {
   buttonName: string

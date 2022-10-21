@@ -28,12 +28,14 @@ type ModalPropsType = {
   buttonProps?: ButtonProps
   disabled?: boolean
   setIsDisabled?: (value: boolean) => void
+  clearField?: () => void
 }
 
 export const BasicModal = (props: ModalPropsType) => {
   const handleClose = () => {
     props.setOpen(false)
     props.setIsDisabled && props.setIsDisabled(true)
+    props.clearField && props.clearField()
   }
   const onClickSaveHandler = () => {
     props.onSave()

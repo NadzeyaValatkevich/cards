@@ -191,7 +191,7 @@ export const CardsTable = <T extends Record<string, unknown>>(
         setOpen={setActiveModalDelete}
         open={activeModalDelete}
         deleteCard={deleteCard}
-        // _id={_id}
+        _id={_id}
       />
     </>
   )

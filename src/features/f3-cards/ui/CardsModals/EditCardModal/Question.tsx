@@ -10,16 +10,22 @@ import { convertFileToBase64 } from 'common/utils/convertFileToBase64'
 import { setCardParamsAC } from 'features/f3-cards/bll/cardsActions'
 
 type QuestionPropsType = {
+  question?: string
+  questionImg?: string
   questionCard?: string
   questionImgCard?: string
   setQuestion: (value: string) => void
   setQuestionImg: (value: string) => void
+  setIsDisabled: (value: boolean) => void
 }
 export const Question: FC<QuestionPropsType> = ({
-  questionCard,
-  questionImgCard,
+  question,
+  questionImg,
   setQuestion,
   setQuestionImg,
+  setIsDisabled,
+  questionCard,
+  questionImgCard,
 }) => {
   const dispatch = useAppDispatch()
 
@@ -31,6 +37,7 @@ export const Question: FC<QuestionPropsType> = ({
         convertFileToBase64(file, (questionImg: any) => {
           setQuestionImg(questionImg)
           setCardParamsAC({ questionImg })
+          setIsDisabled(false)
         })
       } else {
         dispatch(setAppErrorAC('Error: File size more then 4 mb'))
@@ -43,12 +50,13 @@ export const Question: FC<QuestionPropsType> = ({
 
     setQuestion(question)
     setCardParamsAC({ question })
+    setIsDisabled(false)
   }
 
   return (
     <Box>
       {questionImgCard ? (
-        <Box>
+        <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
           <img src={questionImgCard} style={{ width: '150px', height: '150px' }} alt={'question'} />
           <Button variant="contained" fullWidth sx={{ marginTop: '1rem' }} component={'label'}>
             <Input type={'file'} onChange={uploadQuestionHandler} sx={{ display: 'none' }} />

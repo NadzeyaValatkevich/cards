@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from 'react'
+import React, { ChangeEvent, FC, useEffect, useState } from 'react'
 
 import { Input, TextField } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -10,16 +10,22 @@ import { convertFileToBase64 } from 'common/utils/convertFileToBase64'
 import { setCardParamsAC } from 'features/f3-cards/bll/cardsActions'
 
 type AnswerPropsType = {
+  answer?: string
+  answerImg?: string
   answerCard?: string
   answerImgCard?: string
   setAnswer: (value: string) => void
   setAnswerImg: (value: string) => void
+  setIsDisabled: (value: boolean) => void
 }
 export const Answer: FC<AnswerPropsType> = ({
+  answer,
+  answerImg,
   answerCard,
   answerImgCard,
   setAnswer,
   setAnswerImg,
+  setIsDisabled,
 }) => {
   const dispatch = useAppDispatch()
 
@@ -31,6 +37,7 @@ export const Answer: FC<AnswerPropsType> = ({
         convertFileToBase64(file, (answerImg: any) => {
           setAnswerImg(answerImg)
           setCardParamsAC({ answerImg: answerImg })
+          setIsDisabled(false)
         })
       } else {
         dispatch(setAppErrorAC('Error: File size more then 4 mb'))
@@ -43,14 +50,19 @@ export const Answer: FC<AnswerPropsType> = ({
 
     setAnswer(answer)
     setCardParamsAC({ answer })
+    setIsDisabled(false)
   }
 
   return (
     <Box>
       {answerImgCard ? (
-        <Box>
-          <img src={answerImgCard} style={{ width: '150px', height: '150px' }} alt={'question'} />
-          <Button variant="contained" fullWidth sx={{ marginTop: '1rem' }} component={'label'}>
+        <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
+          <img
+            src={answerImgCard}
+            style={{ width: '150px', height: '150px', marginTop: '1rem', marginBottom: '1rem' }}
+            alt={'question'}
+          />
+          <Button variant="contained" fullWidth component={'label'}>
             <Input type={'file'} onChange={uploadAnswerHandler} sx={{ display: 'none' }} />
             {'upload a new answer'}
           </Button>
