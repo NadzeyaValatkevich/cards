@@ -70,6 +70,8 @@ export type UpdateCardsType = {
   _id: string
   question?: string
   answer?: string
+  questionIng?: string
+  answerImg?: string
 }
 export type UpdateCardGradeType = {
   card_id: string

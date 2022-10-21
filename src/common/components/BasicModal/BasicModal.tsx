@@ -26,10 +26,15 @@ type ModalPropsType = {
   onSave: () => void
   nameButton: string
   buttonProps?: ButtonProps
+  disabled?: boolean
+  setIsDisabled?: (value: boolean) => void
 }
 
 export const BasicModal = (props: ModalPropsType) => {
-  const handleClose = () => props.setOpen(false)
+  const handleClose = () => {
+    props.setOpen(false)
+    props.setIsDisabled && props.setIsDisabled(true)
+  }
   const onClickSaveHandler = () => {
     props.onSave()
   }
@@ -62,6 +67,7 @@ export const BasicModal = (props: ModalPropsType) => {
               onClick={onClickSaveHandler}
               color={color}
               {...props.buttonProps}
+              disabled={props.disabled}
             >
               {props.nameButton}
             </Button>

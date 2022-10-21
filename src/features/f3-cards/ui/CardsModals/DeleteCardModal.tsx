@@ -6,11 +6,11 @@ type DeleteCardModalType = {
   setOpen: (value: boolean) => void
   open: boolean
   deleteCard: (id: string) => void
-  id: string
+  // id: string
 }
 export const DeleteCardModal = (props: DeleteCardModalType) => {
   const deletePackHandler = () => {
-    props.deleteCard(props.id)
+    // props.deleteCard(props.id)
     props.setOpen(false)
   }
 

@@ -5,6 +5,7 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import { SelectChangeEvent } from '@mui/material/Select'
+import { isDisabled } from '@testing-library/user-event/dist/utils'
 
 import { setAppErrorAC } from 'app/bll/appActions'
 import userPhoto from 'common/assets/image/user.png'
@@ -30,6 +31,7 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
   const [questionImg, setQuestionImg] = useState('')
   const [answerImg, setAnswerImg] = useState('')
   const [age, setAge] = useState('Text')
+  const [isDisabled, setIsDisabled] = useState(true)
 
   const onChangeTextFieldQuestionHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -46,6 +48,7 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
 
     setAnswer(answer)
     setCardParamsAC({ answer })
+    setIsDisabled(false)
   }
 
   const addCardHandler = () => {
@@ -63,6 +66,8 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
     setAnswer('')
     setQuestionImg('')
     setAnswerImg('')
+    setAge('Text')
+    setIsDisabled(true)
   }
 
   const onChangeFormatHandler = (event: SelectChangeEvent) => {
@@ -77,7 +82,7 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
         setIsQuestionImgBroken(false)
         convertFileToBase64(file, (questionImg: any) => {
           setQuestionImg(questionImg)
-          setCardParamsAC(questionImg)
+          setCardParamsAC({ questionImg })
         })
       } else {
         dispatch(setAppErrorAC('Error: File size more then 4 mb'))
@@ -93,7 +98,8 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
         setIsAnswerImgBroken(false)
         convertFileToBase64(file, (answerImg: any) => {
           setAnswerImg(answerImg)
-          setCardParamsAC(answerImg)
+          setCardParamsAC({ answerImg })
+          setIsDisabled(false)
         })
       } else {
         dispatch(setAppErrorAC('Error: File size more then 4 mb'))
@@ -117,6 +123,8 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
       setOpen={setOpen}
       onSave={addCardHandler}
       nameButton={'Save'}
+      disabled={isDisabled}
+      setIsDisabled={setIsDisabled}
     >
       <FormControl variant="standard">
         <InputLabel id="demo-simple-select-standard-label">Choose a question format</InputLabel>
@@ -154,7 +162,7 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
             {questionImg ? (
               <img
                 src={isQuestionImgBroken ? userPhoto : questionImg || userPhoto}
-                style={{ width: '50px', height: '50px' }}
+                style={{ width: '150px', height: '150px' }}
                 alt={'question'}
                 onError={errorQuestionHandler}
               />
@@ -169,7 +177,7 @@ export const AddCardModal: FC<NewCardModalType> = ({ setOpen, open, addCard, car
             {answerImg ? (
               <img
                 src={isAnswerImgBroken ? userPhoto : answerImg || userPhoto}
-                style={{ width: '50px', height: '50px' }}
+                style={{ width: '150px', height: '150px' }}
                 alt={'answer'}
                 onError={errorAnswerHandler}
               />

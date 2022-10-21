@@ -11,7 +11,7 @@ import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react
 
 import { deleteCardTC, updateCardTC } from '../../bll/cardsThunk'
 import { DeleteCardModal } from '../CardsModals/DeleteCardModal'
-import { EditCardModal } from '../CardsModals/EditCardModal'
+import { EditCardModal } from '../CardsModals/EditCardModal/EditCardModal'
 
 import { CardsActionsComponent } from './CardsActionsComponent/CardsActionsComponent'
 
@@ -29,17 +29,25 @@ export interface TableProps<T extends Record<string, unknown>> extends TableOpti
   sortParam: string | undefined
 }
 
+export type modalObjectType = {
+  _id: string
+  question?: string
+  questionImg?: string
+  answer?: string
+  answerImg?: string
+}
+
 export const CardsTable = <T extends Record<string, unknown>>(
   props: PropsWithChildren<TableProps<T>>
 ): ReactElement => {
   const dispatch = useAppDispatch()
 
-  const [id, setId] = useState('')
+  const [_id, setId] = useState('')
   const [activeModalEdit, setActiveModalEdit] = useState<boolean>(false)
   const [activeModalDelete, setActiveModalDelete] = useState<boolean>(false)
 
-  const updateCard = (id: string, question: string, answer: string) => {
-    dispatch(updateCardTC({ _id: id, question, answer }))
+  const updateCard = (modalObject: modalObjectType) => {
+    dispatch(updateCardTC(modalObject))
   }
   const deleteCard = (_id: string) => {
     dispatch(deleteCardTC(_id))
@@ -177,13 +185,13 @@ export const CardsTable = <T extends Record<string, unknown>>(
         setOpen={setActiveModalEdit}
         open={activeModalEdit}
         updateCard={updateCard}
-        id={id}
+        _id={_id}
       />
       <DeleteCardModal
         setOpen={setActiveModalDelete}
         open={activeModalDelete}
         deleteCard={deleteCard}
-        id={id}
+        // _id={_id}
       />
     </>
   )
