@@ -11,64 +11,79 @@ import {
 
 export const getPacksTC = (): AppThunk => async (dispatch, getState) => {
   const params: PacksParamsType = getState().packs.params
+  const isLoading = getState().packs.entityStatus !== RequestStatusType.loading
 
-  dispatch(setPacksStatusAC(RequestStatusType.loading))
+  isLoading && dispatch(setPacksStatusAC(RequestStatusType.loading))
   try {
     const res = await packsAPI.getPacks(params)
 
-    dispatch(setPacksAC(res.data))
+    await dispatch(setPacksAC(res.data))
   } catch (error: any) {
     errorUtils(error, dispatch)
   } finally {
-    dispatch(setPacksStatusAC(RequestStatusType.succeeded))
+    const isSucceeded = getState().packs.entityStatus !== RequestStatusType.succeeded
+
+    isSucceeded && dispatch(setPacksStatusAC(RequestStatusType.succeeded))
   }
 }
 
 export const addPackTC = (data: AddPackDataType): AppThunk => {
-  return async dispatch => {
-    dispatch(setPacksStatusAC(RequestStatusType.loading))
+  return async (dispatch, getState) => {
+    const isLoading = getState().packs.entityStatus !== RequestStatusType.loading
+
+    isLoading && dispatch(setPacksStatusAC(RequestStatusType.loading))
     try {
       const res = await packsAPI.addPack(data)
 
-      dispatch(getPacksTC())
+      await dispatch(getPacksTC())
     } catch (error: any) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setPacksStatusAC(RequestStatusType.succeeded))
+      const isSucceeded = getState().packs.entityStatus !== RequestStatusType.succeeded
+
+      isSucceeded && dispatch(setPacksStatusAC(RequestStatusType.succeeded))
     }
   }
 }
 
 export const deletePackTC = (idPack: string): AppThunk => {
   return async (dispatch, getState) => {
-    dispatch(setPacksStatusAC(RequestStatusType.loading))
+    const isLoading = getState().packs.entityStatus !== RequestStatusType.loading
+
+    isLoading && dispatch(setPacksStatusAC(RequestStatusType.loading))
     const initCards = getState().cards.initCards
 
     try {
       const res = await packsAPI.deletePack(idPack)
 
-      !initCards && dispatch(getPacksTC())
+      !initCards && (await dispatch(getPacksTC()))
     } catch (error: any) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setPacksStatusAC(RequestStatusType.succeeded))
+      const isSucceeded = getState().packs.entityStatus !== RequestStatusType.succeeded
+
+      isSucceeded && dispatch(setPacksStatusAC(RequestStatusType.succeeded))
     }
   }
 }
 
 export const updatePackTC = (data: UpdatePackDataType): AppThunk => {
   return async (dispatch, getState) => {
-    dispatch(setPacksStatusAC(RequestStatusType.loading))
+    const isLoading = getState().packs.entityStatus !== RequestStatusType.loading
+
+    isLoading && dispatch(setPacksStatusAC(RequestStatusType.loading))
     const initCards = getState().cards.initCards
 
     try {
       const res = await packsAPI.updatePack({ cardsPack: data })
 
-      !initCards && dispatch(getPacksTC())
+      !initCards && (await dispatch(getPacksTC()))
     } catch (error: any) {
       errorUtils(error, dispatch)
     } finally {
-      dispatch(setPacksStatusAC(RequestStatusType.succeeded))
+      const isSucceeded = getState().packs.entityStatus !== RequestStatusType.succeeded
+
+      isSucceeded && dispatch(setPacksStatusAC(RequestStatusType.succeeded))
     }
   }
 }
