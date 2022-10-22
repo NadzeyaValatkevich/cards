@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { addPackTC } from 'features/f2-packs/bll/packsThunks'
-import { AddNewPackModal } from 'features/f2-packs/ui/PacksModals/AddNewPackModal'
+import { AddPackModal } from 'features/f2-packs/ui/PacksModals/AddPackModal'
 
 type ToolbarTablePropsType = {
   disabled: boolean
@@ -19,8 +19,8 @@ export const PacksHeader: FC<ToolbarTablePropsType> = ({ disabled }) => {
   const buttonOnClickHandler = () => {
     setActiveModalAdd(true)
   }
-  const addPack = (name: string, privatePack: boolean) => {
-    dispatch(addPackTC({ name: name, private: privatePack }))
+  const addPack = (name: string, deckCover: string, privatePack: boolean) => {
+    dispatch(addPackTC({ name: name, deckCover: deckCover, private: privatePack }))
   }
 
   return (
@@ -43,7 +43,7 @@ export const PacksHeader: FC<ToolbarTablePropsType> = ({ disabled }) => {
           Add new pack
         </Button>
       </Box>
-      <AddNewPackModal
+      <AddPackModal
         addPack={addPack}
         activeModalAdd={activeModalAdd}
         setActiveModalAdd={setActiveModalAdd}
