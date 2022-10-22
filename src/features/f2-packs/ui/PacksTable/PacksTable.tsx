@@ -11,18 +11,16 @@ import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 import { Column, TableOptions, TableState, useFlexLayout, useTable } from 'react-table'
 
-import { deletePackTC, updatePackTC } from '../../bll/packsThunks'
-import { DeletePackModal } from '../PacksModals/DeletePackModal'
-import { EditPackModal } from '../PacksModals/EditPackModal'
-
-import { PacksActionsComponent } from './PacksActionsComponent/PacksActionsComponent'
-
 import { RequestStatusType } from 'app/bll/appReducer'
 import { SkeletonComponent } from 'common/components/SkeletonComponent/SkeletonComponent'
 import { AppRoutes, sortDir } from 'common/enums/enums'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useStyles } from 'common/styles/TableStyles'
 import { sortFunc } from 'common/utils/sortFunc'
+import { deletePackTC, updatePackTC } from 'features/f2-packs/bll/packsThunks'
+import { DeletePackModal } from 'features/f2-packs/ui/PacksModals/DeletePackModal'
+import { EditPackModal } from 'features/f2-packs/ui/PacksModals/EditPackModal'
+import { PacksActionsComponent } from 'features/f2-packs/ui/PacksTable/PacksActionsComponent/PacksActionsComponent'
 import { setCardsIdAC } from 'features/f3-cards/bll/cardsActions'
 
 export interface TableProps<T extends Record<string, unknown>> extends TableOptions<T> {
@@ -44,8 +42,8 @@ export const PacksTable = <T extends Record<string, unknown>>(
   const [id, setId] = useState('')
   const [packName, setPackName] = useState('')
 
-  const editPack = (id: string, name: string, privatePack: boolean) => {
-    dispatch(updatePackTC({ _id: id, name: name, private: privatePack }))
+  const editPack = (id: string, name: string, privatePack: boolean, deckCover: string) => {
+    dispatch(updatePackTC({ _id: id, name: name, private: privatePack, deckCover: deckCover }))
   }
 
   const removePackCards = (pack_id: string) => {

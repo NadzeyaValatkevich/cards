@@ -33,8 +33,8 @@ export const MenuEditMyCards = () => {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const updatePack = (id: string, name: string, privatePack: boolean) => {
-    dispatch(updatePackFromCardsTC({ _id: id, name, private: privatePack }))
+  const updatePack = (id: string, name: string, privatePack: boolean, deckCover: string) => {
+    dispatch(updatePackFromCardsTC({ _id: id, name, private: privatePack, deckCover: deckCover }))
   }
   const onClickEditDataHandler = () => {
     setActiveModalEdit(true)

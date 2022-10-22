@@ -48,9 +48,8 @@ export const AddPackModal = (props: NewPackModalType) => {
       const file = e.target.files[0]
 
       if (file.size < 4000000) {
-        convertFileToBase64(file, (deckCover: any) => {
+        convertFileToBase64(file, (deckCover: string) => {
           setDeckCover(deckCover)
-          setCardParamsAC({ deckCover })
         })
       } else {
         dispatch(setAppErrorAC('Error: File size more then 4 mb'))
@@ -58,7 +57,7 @@ export const AddPackModal = (props: NewPackModalType) => {
     }
   }
 
-  const errorQuestionHandler = () => {
+  const errorDeckCoverHandler = () => {
     dispatch(setAppErrorAC('Picture upload failed'))
   }
 
@@ -89,8 +88,8 @@ export const AddPackModal = (props: NewPackModalType) => {
           <img
             src={deckCover}
             style={{ width: '150px', height: '150px' }}
-            alt={'question'}
-            onError={errorQuestionHandler}
+            alt={'deckCover'}
+            onError={errorDeckCoverHandler}
           />
         </Box>
       )}
