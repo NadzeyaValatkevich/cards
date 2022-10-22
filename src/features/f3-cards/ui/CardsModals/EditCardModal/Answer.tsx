@@ -58,7 +58,7 @@ export const Answer: FC<AnswerPropsType> = ({
       {answerImgCard ? (
         <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
           <img
-            src={answerImgCard}
+            src={answerImg}
             style={{ width: '150px', height: '150px', marginTop: '1rem', marginBottom: '1rem' }}
             alt={'question'}
           />

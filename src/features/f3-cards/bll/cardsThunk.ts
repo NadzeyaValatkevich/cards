@@ -68,8 +68,6 @@ export const updateCardTC =
       dispatch(getCardsTC())
     } catch (error: any) {
       errorUtils(error, dispatch)
-    } finally {
-      dispatch(setCardsStatusAC(RequestStatusType.succeeded))
     }
   }
 export const updateCardGradeTC =

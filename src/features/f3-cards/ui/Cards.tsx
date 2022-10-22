@@ -4,6 +4,7 @@ import Box from '@mui/material/Box'
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom'
 import { Column } from 'react-table'
 
+import { Loader } from '../../../common/components/Loader/Loader'
 import { SearchPanel } from '../../../common/components/SearchPanel/SearchPanel'
 
 import { RequestStatusType } from 'app/bll/appReducer'
@@ -152,39 +153,44 @@ export const Cards = () => {
 
   return (
     <ContentWrapper withoutPaper>
-      <CardsHeader
-        packName={packName}
-        isMyPack={isMyPack}
-        disabled={isDisabled}
-        packDeckCover={packDeckCover}
-        entityStatus={cardsEntityStatus}
-        cardsPack={cardsPack}
-        searchParam={cardsParams.question}
-        learnCallback={learnOnClickHandler}
-      />
-      {isMyPack && !cardsPack.length ? null : (
-        <SearchPanel
-          setParams={setCardsSearchQuestionAC}
-          searchParam={cardsParams.question}
-          sx={{ m: '1.5rem 0', width: '100%' }}
-        />
-      )}
-      {cardsPack.length && cardsEntityStatus !== RequestStatusType.loading ? (
-        <>
-          <CardsTable
-            columns={columns}
-            data={cardsPack}
-            entityStatus={cardsEntityStatus}
-            sortParam={cardsParams.sortCards}
-          />
-          <Pagination {...paginationProps} />
-        </>
+      {cardsEntityStatus === RequestStatusType.loading ? (
+        <Loader />
       ) : (
-        <Box>
-          {isMyPack
-            ? 'Cards not found. Click add new card to fill this pack'
-            : 'Cards not found. Please change the filter settings'}
-        </Box>
+        <>
+          <CardsHeader
+            packName={packName}
+            isMyPack={isMyPack}
+            disabled={isDisabled}
+            packDeckCover={packDeckCover}
+            entityStatus={cardsEntityStatus}
+            cardsPack={cardsPack}
+            searchParam={cardsParams.question}
+            learnCallback={learnOnClickHandler}
+          />
+          {isMyPack && !cardsPack.length ? null : (
+            <SearchPanel
+              setParams={setCardsSearchQuestionAC}
+              searchParam={cardsParams.question}
+              sx={{ m: '1.5rem 0', width: '100%' }}
+            />
+          )}
+          {cardsPack.length ? (
+            <>
+              <CardsTable
+                columns={columns}
+                data={cardsPack}
+                entityStatus={cardsEntityStatus}
+                sortParam={cardsParams.sortCards}
+              />
+              <Pagination {...paginationProps} />
+            </>
+          ) : (
+            <Box>
+              {'Cards not found. Click add new card to fill this pack'}
+              {/*: 'Cards not found. Please change the filter settings'*/}
+            </Box>
+          )}
+        </>
       )}
     </ContentWrapper>
   )

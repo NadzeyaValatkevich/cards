@@ -3,6 +3,7 @@ import React, { FC, useState } from 'react'
 import Box from '@mui/material/Box'
 
 import { RequestStatusType } from '../../../../app/bll/appReducer'
+import { Loader } from '../../../../common/components/Loader/Loader'
 
 import { MenuEditMyCards } from './MenuEditMyCards/MenuEditMyCards'
 
@@ -67,13 +68,6 @@ export const CardsHeader: FC<CardsHeaderPropsType> = ({
           mr: '.5rem',
         }}
       />
-      {/*{cardsPack.length ? (*/}
-      {/*  <SearchPanel*/}
-      {/*    setParams={setCardsSearchQuestionAC}*/}
-      {/*    searchParam={searchParam}*/}
-      {/*    sx={{ m: '1.5rem 0', width: '100%' }}*/}
-      {/*  />*/}
-      {/*) : null}*/}
     </Box>
   )
 }

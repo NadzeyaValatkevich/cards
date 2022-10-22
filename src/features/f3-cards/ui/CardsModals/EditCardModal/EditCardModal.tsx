@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, FC, useEffect, useState } from 'react'
 
 import Box from '@mui/material/Box'
 
@@ -32,7 +32,7 @@ export const EditCardModal: FC<EditCardModalType> = ({ setOpen, open, updateCard
 
   const updateCardHandler = () => {
     updateCard(
-      questionImg && answerImg
+      questionImg || answerImg
         ? { _id, questionImg, answerImg }
         : {
             _id,
@@ -42,6 +42,14 @@ export const EditCardModal: FC<EditCardModalType> = ({ setOpen, open, updateCard
     )
     setOpen(false)
   }
+
+  useEffect(() => {
+    setQuestionImg(questionImgCard)
+  }, [questionImgCard])
+
+  useEffect(() => {
+    setAnswerImg(answerImgCard)
+  }, [answerImgCard])
 
   return (
     <BasicModal

@@ -57,7 +57,7 @@ export const Question: FC<QuestionPropsType> = ({
     <Box>
       {questionImgCard ? (
         <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
-          <img src={questionImgCard} style={{ width: '150px', height: '150px' }} alt={'question'} />
+          <img src={questionImg} style={{ width: '150px', height: '150px' }} alt={'question'} />
           <Button variant="contained" fullWidth sx={{ marginTop: '1rem' }} component={'label'}>
             <Input type={'file'} onChange={uploadQuestionHandler} sx={{ display: 'none' }} />
             {'upload a new question'}

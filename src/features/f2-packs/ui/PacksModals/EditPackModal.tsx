@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent, useState } from 'react'
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 
 import { Checkbox, FormControlLabel, Input, TextField } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -68,6 +68,10 @@ export const EditPackModal = (props: EditPackModalType) => {
     }
   }
 
+  useEffect(() => {
+    setDeckCover(deckCoverPack)
+  }, [deckCoverPack])
+
   return (
     <BasicModal
       name={'Edit name pack'}
@@ -93,7 +97,7 @@ export const EditPackModal = (props: EditPackModalType) => {
         sx={{ marginBottom: '1rem', marginTop: '1rem' }}
       >
         <img
-          src={deckCoverPack}
+          src={deckCover}
           style={{ width: '150px', height: '150px' }}
           alt={'deckCover'}
           onError={errorDeckCoverHandler}
