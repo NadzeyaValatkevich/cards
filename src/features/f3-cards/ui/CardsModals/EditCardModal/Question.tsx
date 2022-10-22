@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from 'react'
+import React, { ChangeEvent, FC } from 'react'
 
 import { Input, TextField } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -10,7 +10,6 @@ import { convertFileToBase64 } from 'common/utils/convertFileToBase64'
 import { setCardParamsAC } from 'features/f3-cards/bll/cardsActions'
 
 type QuestionPropsType = {
-  question?: string
   questionImg?: string
   questionCard?: string
   questionImgCard?: string
@@ -19,7 +18,6 @@ type QuestionPropsType = {
   setIsDisabled: (value: boolean) => void
 }
 export const Question: FC<QuestionPropsType> = ({
-  question,
   questionImg,
   setQuestion,
   setQuestionImg,
@@ -46,10 +44,10 @@ export const Question: FC<QuestionPropsType> = ({
   }
 
   const onChangeQuestionHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const question = e.currentTarget.value
+    const cardQuestion = e.currentTarget.value
 
-    setQuestion(question)
-    setCardParamsAC({ question })
+    setQuestion(cardQuestion)
+    setCardParamsAC({ cardQuestion })
     setIsDisabled(false)
   }
 

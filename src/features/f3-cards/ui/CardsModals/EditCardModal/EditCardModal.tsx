@@ -63,7 +63,6 @@ export const EditCardModal: FC<EditCardModalType> = ({ setOpen, open, updateCard
     >
       <Box>
         <Question
-          question={question}
           questionImg={questionImg}
           questionCard={questionCard}
           questionImgCard={questionImgCard}
@@ -72,7 +71,6 @@ export const EditCardModal: FC<EditCardModalType> = ({ setOpen, open, updateCard
           setIsDisabled={setIsDisabled}
         />
         <Answer
-          answer={answer}
           answerImg={answerImg}
           answerCard={answerCard}
           answerImgCard={answerImgCard}

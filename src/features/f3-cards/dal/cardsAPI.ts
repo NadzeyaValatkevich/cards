@@ -3,9 +3,9 @@ import { TokenType } from 'features/f2-packs/dal/packsAPI'
 
 export type CardsParamsType = {
   cardsPack_id: string
-  question?: string
+  cardQuestion?: string
   questionImg?: string
-  answer?: string
+  cardAnswer?: string
   answerImg?: string
   sortCards?: string
   page?: string

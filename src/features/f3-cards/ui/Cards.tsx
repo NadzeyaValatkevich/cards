@@ -1,20 +1,19 @@
 import React, { useEffect } from 'react'
 
 import Box from '@mui/material/Box'
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Column } from 'react-table'
 
-import { Loader } from '../../../common/components/Loader/Loader'
-import { SearchPanel } from '../../../common/components/SearchPanel/SearchPanel'
-
 import { RequestStatusType } from 'app/bll/appReducer'
+import { Loader } from 'common/components/Loader/Loader'
 import { Pagination, PaginationPropsType } from 'common/components/Pagination/Pagination'
+import { SearchPanel } from 'common/components/SearchPanel/SearchPanel'
 import { AppRoutes } from 'common/enums/enums'
 import { ContentWrapper } from 'common/HOCs/ContentWrapper/ContentWrapper'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { compareObj } from 'common/utils/removeEmptyObj'
-import { packSelector, profileSelector } from 'features/f2-packs/bll/packsSelectors'
+import { profileSelector } from 'features/f2-packs/bll/packsSelectors'
 import {
   setCardPageIsInitAC,
   setCardParamsAC,
@@ -104,7 +103,6 @@ export const Cards = () => {
   const cardsEntityStatus = useAppSelector(cardsEntityStatusSelector)
   const cardsPackIsDeleted = useAppSelector(cardsPackIsDeletedSelector)
   const [URLSearchParams, SetURLSearchParams] = useSearchParams()
-  const { cardsPack_id } = cardsParams
   const isMyPack = packUserId === profileId
   const isDisabled = cardsEntityStatus === RequestStatusType.loading
 
@@ -164,13 +162,13 @@ export const Cards = () => {
             packDeckCover={packDeckCover}
             entityStatus={cardsEntityStatus}
             cardsPack={cardsPack}
-            searchParam={cardsParams.question}
+            searchParam={cardsParams.cardQuestion}
             learnCallback={learnOnClickHandler}
           />
           {isMyPack && !cardsPack.length ? null : (
             <SearchPanel
               setParams={setCardsSearchQuestionAC}
-              searchParam={cardsParams.question}
+              searchParam={cardsParams.cardQuestion}
               sx={{ m: '1.5rem 0', width: '100%' }}
             />
           )}
@@ -185,10 +183,7 @@ export const Cards = () => {
               <Pagination {...paginationProps} />
             </>
           ) : (
-            <Box>
-              {'Cards not found. Click add new card to fill this pack'}
-              {/*: 'Cards not found. Please change the filter settings'*/}
-            </Box>
+            <Box>{'Cards not found. Click add new card to fill this pack'}</Box>
           )}
         </>
       )}

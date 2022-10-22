@@ -32,10 +32,10 @@ export const Answer: FC<AnswerPropsType> = ({
   const onChangeTextFieldAnswerHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const answer = e.currentTarget.value
+    const cardAnswer = e.currentTarget.value
 
-    setAnswer(answer)
-    setCardParamsAC({ answer })
+    setAnswer(cardAnswer)
+    setCardParamsAC({ cardAnswer })
     setIsDisabled(false)
   }
 

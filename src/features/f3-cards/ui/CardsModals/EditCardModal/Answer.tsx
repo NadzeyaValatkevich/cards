@@ -10,7 +10,6 @@ import { convertFileToBase64 } from 'common/utils/convertFileToBase64'
 import { setCardParamsAC } from 'features/f3-cards/bll/cardsActions'
 
 type AnswerPropsType = {
-  answer?: string
   answerImg?: string
   answerCard?: string
   answerImgCard?: string
@@ -19,7 +18,6 @@ type AnswerPropsType = {
   setIsDisabled: (value: boolean) => void
 }
 export const Answer: FC<AnswerPropsType> = ({
-  answer,
   answerImg,
   answerCard,
   answerImgCard,
@@ -46,10 +44,10 @@ export const Answer: FC<AnswerPropsType> = ({
   }
 
   const onChangeAnswerHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const answer = e.currentTarget.value
+    const cardAnswer = e.currentTarget.value
 
-    setAnswer(answer)
-    setCardParamsAC({ answer })
+    setAnswer(cardAnswer)
+    setCardParamsAC({ cardAnswer })
     setIsDisabled(false)
   }
 

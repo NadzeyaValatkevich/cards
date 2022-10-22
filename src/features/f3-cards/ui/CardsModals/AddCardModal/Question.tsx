@@ -31,10 +31,10 @@ export const Question: FC<QuestionPropsType> = ({
   const onChangeTextFieldQuestionHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const question = e.currentTarget.value
+    const cardQuestion = e.currentTarget.value
 
-    setQuestion(question)
-    setCardParamsAC({ question })
+    setQuestion(cardQuestion)
+    setCardParamsAC({ cardQuestion })
   }
 
   const errorQuestionHandler = () => {

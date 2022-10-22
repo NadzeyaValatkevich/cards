@@ -11,9 +11,9 @@ export const initialCardsParams: Partial<CardsParamsType> = {
   pageCount: '5',
   min: 0,
   max: 100,
-  question: '',
+  cardQuestion: '',
   questionImg: '',
-  answer: '',
+  cardAnswer: '',
   answerImg: '',
   sortCards: '',
   maxGrade: 0,
@@ -69,9 +69,9 @@ export const cardsReducer = (
     case 'CARDS/SET-PAGINATION':
       return { ...state, params: { ...state.params, ...action.payload.params } }
     case 'CARDS/SET-SEARCH-QUESTION':
-      return { ...state, params: { ...state.params, question: action.payload.cardQuestion } }
+      return { ...state, params: { ...state.params, cardQuestion: action.payload.cardQuestion } }
     case 'CARDS/SET-SEARCH-ANSWER':
-      return { ...state, params: { ...state.params, answer: action.payload.cardAnswer } }
+      return { ...state, params: { ...state.params, cardAnswer: action.payload.cardAnswer } }
     case 'CARDS/SET-SORT': {
       const sortRequest =
         action.payload.dir === 'asc' ? `0${action.payload.name}` : `1${action.payload.name}`
