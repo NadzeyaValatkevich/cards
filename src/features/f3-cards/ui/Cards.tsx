@@ -165,7 +165,7 @@ export const Cards = () => {
             searchParam={cardsParams.cardQuestion}
             learnCallback={learnOnClickHandler}
           />
-          {isMyPack && !cardsPack.length ? null : (
+          {isMyPack && !cardsPack.length && !cardsParams.cardQuestion ? null : (
             <SearchPanel
               setParams={setCardsSearchQuestionAC}
               searchParam={cardsParams.cardQuestion}
